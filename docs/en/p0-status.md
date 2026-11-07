@@ -71,5 +71,5 @@ Performance is a single-machine baseline (`fixtures/p0/perf-baseline.json`); hea
 
 ## Remaining P0-4 work
 
-1. **External reproduction** by a developer not involved in the project (runbook + issue form ready; run pending).
+1. **External reproduction** by a developer not involved in the project — runbook ready, tracking issue [#1](https://github.com/haeliotang/choroweave/issues/1); run pending.
 2. Then freeze SHP v0.1, review the coverage matrix, and evaluate G0.

@@ -71,5 +71,5 @@ node scripts/p0-report.mjs                     # 统一 mock/live 报告
 
 ## P0-4 剩余
 
-1. 由**未参与开发**的开发者完成外部复现（runbook 与 issue 表单已就绪，执行待完成）。
+1. 由**未参与开发**的开发者完成外部复现（runbook 已就绪，跟踪 issue [#1](https://github.com/haeliotang/choroweave/issues/1)；执行待完成）。
 2. 然后冻结 SHP v0.1，复核覆盖矩阵并评估 G0。

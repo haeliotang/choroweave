@@ -60,7 +60,7 @@ curl --cacert .p0-tls/ca.crt --resolve alice.example:8443:127.0.0.1 \
 
 ## 5. 回报
 
-打开 **External reproduction (P0)** issue 表单，附上：
+打开 **External reproduction (P0)** issue 表单（或直接在跟踪 issue <https://github.com/haeliotang/choroweave/issues/1> 下评论），附上：
 - commit 与日期；
 - OS/Node/Chrome 版本；
 - 各套件通过数/失败数及错误文本；

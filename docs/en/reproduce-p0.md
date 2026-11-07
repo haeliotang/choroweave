@@ -60,7 +60,7 @@ Controls: `WASD`, mouse drag, `E` to inspect/enter a portal, `Esc` cancel.
 
 ## 5. Report back
 
-Open the **External reproduction (P0)** issue form and include:
+Open the **External reproduction (P0)** issue form and include (or comment on the tracking issue: <https://github.com/haeliotang/choroweave/issues/1>):
 - commit hash and date;
 - OS/Node/Chrome versions;
 - suite outputs (pass/fail counts) and any error text;
