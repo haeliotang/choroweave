@@ -1,7 +1,7 @@
 # choroweave 系统架构（v0.1）
 > **English (primary):** [`docs/en/03-architecture.md`](en/03-architecture.md) · 本页为中文版（Chinese version）。
 > 状态：草案 · 截至 **2026-11-07** · 代码许可证 Apache-2.0 · 面向实现团队与外部贡献者
-> 依据：[`02-tech-selection.md`](02-tech-selection.md) 的 12 条 ADR、[`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md)（SHP）、[`research/`](research/) 四份调研。
+> 依据：[`02-tech-selection.md`](02-tech-selection.md) 的 13 条 ADR、[`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md)（SHP）、[`research/`](research/) 四份调研。
 > 本文所有 `CHW_*` 扩展与 `world.json` 字段以 [`04`](04-spatial-hyperlink-protocol.md) 与 [`schemas/`](../schemas/) 为准；三者不一致时视为缺陷。
 
 ---
@@ -593,7 +593,7 @@ choroweave/
 
 ## 14. 参考
 
-- [02 技术选型](02-tech-selection.md)（ADR-01…12）· [04 SHP v0.1](04-spatial-hyperlink-protocol.md)（`world.json` / `CHW_portal` / 握手 / 信任 / 一致性用例）
+- [02 技术选型](02-tech-selection.md)（ADR-01…13）· [04 SHP v0.1](04-spatial-hyperlink-protocol.md)（`world.json` / `CHW_portal` / 握手 / 信任 / 一致性用例）
 - [调研 01 空间网络](research/01-spatial-web-platforms.md) · [02 生成式 3D](research/02-generative-3d-and-agents.md) · [03 运行时标准](research/03-runtime-standards.md) · [04 产品与失败先例](research/04-products-market-prior-art.md)
 - Schemas：[`spatial-dsl`](../schemas/spatial-dsl.schema.json) · [`world-manifest`](../schemas/world-manifest.schema.json) · [`implicit-spatial-spec`](../schemas/implicit-spatial-spec.schema.json)
 - 示例：[`examples/pixel-rooftop/`](../examples/pixel-rooftop/)

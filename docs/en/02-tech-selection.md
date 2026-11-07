@@ -32,6 +32,7 @@ The choroweave technical path compresses into 12 decisions. If you read only one
 | ADR-10 | Physics = **Rapier (Apache-2.0/WASM)**; automatic collider generation + a semantic subset of `OMI_physics_shape` + `CHW_collider` as fallback; KHR_physics is still a Review Draft and cannot be depended on | Khronos registry (A); OMI Stage 1 (A) | Medium-high |
 | ADR-11 | World models and 3DGS **are not used as a multiplayer persistent runtime**; although `KHR_gaussian_splatting` is now ratified, 3DGS is deferred to P3 as visual enhancement | Genie 4 official limitations (A); Marble exports persistent assets (A); headset streaming cost (B/C) | Medium-high |
 | ADR-12 | Licensing: **code Apache-2.0 / specification CC-BY-4.0 / example assets CC0-CC-BY**; the **conformance suite** is the governance core | Protocol adoption depends on free commercial use + verifiability (C) | High |
+| ADR-13 | Architecture principle: **Web-native at the surface, Rust-native at the core**; Rust owns protocol/verification/deterministic compilation/spatial compute, TS owns the Web runtime and Agent adapters; P0 frozen, Rust introduced after G0 | One authoritative protocol semantics + cross-language test vectors; the browser remains the primary runtime ([full ADR](../decisions/ADR-0013-rust-core-web-native-runtime.md)) | High (post-G0) |
 
 ---
 
@@ -180,6 +181,18 @@ The choroweave technical path compresses into 12 decisions. If you read only one
 - **The conformance suite `weave-check` is a core asset**: it validates `world.json`, glTF, behavior graphs, portals, budgets, and security policy; any implementation claiming SHP compatibility should be able to pass it. The moat of a protocol project is not code but "verifiable conformance + ecosystem adoption".
 
 ---
+
+### ADR-13: Rust Core, Web-Native Runtime
+
+**Principle**: the surface natively fits the Web (TypeScript + Babylon.js 9 + WebXR); the core implements verifiable, portable protocol and computation logic in Rust. WASM/CLI/native interfaces are delivery formats, not a mandatory single execution environment.
+
+**Scope**: Rust for the SHP protocol core, `weave-check`, the Chôra compiler core and 3D asset processing; TypeScript for the Web runtime, UI and Agent adapters; Node.js stays in P0 for the node service and is re-evaluated in P1/P2; physics reuses Rapier.
+
+**Migration order**: P0 freeze → after G0 build `choroweave-protocol` (JCS/Ed25519/manifest/trust/handshake, cross-language vectors first) → P1 compiler core in Rust → P2 evaluate a Rust node. **This ADR changes no runtime before G0.**
+
+**Cost**: dual Rust + TS build/test matrix after G0; WASM boundary and distribution costs must be measured.
+
+**Full record**: [`decisions/ADR-0013-rust-core-web-native-runtime.md`](../decisions/ADR-0013-rust-core-web-native-runtime.md)
 
 ## 4. Selection matrix (weighted)
 

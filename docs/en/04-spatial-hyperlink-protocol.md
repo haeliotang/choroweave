@@ -2,7 +2,7 @@
 
 > Status: **v0.1 release candidate** (candidate freeze at `p0-rc1` / runtime `95f12d8`; final freeze only after external validation) · Specification license: CC-BY-4.0 · Implementation: Apache-2.0
 > Scope: world manifest (`world.json`), world addressing and node discovery, the `CHW_portal` extension, the traversal handshake, trust/signature, prefetch budget, visitor identity and gates, version compatibility, and the conformance test list.
-> Companions: [`02-tech-selection.md`](02-tech-selection.md) (ADR-01…12), [`03-architecture.md`](03-architecture.md) (runtime and node implementation), [`research/`](research/) (evidence).
+> Companions: [`02-tech-selection.md`](02-tech-selection.md) (ADR-01…13), [`03-architecture.md`](03-architecture.md) (runtime and node implementation), [`research/`](research/) (evidence).
 > Alignment targets: **MSF "Web of Worlds"** (*pages become places, links become portals*) and the **X3D 4.1 WoW Profile**'s `Anchor` (3D hyperlinks) and `Inline` (external scenes); SHP supplies only what they leave undefined: **handshake, trust, prefetch, rollback**. Verified as of 2026-11: OMI has no portal extension (`OMI_link` is archived, `OMI_spawn_point` is still Stage 1), and glTF has no ratified spatial-link extension (A).
 > Chinese version: [`../04-spatial-hyperlink-protocol.md`](../04-spatial-hyperlink-protocol.md)
 

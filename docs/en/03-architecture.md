@@ -1,7 +1,7 @@
 # choroweave System Architecture (v0.1)
 
 > Status: draft · as of **2026-11-07** · code license Apache-2.0 · for the implementation team and external contributors
-> Basis: the 12 ADRs in [`02-tech-selection.md`](02-tech-selection.md), [`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md) (SHP), and the four research reports in [`research/`](research/).
+> Basis: the 13 ADRs in [`02-tech-selection.md`](02-tech-selection.md), [`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md) (SHP), and the four research reports in [`research/`](research/).
 > All `CHW_*` extensions and `world.json` fields in this document defer to [`04`](04-spatial-hyperlink-protocol.md) and [`schemas/`](../../schemas/); any inconsistency among the three is a defect.
 > Chinese version: [`../03-architecture.md`](../03-architecture.md)
 
@@ -594,7 +594,7 @@ No ADR-level conflicts; this document introduces no new technical bets.
 
 ## 14. References
 
-- [02 Technology selection](02-tech-selection.md) (ADR-01…12) · [04 SHP v0.1](04-spatial-hyperlink-protocol.md) (`world.json` / `CHW_portal` / handshake / trust / conformance cases)
+- [02 Technology selection](02-tech-selection.md) (ADR-01…13) · [04 SHP v0.1](04-spatial-hyperlink-protocol.md) (`world.json` / `CHW_portal` / handshake / trust / conformance cases)
 - [Research 01 spatial web platforms](research/01-spatial-web-platforms.md) · [02 generative 3D](research/02-generative-3d-and-agents.md) · [03 runtime standards](research/03-runtime-standards.md) · [04 products and failure precedents](research/04-products-market-prior-art.md)
 - Schemas: [`spatial-dsl`](../../schemas/spatial-dsl.schema.json) · [`world-manifest`](../../schemas/world-manifest.schema.json) · [`implicit-spatial-spec`](../../schemas/implicit-spatial-spec.schema.json)
 - Examples: [`examples/pixel-rooftop/`](../../examples/pixel-rooftop/)

@@ -4,8 +4,8 @@
 
 > 状态：草案 · 全部数据 **截至 2026-11-07 核实**（GitHub 数据为当日 REST API 抓取；其余为规范正文/官方页面/权威第三方，逐条标注见 §7）
 > 证据等级：**A** = 一手规范、官方文档、仓库元数据；**B** = 第三方实测或权威媒体报道；**C** = 工程判断（与 [`02-tech-selection.md`](02-tech-selection.md) 同一口径）
-> 配套：[`02-tech-selection.md`](02-tech-selection.md)（ADR-01..12）、[`03-architecture.md`](03-architecture.md)、[`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md)、[`research/`](research/)（四份原始调研）
-> 纪律：本文只提供生态证据与判断。**技术结论以 02 的 12 条 ADR 为准，本文不新增决策**；发现口径差异在 §8 显式列出。
+> 配套：[`02-tech-selection.md`](02-tech-selection.md)（ADR-01..13）、[`03-architecture.md`](03-architecture.md)、[`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md)、[`research/`](research/)（四份原始调研）
+> 纪律：本文只提供生态证据与判断。**技术结论以 02 的 13 条 ADR 为准，本文不新增决策**；发现口径差异在 §8 显式列出。
 
 ## 0. 一页结论（先结论，后证据）
 
@@ -549,7 +549,7 @@ flowchart TB
 ### 8.1 自查结果
 
 - **术语一致**：世界/空间/世界包/世界描述符/节点/门户/传送/房间/节点能力/ISS/Spatial-DSL/Chôra Compiler/`weave-check` 均按 [`internal/writing-spec.md`](internal/writing-spec.md) §1 使用；术语统一用"门户"（首次出现注明俗称"传送门"）。
-- **ADR 一致**：§6 逐一回指 ADR-01..12，未新增决策；所有"判断"均标注 C，未冒充事实。
+- **ADR 一致**：§6 逐一回指 ADR-01..13，未新增决策；所有"判断"均标注 C，未冒充事实。
 - **数字口径**：所有 GitHub 数据为 2026-11-07 抓取；产品/市场数据标注原始统计口径与时点；未能核实项见 §8.3。
 - **链接正确**：§7 全部 URL 取自四份调研来源表；正文用编号引用，未引入未核实外链。内部相对链接指向交付树中的 02/03/04/08 与 `research/`；其中 03/04/08 由并行角色交付，合稿时需复核可达性。
 

@@ -33,6 +33,7 @@ choroweave 的技术路径压缩为 12 条决策。若只读一段：
 | ADR-10 | 物理 = **Rapier（Apache-2.0/WASM）**；碰撞体自动生成 + `OMI_physics_shape` 语义子集 + `CHW_collider` 兜底；KHR_physics 仍是 Review Draft，不能依赖 | Khronos registry（A）；OMI Stage 1（A） | 中高 |
 | ADR-11 | 世界模型与 3DGS **不作多人持久运行时**；3DGS 虽已有 ratified 的 `KHR_gaussian_splatting`，仍排 P3 作视觉增强 | Genie 4 官方限制（A）；Marble 导出持久资产（A）；头显流式成本（B/C） | 中高 |
 | ADR-12 | 许可证：**代码 Apache-2.0 / 规范 CC-BY-4.0 / 示例资产 CC0-CC-BY**；以 **一致性测试套件** 为治理核心 | 协议采用度取决于可自由商用 + 可验证（C） | 高 |
+| ADR-13 | 架构原则：**Web-native at the surface, Rust-native at the core**；Rust 负责协议/验证/确定性编译/空间计算，TS 负责 Web 运行时与 Agent 接入；P0 冻结，G0 后渐进引入 | 单一权威协议语义 + 跨语言测试向量；浏览器仍是主运行环境（[详细 ADR](decisions/ADR-0013-rust-core-web-native-runtime.md)） | 高（G0 后执行） |
 
 ---
 
@@ -181,6 +182,18 @@ choroweave 的技术路径压缩为 12 条决策。若只读一段：
 - **一致性套件 `weave-check` 是核心资产**：验证 `world.json`、glTF、行为图、门户、预算、安全策略；任何声称兼容 SHP 的实现都应能跑通它。协议类项目的护城河不是代码，而是"可验证的一致性 + 生态采用"。
 
 ---
+
+### ADR-13：Rust Core, Web-Native Runtime
+
+**原则**：表层原生适配 Web（TypeScript + Babylon.js 9 + WebXR），核心以 Rust 实现可验证、可移植的协议与计算能力；WASM/CLI/原生接口是交付方式，不是强制统一执行环境。
+
+**范围**：SHP 协议核心、`weave-check`、Chôra 编译器核心、3D 资产处理用 Rust；Web 运行时、UI、Agent 适配用 TypeScript；节点服务 P0 保留 Node.js，P1/P2 按实测负载再评估 Rust；物理复用 Rapier。
+
+**迁移顺序**：P0 冻结 → G0 后建立 `choroweave-protocol`（JCS/Ed25519/manifest/信任/握手，先用现有测试向量做跨语言一致性）→ P1 编译器核心 Rust 化 → P2 评估 Rust 节点。**本 ADR 在 G0 前不改变任何运行时。**
+
+**代价**：G0 后维护 Rust + TS 双构建/测试矩阵；WASM 边界与分发成本需计量。
+
+**详细记录**：[`decisions/ADR-0013-rust-core-web-native-runtime.md`](decisions/ADR-0013-rust-core-web-native-runtime.md)
 
 ## 4. 选型矩阵（加权）
 

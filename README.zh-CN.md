@@ -34,14 +34,14 @@ choroweave 是 **Inceptless** 矩阵中的"空间计算层"项目。它不做一
 |---|---|
 | [`docs/00-executive-summary.md`](docs/00-executive-summary.md) | 执行摘要：判断、路径、路线图、资源、指标 |
 | [`docs/01-landscape.md`](docs/01-landscape.md) | 开源生态全景与"断层"分析 |
-| [`docs/02-tech-selection.md`](docs/02-tech-selection.md) | 技术选型决策矩阵与 12 条 ADR（含与原始设想的差异） |
+| [`docs/02-tech-selection.md`](docs/02-tech-selection.md) | 技术选型决策矩阵与 13 条 ADR（含与原始设想的差异） |
 | [`docs/03-architecture.md`](docs/03-architecture.md) | 系统架构、编译管线、运行时、节点、接口 |
 | [`docs/04-spatial-hyperlink-protocol.md`](docs/04-spatial-hyperlink-protocol.md) | SHP v0.1 协议草案（world.json / CHW_portal / 进入握手） |
 | [`docs/05-roadmap.md`](docs/05-roadmap.md) | 24 个月路线图、阶段门、资源与 KPI |
 | [`docs/06-mvp-spec.md`](docs/06-mvp-spec.md) | Phase 1 MVP 规格与验收测试 |
 | [`docs/07-risks-compliance.md`](docs/07-risks-compliance.md) | 风险、许可证、安全、内容治理与合规 |
 | [`docs/08-open-source-strategy.md`](docs/08-open-source-strategy.md) | 开源治理、标准路线、社区与可持续模式 |
-| [`docs/decisions/`](docs/decisions/README.md) | ADR 索引与变更流程（12 条 ADR 正文在 02） |
+| [`docs/decisions/`](docs/decisions/README.md) | ADR 索引与变更流程（13 条 ADR 正文在 02） |
 | [`docs/research/`](docs/research/) | 四份原始调研（空间网络 / 生成式 3D / 运行时标准 / 市场先例） |
 | [`schemas/`](schemas/) | Spatial-DSL、world.json 与 ISS 契约的 JSON Schema（v0.1） |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | 旗舰示例世界"像素天台"的 DSL、签名清单与说明 |

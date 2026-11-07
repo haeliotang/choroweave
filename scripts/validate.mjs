@@ -544,11 +544,11 @@ function checkDocs() {
   }
   pass("docs.anchors", "03/04 含必需的结构锚点（管线 / Bundle / WSP / ISS / SHP 字段）");
 
-  // ADR 一致性：02 中定义 ADR-01..12；任何文档不得引用不存在的 ADR
+  // ADR 一致性：02 中定义 ADR-01..13；任何文档不得引用不存在的 ADR
   const sel = join(ROOT, "docs/02-tech-selection.md");
   const selText = readFileSync(sel, "utf8");
   const defined = new Set([...selText.matchAll(/ADR-(\d{2})/g)].map((m) => m[1]));
-  const expected = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, "0"));
+  const expected = Array.from({ length: 13 }, (_, i) => String(i + 1).padStart(2, "0"));
   const missing = expected.filter((n) => !defined.has(n));
   if (missing.length) throw new Error(`docs/02 缺少 ADR：${missing.join(", ")}`);
   const docFiles = walkFiles(join(ROOT, "docs")).filter((f) => extname(f) === ".md" && !f.includes("/research/"));
@@ -558,7 +558,7 @@ function checkDocs() {
     for (const m of text.matchAll(/ADR-(\d{2})/g)) if (!defined.has(m[1])) badRefs.push(`${display(file)}: ADR-${m[1]}`);
   }
   if (badRefs.length) throw new Error(`引用了不存在的 ADR：${badRefs.join(", ")}`);
-  pass("docs.adr", `ADR-01..12 齐备；${docFiles.length} 份文档无越界引用`);
+  pass("docs.adr", `ADR-01..13 齐备；${docFiles.length} 份文档无越界引用`);
 
   // world.json 顶层必填字段必须在 04 的字段表出现；schemas 与 04 不一致即视为缺陷
   const manifestSchema = SCHEMA_REGISTRY.get("urn:choroweave:schemas:world-manifest:0.1");
@@ -617,7 +617,7 @@ function checkEnglishDocs() {
     const id = `ADR-${String(i).padStart(2, "0")}`;
     if (!sel.includes(id)) throw new Error(`docs/en/02 missing ${id}`);
   }
-  pass("docs.en", `${required.length} English docs present; 03/04 within 350-600 lines; anchors + ADR-01..12 OK`);
+  pass("docs.en", `${required.length} English docs present; 03/04 within 350-600 lines; anchors + ADR-01..13 OK`);
 }
 
 function checkCoverage(example) {

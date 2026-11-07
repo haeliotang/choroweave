@@ -1,6 +1,6 @@
 # choroweave Executive Summary
 
-> Version v0.1 · 2026-11 · Based on four first-hand research reports ([`research/`](research/); English translations; Chinese originals under `../research/`) and 12 ADRs ([`02-tech-selection.md`](02-tech-selection.md))
+> Version v0.1 · 2026-11 · Based on four first-hand research reports ([`research/`](research/); English translations; Chinese originals under `../research/`) and 13 ADRs ([`02-tech-selection.md`](02-tech-selection.md))
 > Audience: founders / investors / first contributors. Every number is tagged with an evidence grade; estimates are explicitly labeled "estimate".
 > Chinese version: [`../00-executive-summary.md`](../00-executive-summary.md)
 
@@ -41,7 +41,7 @@
 
 ---
 
-## 4. Technical Path (Summary of 12 ADRs)
+## 4. Technical Path (Summary of 13 ADRs)
 
 | Layer | Choice | Rejected alternative |
 |---|---|---|

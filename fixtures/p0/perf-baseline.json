@@ -30,18 +30,20 @@
     "coldStartP95Ms": 5000,
     "warmTraversalP95Ms": 1500
   },
-  "note": "Cold start = fresh browser process per sample; warm = same page, real UI traversal. Loopback only; LAN/public not claimed. Perf harness: scripts/perf-p0.mjs.",
+  "note": "Cold start = fresh browser process per sample; warm = same page, real UI traversal. Strict mode (--strict) exits non-zero on budget/restart failure. Headed loopback passes; headless loopback fails the 5s cold gate. LAN/public require remote deployment.",
   "sampledHeaded": {
     "profile": "loopback",
+    "strict": true,
+    "strictResult": "PASS",
     "coldSamples": 10,
     "warmSamples": 20,
     "cold": {
-      "p50": 2820,
-      "p95": 3419
+      "p50": 2478,
+      "p95": 3439
     },
     "warm": {
-      "p50": 48,
-      "p95": 172
+      "p50": 51,
+      "p95": 141
     },
     "restartRecovery": {
       "rolledBackBeforeRestart": true,
@@ -51,25 +53,39 @@
   },
   "sampledHeadless": {
     "profile": "loopback",
+    "strict": true,
+    "strictResult": "FAIL (cold p95 > 5000ms)",
     "coldSamples": 10,
     "warmSamples": 20,
     "cold": {
-      "p50": 4264,
-      "p95": 4588
+      "p50": 4860,
+      "p95": 5024
     },
     "warm": {
-      "p50": 337,
-      "p95": 463
+      "p50": 502,
+      "p95": 639
     },
     "restartRecovery": {
       "rolledBackBeforeRestart": true,
       "retriedAfterRestart": true,
-      "retryMs": 237
+      "retryMs": 116
     }
   },
   "networkProfiles": {
     "loopback": "measured",
     "lan": "pending (needs second host)",
     "public": "pending (needs deployed nodes)"
+  },
+  "profiles": {
+    "supported": [
+      "loopback",
+      "lan",
+      "public"
+    ],
+    "validated": {
+      "loopback": "headed strict PASS; headless strict FAIL on cold"
+    },
+    "lan": "P0_PERF_REMOTE=1 + non-loopback host required",
+    "public": "P0_PERF_REMOTE=1 + public host required; private/loopback rejected"
   }
 }

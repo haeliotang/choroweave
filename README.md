@@ -38,7 +38,7 @@ All claims are evidence-graded (A = primary source, B = third-party test/report,
 |---|---|
 | [`docs/en/00-executive-summary.md`](docs/en/00-executive-summary.md) | Executive summary: judgments, path, roadmap, resourcing, KPIs |
 | [`docs/en/01-landscape.md`](docs/en/01-landscape.md) | Open-source landscape: four layers, five gaps, 2026–2028 window |
-| [`docs/en/02-tech-selection.md`](docs/en/02-tech-selection.md) | 12 ADRs, technical decision matrix, **deviations from the original vision** |
+| [`docs/en/02-tech-selection.md`](docs/en/02-tech-selection.md) | 13 ADRs, technical decision matrix, **deviations from the original vision** |
 | [`docs/en/03-architecture.md`](docs/en/03-architecture.md) | System architecture: compiler pipeline, runtime, node, interfaces |
 | [`docs/en/04-spatial-hyperlink-protocol.md`](docs/en/04-spatial-hyperlink-protocol.md) | SHP v0.1: `world.json`, `CHW_portal`, traversal handshake, trust |
 | [`docs/en/05-roadmap.md`](docs/en/05-roadmap.md) | 24-month roadmap (P0–P4), gates, resourcing, KPI dictionary |

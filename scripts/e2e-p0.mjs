@@ -15,6 +15,7 @@ import { chromium } from "playwright-core";
 import { spawn, execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { request as httpsRequest } from "node:https";
+import { createServer } from "node:net";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -71,7 +72,13 @@ try {
     const trust = JSON.parse(readFileSync(join(TLS, "trust.json"), "utf8"));
     const pins = Object.values(trust.origins).map((o) => o.spkiSha256).join(",");
     // Kill leftovers from previous runs on the fixture ports.
-    try { execFileSync("bash", ["-lc", "lsof -ti:8443,8444 | xargs kill 2>/dev/null || true"]); } catch { /* ignore */ }
+    const portsFree = await Promise.all([8443, 8444].map((port) => new Promise((resolve) => {
+      const s = createServer();
+      s.once("error", () => resolve(false));
+      s.once("listening", () => s.close(() => resolve(true)));
+      s.listen(port, "127.0.0.1");
+    })));
+    if (portsFree.some((free) => !free)) throw new Error("port 8443/8444 in use; stop existing P0 nodes first (this harness never kills unrelated processes)");
     startNode("alice", 8443, ["--client-dist", "apps/playground/dist"]);
     startNode("hana", 8444);
     if (!(await waitNodes())) throw new Error("live nodes failed to start");

@@ -1,7 +1,7 @@
 # P0 实现状态（2026-11-07）
 
 > 范围：**P0-1**（两个世界 + 运行时）、**P0-2**（真实双节点 HTTPS 握手 + 加固）、**P0-3**（统一一致性报告）、**P0-4**（外部复现 runbook；外部执行仍待完成）。
-> **P0 验收（外部复现 + LAN/公网性能证据）尚未达成**，G0 仍未授予，目标日期 **2027-01-25**。工程实现已完成；RC/验收分离见 [`p0-rc.md`](p0-rc.md)。
+> **P0 验收（外部复现 + LAN/公网性能证据）尚未达成**，G0 仍未授予，目标日期 **2027-01-25**。工程实现已完成；RC/验收分离见 [`p0-rc.md`](p0-rc.md)。候选 tag：`p0-rc2`（运行时基线 `95f12d8`，仅工具增量）。
 > English (primary): [`en/p0-status.md`](en/p0-status.md)
 
 ## 已实现
@@ -54,10 +54,10 @@ node scripts/p0-report.mjs                     # 统一 mock/live 报告
 | `node-hardening` | **5/5**（限流、会话配额、room-full、私有、密钥轮换） | live |
 | `e2e-p0 --live` | **15/15**（10 次穿越 + 回滚 + 手势 + room-full + 预算 + 白名单） | live 浏览器 |
 | 统一报告 | PASS | mock + live，分层标注 |
-| 性能（headed，Metal，采样） | 冷启动 p50 **2.82s** / p95 **3.42s**；热切换 p50 **48ms** / p95 **172ms**；重启恢复 PASS | loopback，冷 10 / 热 20 次 |
-| 性能（headless SwiftShader，采样） | 冷启动 p50 **4.26s** / p95 **4.59s**；热切换 p50 **337ms** / p95 **463ms**；重启恢复 PASS | loopback，冷 10 / 热 20 次 |
+| 性能（headed，Metal，采样，strict） | 冷启动 p50 **2.48s** / p95 **3.44s**；热切换 p50 **51ms** / p95 **141ms**；重启恢复 PASS | loopback，冷 10 / 热 20 次 |
+| 性能（headless SwiftShader，采样，strict） | 冷启动 p50 **4.86s** / p95 **5.02s** → **strict FAIL**；热切换 p50 **502ms** / p95 **639ms**；重启恢复 PASS | loopback，冷 10 / 热 20 次 |
 
-冷启动为**每个样本全新浏览器进程**；热切换为同一页面、真实门户 UI。仅 loopback；**LAN/公网档案未测、不作声明**。G0 目标（热 p95 <1.5s、冷 p95 <5s）在 loopback 达标；真实设备与网络档案仍为 G0 必需证据。基线：`fixtures/p0/perf-baseline.json`；工具：`pnpm perf:p0`。
+冷启动为**每个样本全新浏览器进程**；热切换为同一页面、真实门户 UI。**`--strict` 在超预算/重启失败时返回非零**：headed loopback 通过；headless loopback 冷启动 5.02s，strict **失败**。LAN/公网档案**未测**；需 `P0_PERF_REMOTE=1` 与真实非 loopback 部署，脚本会校验（public 拒绝私有/loopback 主机）。基线：`fixtures/p0/perf-baseline.json`；工具：`pnpm perf:p0 --strict`。
 
 ## 覆盖：mock vs live
 

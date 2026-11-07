@@ -2,9 +2,9 @@
 
 > Status: Draft · All data **verified as of 2026-11-07** (GitHub data captured that day via the REST API; everything else from specification text / official pages / authoritative third parties, itemized in §7)
 > Evidence grades: **A** = first-hand specifications, official documentation, repository metadata; **B** = third-party measurement or authoritative media; **C** = engineering judgment (same rubric as [`02-tech-selection.md`](02-tech-selection.md))
-> Companions: [`02-tech-selection.md`](02-tech-selection.md) (ADR-01..12), [`03-architecture.md`](03-architecture.md), [`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md), [`research/`](research/) (four original research reports (English translations; Chinese originals under `../research/`))
+> Companions: [`02-tech-selection.md`](02-tech-selection.md) (ADR-01..13), [`03-architecture.md`](03-architecture.md), [`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md), [`research/`](research/) (four original research reports (English translations; Chinese originals under `../research/`))
 > Chinese version: [`../01-landscape.md`](../01-landscape.md)
-> Discipline: this document provides ecosystem evidence and judgments only. **Technical conclusions follow the 12 ADRs in 02; this document introduces no new decisions**; any divergence in framing is listed explicitly in §8.
+> Discipline: this document provides ecosystem evidence and judgments only. **Technical conclusions follow the 13 ADRs in 02; this document introduces no new decisions**; any divergence in framing is listed explicitly in §8.
 
 ## 0. One-Page Conclusion (Conclusion First, Evidence After)
 
@@ -548,7 +548,7 @@ This layer answers: who is making money, who is dying, and whether demand-side d
 ### 8.1 Self-check results
 
 - **Terminology consistent**: world/space/World Bundle/world manifest/node/portal/traversal/room/node capability/ISS/Spatial-DSL/Chôra Compiler/`weave-check` are used consistently with the established glossary; the term "portal" is used throughout (with the colloquial "teleport gate" noted at its first occurrence).
-- **ADR consistent**: §6 points back to ADR-01..12 one by one, with no new decisions; all "judgments" are marked C and never passed off as facts.
+- **ADR consistent**: §6 points back to ADR-01..13 one by one, with no new decisions; all "judgments" are marked C and never passed off as facts.
 - **Number rubric**: all GitHub data was captured on 2026-11-07; product/market data carry the original statistical scope and time point; unverified items are in §8.3.
 - **Links correct**: all URLs in §7 are taken from the four research source tables; the body cites IDs and introduces no unverified external links. Internal relative links point to 02/03/04/08 in the delivery tree and to `research/`; 03/04/08 are delivered by parallel roles and link reachability must be rechecked during consolidation.
 

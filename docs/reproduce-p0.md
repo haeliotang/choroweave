@@ -34,7 +34,9 @@ node scripts/live-conformance.mjs --json-out .p0-reports/live-node.json
 node scripts/node-hardening.mjs --json-out .p0-reports/live-hardening.json
 P0_LIVE=1 P0_REPORT_OUT=.p0-reports/live-browser.json node scripts/e2e-p0.mjs
 node scripts/p0-report.mjs
-pnpm perf:p0                 # 采样冷/热切换与目标重启恢复（G0 需要）
+pnpm perf:p0 --strict        # 采样冷/热切换与目标重启恢复；超预算返回非零
+# LAN/公网（需真实部署；public 拒绝私有/loopback 主机）：
+# P0_PERF_REMOTE=1 P0_PERF_PROFILE=lan P0_URL=https://... node scripts/perf-p0.mjs --strict
 ```
 
 预期：
@@ -76,7 +78,7 @@ curl --cacert .p0-tls/ca.crt --resolve alice.example:8443:127.0.0.1 \
 
 | 症状 | 处理 |
 |---|---|
-| 8443/8444 `EADDRINUSE` | 之前的节点/测试仍在运行，先停掉 |
+| 8443/8444 `EADDRINUSE` | 先停掉已有 P0 节点；测试工具只检测冲突，不会杀无关进程 |
 | 证书错误 | 重新 `pnpm tls:fixture`，确认 `.p0-tls/` 存在 |
 | `failed to load scene` | 先 `pnpm build`（client dist 缺失） |
 | E2E 找不到 Chrome | 设置 `CHROME_PATH` |

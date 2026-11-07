@@ -4,7 +4,7 @@
 
 > 状态：**v0.1 release candidate（候选冻结，基线 `p0-rc1` / runtime `95f12d8`；外部验证完成后才宣告最终冻结）** · 规范许可证：CC-BY-4.0 · 实现：Apache-2.0
 > 范围：世界描述符（`world.json`）、世界寻址与节点发现、门户扩展 `CHW_portal`、进入握手（Traversal）、信任/签名、预取预算、访客身份与门禁、版本兼容，以及一致性测试清单。
-> 配套：[`02-tech-selection.md`](02-tech-selection.md)（ADR-01…12）、[`03-architecture.md`](03-architecture.md)（运行时与节点落地）、[`research/`](research/)（证据）。
+> 配套：[`02-tech-selection.md`](02-tech-selection.md)（ADR-01…13）、[`03-architecture.md`](03-architecture.md)（运行时与节点落地）、[`research/`](research/)（证据）。
 > 对齐对象：**MSF "Web of Worlds"**（*pages become places, links become portals*）与 **X3D 4.1 WoW Profile** 的 `Anchor`（3D 超链接）与 `Inline`（外部场景）；SHP 只补它们未定义的**握手、信任、预取、回滚**。截至 2026-11 核实：OMI 无 portal 扩展（`OMI_link` 已归档，`OMI_spawn_point` 仍 Stage 1），glTF 无 ratified 的空间链接扩展（A）。
 
 ---

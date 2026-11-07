@@ -1,6 +1,6 @@
 # P0 Release Candidate 与外部验证（2026-11-07）
 
-> **运行时基线：** `95f12d8`（2026-11-07）。**RC tag：** `p0-rc1`（指向验证工具提交；其运行时文件与 `95f12d8` 相同，可用 `git diff 95f12d8..p0-rc1 -- apps packages scripts/serve-node.mjs scripts/tls-fixture.mjs worlds` 核对）。
+> **运行时基线：** `95f12d8`（2026-11-07）。**RC tag：** `p0-rc2`（验证工具：strict 性能门禁、远程档案、安全端口检查；运行时文件与 `95f12d8` 相同；取代 `p0-rc1`）。可用 `git diff 95f12d8..p0-rc2 -- apps packages scripts/serve-node.mjs scripts/tls-fixture.mjs worlds schemas` 核对。
 > **SHP v0.1：** 候选冻结——外部验证完成前**不是最终冻结**。
 > G0：**未授予**。目标日期 **2027-01-25**。
 > English (primary): [`en/p0-rc.md`](en/p0-rc.md)
@@ -25,12 +25,12 @@ P0 现在处于 **Release Candidate / External Validation**，不是功能开发
 | Live 浏览器 E2E | **15/15**（10 穿越 + 回滚 + 手势 + room-full + 预算 + 白名单） | live-browser | `scripts/e2e-p0.mjs` |
 | 统一报告 | PASS，层级分离 | mock + live | `pnpm report:p0` |
 | 覆盖矩阵 | 22 条 × 层级；8 条 mock-only 已披露 | — | `fixtures/p0/coverage.json` |
-| 性能 — headed loopback | 冷 p50 **2.82s** / p95 **3.42s**；热 p50 **48ms** / p95 **172ms** | loopback | `scripts/perf-p0.mjs` |
-| 性能 — headless loopback | 冷 p50 **4.26s** / p95 **4.59s**；热 p50 **337ms** / p95 **463ms** | loopback | `scripts/perf-p0.mjs` |
+| 性能 — headed loopback（strict） | 冷 p50 **2.48s** / p95 **3.44s**；热 p50 **51ms** / p95 **141ms**；strict PASS | loopback | `scripts/perf-p0.mjs --strict` |
+| 性能 — headless loopback（strict） | 冷 p95 **5.02s** → strict FAIL；热 p95 **639ms** | loopback | `scripts/perf-p0.mjs --strict` |
 | 目标重启恢复 | 重启前回滚 + 重启后重试成功 | loopback | `scripts/perf-p0.mjs` |
 | CI | mock + live + 加固 + 浏览器 E2E + 报告 + artifacts | — | GitHub Actions |
 
-性能口径：冷启动**每个样本全新浏览器进程**；热切换同页真实门户 UI。仅 loopback；**LAN/公网档案未测，不作为 G0 证据。**
+性能口径：冷启动**每个样本全新浏览器进程**；热切换同页真实门户 UI。`--strict` 超预算/重启失败返回非零。仅 loopback：headed 通过、headless 冷启动失败。**LAN/公网档案未测**；远程驱动会校验非 loopback/public 主机，不能仅靠标签冒充。
 
 ## 3. 外部验证必须记录
 

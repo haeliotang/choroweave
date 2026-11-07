@@ -34,7 +34,9 @@ node scripts/live-conformance.mjs --json-out .p0-reports/live-node.json
 node scripts/node-hardening.mjs --json-out .p0-reports/live-hardening.json
 P0_LIVE=1 P0_REPORT_OUT=.p0-reports/live-browser.json node scripts/e2e-p0.mjs
 node scripts/p0-report.mjs
-pnpm perf:p0                 # sampled cold/warm + restart recovery (optional but requested for G0)
+pnpm perf:p0 --strict        # sampled cold/warm + restart recovery; exits non-zero on budget failure
+# LAN/public (requires real deployment; public rejects private/loopback hosts):
+# P0_PERF_REMOTE=1 P0_PERF_PROFILE=lan P0_URL=https://... node scripts/perf-p0.mjs --strict
 ```
 
 Expected:
@@ -76,7 +78,7 @@ If a command fails, quote the exact command and output — that is the most usef
 
 | Symptom | Fix |
 |---|---|
-| `EADDRINUSE` on 8443/8444 | `pnpm p0:up` / previous tests still running; stop them |
+| `EADDRINUSE` on 8443/8444 | stop the existing P0 nodes; test tooling detects conflicts and never kills unrelated processes |
 | certificate errors | run `pnpm tls:fixture`, ensure `.p0-tls/` exists; don't reuse an old fixture |
 | `failed to load scene` | run `pnpm build` (client dist missing) |
 | browser E2E can't find Chrome | set `CHROME_PATH=/path/to/chrome` |
