@@ -5,7 +5,7 @@
 >
 > 中文版：[README.zh-CN.md](README.zh-CN.md) · Repository: <https://github.com/haeliotang/choroweave>
 
-> **Status (2026-11): design stage + P0-1/P0-2 hardening.** Runnable now: two hand-built worlds, a Babylon.js 9 playground, **two independent HTTPS SHP nodes** with signed descriptors + pinned trust anchors + one-time `arrive` tokens, rate limiting, session quotas, room-full/private handling and key rotation; mock **44/44** (2×22), live node **12/12**, hardening **5/5**, live browser **15/15** (10 jumps + rollback + gesture + room-full + budget + whitelist), unified report PASS ([details](docs/en/p0-status.md)). **P0 acceptance still requires external reproduction**; runbook: [docs/en/reproduce-p0.md](docs/en/reproduce-p0.md). Contributing: [CONTRIBUTING.md](CONTRIBUTING.md) · Security: [SECURITY.md](SECURITY.md).
+> **Status (2026-11): design stage + P0-1/P0-2 hardening.** Runnable now: two hand-built worlds, a Babylon.js 9 playground, **two independent HTTPS SHP nodes** with signed descriptors + pinned trust anchors + one-time `arrive` tokens, rate limiting, session quotas, room-full/private handling and key rotation; mock **44/44** (2×22), live node **12/12**, hardening **5/5**, live browser **15/15** (10 jumps + rollback + gesture + room-full + budget + whitelist), unified report PASS ([details](docs/en/p0-status.md)). **P0 is now a release candidate** (runtime baseline `95f12d8`, tag `p0-rc1`); external validation + LAN/public performance profiles are still pending. RC/acceptance split: [docs/en/p0-rc.md](docs/en/p0-rc.md) · runbook: [docs/en/reproduce-p0.md](docs/en/reproduce-p0.md). Contributing: [CONTRIBUTING.md](CONTRIBUTING.md) · Security: [SECURITY.md](SECURITY.md).
 
 choroweave is the spatial-computing layer of the **Inceptless** project family. It is *not* another closed metaverse platform: it builds the **compiler, the hyperlink protocol, and the reference implementation** for a web of worlds.
 
@@ -50,6 +50,7 @@ All claims are evidence-graded (A = primary source, B = third-party test/report,
 | [`docs/en/research/`](docs/en/research/) | Four primary research reports (spatial networks / generative 3D / runtime standards / market) |
 | [`schemas/`](schemas/) | JSON Schemas for Spatial-DSL, `world.json`, and the tacitweave ISS contract |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | The flagship example world ("pixel rooftop"), DSL + signed manifest |
+| [`docs/en/p0-rc.md`](docs/en/p0-rc.md) | Release Candidate + G0 acceptance checklist (runtime baseline `95f12d8`) |
 | [`docs/en/reproduce-p0.md`](docs/en/reproduce-p0.md) | External reproduction runbook (P0-4 gate) |
 | [`docs/en/p0-status.md`](docs/en/p0-status.md) | P0-1/P0-2 verification report (mock vs live results, perf, gaps) |
 | [`apps/playground/`](apps/playground/) | Babylon.js P0 viewer: loads `world.json` + `scene/world.glb`, first-person roaming, portal traversal with rollback |

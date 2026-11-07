@@ -1,7 +1,7 @@
 # P0 实现状态（2026-11-07）
 
 > 范围：**P0-1**（两个世界 + 运行时）、**P0-2**（真实双节点 HTTPS 握手 + 加固）、**P0-3**（统一一致性报告）、**P0-4**（外部复现 runbook；外部执行仍待完成）。
-> **P0 验收（外部复现）尚未达成**，G0 仍未授予，目标日期 **2027-01-25**。
+> **P0 验收（外部复现 + LAN/公网性能证据）尚未达成**，G0 仍未授予，目标日期 **2027-01-25**。工程实现已完成；RC/验收分离见 [`p0-rc.md`](p0-rc.md)。
 > English (primary): [`en/p0-status.md`](en/p0-status.md)
 
 ## 已实现
@@ -38,6 +38,13 @@ node scripts/p0-report.mjs                     # 统一 mock/live 报告
 
 完整外部复现步骤：[`reproduce-p0.md`](reproduce-p0.md)。
 
+## 工程完成 vs G0 验收
+
+| 状态 | 含义 |
+|---|---|
+| **工程：完成** | P0-1…P0-4 工具已实现；CI 绿；mock/live 分层套件通过 |
+| **G0 验收：未授予** | 缺外部复现；LAN/公网性能档案未测；冷启动证据仅 loopback |
+
 ## 结果（2026-11-07，本地）
 
 | 套件 | 结果 | 层级 |
@@ -47,10 +54,10 @@ node scripts/p0-report.mjs                     # 统一 mock/live 报告
 | `node-hardening` | **5/5**（限流、会话配额、room-full、私有、密钥轮换） | live |
 | `e2e-p0 --live` | **15/15**（10 次穿越 + 回滚 + 手势 + room-full + 预算 + 白名单） | live 浏览器 |
 | 统一报告 | PASS | mock + live，分层标注 |
-| 性能（headed，Metal） | 冷启动 **2.47s**，热切换 **p50 47ms / p95 167ms** | 参考值 |
-| 性能（headless SwiftShader） | 冷启动 **4.3–6.2s**（运行波动，有时 >5s），热切换 **p50 432ms / p95 542ms** | 参考值 |
+| 性能（headed，Metal，采样） | 冷启动 p50 **2.82s** / p95 **3.42s**；热切换 p50 **48ms** / p95 **172ms**；重启恢复 PASS | loopback，冷 10 / 热 20 次 |
+| 性能（headless SwiftShader，采样） | 冷启动 p50 **4.26s** / p95 **4.59s**；热切换 p50 **337ms** / p95 **463ms**；重启恢复 PASS | loopback，冷 10 / 热 20 次 |
 
-性能为单机基线（`fixtures/p0/perf-baseline.json`）；headed 使用硬件加速，但不等于头显/低端设备。G0 目标：热 p95 <1.5s、冷 <5s。热切换稳定达标；**headless 冷启动接近/超过 5s，不能视为通过**——headed 冷启动 2.47s，仍需真实设备复测。
+冷启动为**每个样本全新浏览器进程**；热切换为同一页面、真实门户 UI。仅 loopback；**LAN/公网档案未测、不作声明**。G0 目标（热 p95 <1.5s、冷 p95 <5s）在 loopback 达标；真实设备与网络档案仍为 G0 必需证据。基线：`fixtures/p0/perf-baseline.json`；工具：`pnpm perf:p0`。
 
 ## 覆盖：mock vs live
 
@@ -72,4 +79,5 @@ node scripts/p0-report.mjs                     # 统一 mock/live 报告
 ## P0-4 剩余
 
 1. 由**未参与开发**的开发者完成外部复现（runbook 已就绪，跟踪 issue [#1](https://github.com/haeliotang/choroweave/issues/1)；执行待完成）。
-2. 然后冻结 SHP v0.1，复核覆盖矩阵并评估 G0。
+2. 在规定的硬件/网络档案上补测 **LAN 与公网性能**；loopback 采样已满足冷/热目标与重启恢复，但不能替代这些档案。
+3. 然后冻结 SHP v0.1，复核覆盖矩阵并评估 G0。

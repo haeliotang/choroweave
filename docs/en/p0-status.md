@@ -1,7 +1,7 @@
 # P0 implementation status (2026-11-07)
 
 > Scope: **P0-1** (two worlds + runtime), **P0-2** (real two-node HTTPS handshake + hardening), **P0-3** (unified conformance report), **P0-4** (external reproduction runbook; external run still pending).
-> P0 acceptance (external reproduction) is **not** met; G0 remains un-granted, target **2027-01-25**.
+> P0 acceptance (external reproduction + LAN/public performance evidence) is **not** met; G0 remains un-granted, target **2027-01-25**. Engineering implementation is complete; see [`p0-rc.md`](p0-rc.md) for the RC/validation split.
 > Chinese: [`../p0-status.md`](../p0-status.md)
 
 ## What is implemented
@@ -38,6 +38,13 @@ node scripts/p0-report.mjs                     # unified mock/live report
 
 Full external runbook: [`reproduce-p0.md`](reproduce-p0.md).
 
+## Engineering vs G0 acceptance
+
+| Status | Meaning |
+|---|---|
+| **Engineering: complete** | P0-1…P0-4 tools implemented; CI green; mock/live layered suites pass |
+| **G0 acceptance: not granted** | missing external reproduction; LAN/public performance profiles not measured; cold-start evidence is loopback only |
+
 ## Results (2026-11-07, local)
 
 | Suite | Result | Layer |
@@ -47,10 +54,10 @@ Full external runbook: [`reproduce-p0.md`](reproduce-p0.md).
 | `node-hardening` | **5/5** (rate limit, session quota, room-full, private, key rotation) | live |
 | `e2e-p0 --live` | **15/15** (10 jumps + rollback + gesture + room-full + budget + whitelist) | live browser |
 | Unified report | PASS | mock + live, separately labelled |
-| Performance (headed, Metal) | cold **2.47 s**, warm **p50 47 ms / p95 167 ms** | indicative |
-| Performance (headless SwiftShader) | cold **4.3–6.2 s** (run variance; sometimes >5 s), warm **p50 432 ms / p95 542 ms** | indicative |
+| Performance (headed, Metal, sampled) | cold p50 **2.82 s** / p95 **3.42 s**; warm p50 **48 ms** / p95 **172 ms**; restart recovery PASS | loopback, N=10 cold / 20 warm |
+| Performance (headless SwiftShader, sampled) | cold p50 **4.26 s** / p95 **4.59 s**; warm p50 **337 ms** / p95 **463 ms**; restart recovery PASS | loopback, N=10 cold / 20 warm |
 
-Performance is a single-machine baseline (`fixtures/p0/perf-baseline.json`); headed uses hardware acceleration but is not a headset/low-end benchmark. G0 targets: warm p95 < 1.5 s, cold p95 < 5 s. Warm is comfortably met; **headless cold start is near/over 5 s and must not be treated as a pass** — headed cold is 2.47 s and real-device measurements are still required.
+Cold sampling uses a **fresh browser process per sample**; warm uses one page and the real portal UI. Loopback only — **LAN and public-network profiles are not measured and are not claimed**. G0 targets (warm p95 < 1.5 s, cold p95 < 5 s) are met on loopback; real-device and network profiles are required for G0. Baseline: `fixtures/p0/perf-baseline.json`; harness: `pnpm perf:p0`.
 
 ## Coverage: mock vs live
 
@@ -72,4 +79,5 @@ Performance is a single-machine baseline (`fixtures/p0/perf-baseline.json`); hea
 ## Remaining P0-4 work
 
 1. **External reproduction** by a developer not involved in the project — runbook ready, tracking issue [#1](https://github.com/haeliotang/choroweave/issues/1); run pending.
-2. Then freeze SHP v0.1, review the coverage matrix, and evaluate G0.
+2. **LAN + public-network performance profiles** on the required hardware/network; loopback samples already pass cold/warm targets and restart recovery but do not substitute for them.
+3. Then freeze SHP v0.1, review the coverage matrix, and evaluate G0.

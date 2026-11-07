@@ -26,12 +26,15 @@ pnpm tls:fixture
 
 ## 3. Automated verification (5–10 min)
 
+> Candidate runtime baseline: `95f12d8` (tag `p0-rc1`). Record the exact commit you test.
+
 ```bash
 pnpm test:p0                 # mock conformance: 44/44 (2 worlds × 22)
 node scripts/live-conformance.mjs --json-out .p0-reports/live-node.json
 node scripts/node-hardening.mjs --json-out .p0-reports/live-hardening.json
 P0_LIVE=1 P0_REPORT_OUT=.p0-reports/live-browser.json node scripts/e2e-p0.mjs
 node scripts/p0-report.mjs
+pnpm perf:p0                 # sampled cold/warm + restart recovery (optional but requested for G0)
 ```
 
 Expected:

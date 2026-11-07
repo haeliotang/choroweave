@@ -30,5 +30,46 @@
     "coldStartP95Ms": 5000,
     "warmTraversalP95Ms": 1500
   },
-  "note": "Indicative single-machine baseline. Headless software GL cold start varies and can exceed 5s; headed uses Metal but is not a headset/low-end benchmark."
+  "note": "Cold start = fresh browser process per sample; warm = same page, real UI traversal. Loopback only; LAN/public not claimed. Perf harness: scripts/perf-p0.mjs.",
+  "sampledHeaded": {
+    "profile": "loopback",
+    "coldSamples": 10,
+    "warmSamples": 20,
+    "cold": {
+      "p50": 2820,
+      "p95": 3419
+    },
+    "warm": {
+      "p50": 48,
+      "p95": 172
+    },
+    "restartRecovery": {
+      "rolledBackBeforeRestart": true,
+      "retriedAfterRestart": true,
+      "retryMs": 50
+    }
+  },
+  "sampledHeadless": {
+    "profile": "loopback",
+    "coldSamples": 10,
+    "warmSamples": 20,
+    "cold": {
+      "p50": 4264,
+      "p95": 4588
+    },
+    "warm": {
+      "p50": 337,
+      "p95": 463
+    },
+    "restartRecovery": {
+      "rolledBackBeforeRestart": true,
+      "retriedAfterRestart": true,
+      "retryMs": 237
+    }
+  },
+  "networkProfiles": {
+    "loopback": "measured",
+    "lan": "pending (needs second host)",
+    "public": "pending (needs deployed nodes)"
+  }
 }

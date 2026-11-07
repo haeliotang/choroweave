@@ -26,12 +26,15 @@ pnpm tls:fixture
 
 ## 3. 自动化验证（5–10 分钟）
 
+> 候选运行时基线：`95f12d8`（tag `p0-rc1`）。请记录实际测试的 commit。
+
 ```bash
 pnpm test:p0                 # mock 一致性：44/44（2 个世界 × 22）
 node scripts/live-conformance.mjs --json-out .p0-reports/live-node.json
 node scripts/node-hardening.mjs --json-out .p0-reports/live-hardening.json
 P0_LIVE=1 P0_REPORT_OUT=.p0-reports/live-browser.json node scripts/e2e-p0.mjs
 node scripts/p0-report.mjs
+pnpm perf:p0                 # 采样冷/热切换与目标重启恢复（G0 需要）
 ```
 
 预期：

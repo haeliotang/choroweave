@@ -18,7 +18,8 @@
     "test:hardening": "node scripts/node-hardening.mjs",
     "report:p0": "node scripts/p0-report.mjs",
     "p0:up": "node scripts/p0-up.mjs",
-    "repro:check": "node scripts/repro-check.mjs"
+    "repro:check": "node scripts/repro-check.mjs",
+    "perf:p0": "node scripts/perf-p0.mjs"
   },
   "devDependencies": {
     "playwright-core": "^1.65.0",
