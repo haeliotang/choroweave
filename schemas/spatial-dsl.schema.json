@@ -1,0 +1,992 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:choroweave:schemas:spatial-dsl:0.1",
+  "title": "choroweave Spatial-DSL v0.1",
+  "description": "Chôra Compiler 的内部中间表示（IR），不是公开标准。公开契约是 World Bundle + world.json（见 world-manifest.schema.json）。LLM 只允许产出本 schema 约束的 JSON；编译器负责其余一切。parts 是一等字段：实体 = 语义部件集合 + 装配约束 + 可交互属性。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "dslVersion",
+    "world",
+    "intent",
+    "space",
+    "entities",
+    "budget",
+    "provenance"
+  ],
+  "properties": {
+    "dslVersion": {
+      "const": "0.1",
+      "description": "DSL 语法版本（major.minor，独立于协议版本演进）。"
+    },
+    "world": {
+      "$ref": "#/$defs/world"
+    },
+    "intent": {
+      "$ref": "#/$defs/intent"
+    },
+    "space": {
+      "$ref": "#/$defs/space"
+    },
+    "entities": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 512,
+      "description": "空间实体列表；每个实体至少一个 part。",
+      "items": {
+        "$ref": "#/$defs/entity"
+      }
+    },
+    "interactions": {
+      "type": "array",
+      "maxItems": 128,
+      "description": "L0 行为图的声明式来源；编译为 KHR_interactivity 图 + CHW 扩展操作。",
+      "items": {
+        "$ref": "#/$defs/interaction"
+      }
+    },
+    "portals": {
+      "type": "array",
+      "maxItems": 32,
+      "description": "门户声明；编译为节点上的 CHW_portal 扩展，并与 CHW_portal 字段一一对应。",
+      "items": {
+        "$ref": "#/$defs/portal"
+      }
+    },
+    "budget": {
+      "$ref": "#/$defs/budget"
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    }
+  },
+  "$defs": {
+    "world": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "license",
+        "style",
+        "seed"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://",
+          "maxLength": 2048,
+          "description": "世界标识：指向 world.json 的 HTTPS 绝对 URL（ADR-05）。"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "license": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9.+-]{2,64}$",
+          "description": "SPDX 风格许可证标识符，示例资产默认 CC0-1.0 / CC-BY-4.0（ADR-12）。"
+        },
+        "style": {
+          "$ref": "#/$defs/style"
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991,
+          "description": "装配确定性种子；同一 DSL + seed + 编译器版本应产出相同 bundle。"
+        },
+        "tags": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 24
+          }
+        }
+      }
+    },
+    "style": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "palette",
+        "pixelated"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "palette": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          }
+        },
+        "pixelated": {
+          "type": "boolean",
+          "description": "像素风：低分辨率贴图 + 最近邻采样 + 限制色板。"
+        }
+      }
+    },
+    "intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prompt",
+        "constraints"
+      ],
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000,
+          "description": "用户显式意图原文（用于审计与回归评测，不参与确定性装配）。"
+        },
+        "iss": {
+          "$ref": "urn:choroweave:schemas:implicit-spatial-spec:0.1",
+          "description": "可选：tacitweave 输出的 ISS 快照（可选字段，示例中给出）。"
+        },
+        "constraints": {
+          "$ref": "#/$defs/constraints"
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maxTriangles",
+        "maxDrawCalls",
+        "maxTextureMB",
+        "rating"
+      ],
+      "properties": {
+        "maxTriangles": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 5000000
+        },
+        "maxDrawCalls": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 2000
+        },
+        "maxTextureMB": {
+          "type": "number",
+          "minimum": 8,
+          "maximum": 2048
+        },
+        "maxFirstByteKB": {
+          "type": "integer",
+          "minimum": 256,
+          "maximum": 15360
+        },
+        "rating": {
+          "enum": [
+            "general",
+            "teen",
+            "mature"
+          ]
+        },
+        "accessibility": {
+          "type": "array",
+          "maxItems": 6,
+          "items": {
+            "enum": [
+              "seated",
+              "reducedMotion",
+              "highContrast",
+              "colorBlind",
+              "lowVision"
+            ]
+          }
+        }
+      }
+    },
+    "space": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "dimensions",
+        "environment"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "rooftop",
+            "room",
+            "gallery",
+            "courtyard",
+            "street",
+            "studio"
+          ]
+        },
+        "dimensions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "width",
+            "depth",
+            "height"
+          ],
+          "properties": {
+            "width": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 500
+            },
+            "depth": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 500
+            },
+            "height": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 200
+            }
+          }
+        },
+        "environment": {
+          "$ref": "#/$defs/environment"
+        }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "timeOfDay",
+        "weather",
+        "ambientLight",
+        "mood"
+      ],
+      "properties": {
+        "timeOfDay": {
+          "enum": [
+            "dawn",
+            "day",
+            "dusk",
+            "night"
+          ]
+        },
+        "weather": {
+          "enum": [
+            "clear",
+            "overcast",
+            "rain",
+            "snow"
+          ]
+        },
+        "ambientLight": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "color",
+            "intensity"
+          ],
+          "properties": {
+            "color": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$"
+            },
+            "intensity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10
+            }
+          }
+        },
+        "mood": {
+          "enum": [
+            "calm",
+            "lively",
+            "melancholic",
+            "playful"
+          ]
+        },
+        "audio": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "track",
+            "loop"
+          ],
+          "properties": {
+            "track": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "loop": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "parts",
+        "transform"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{1,63}$",
+          "description": "世界内唯一实体 ID；编译为 glTF 节点名并保持稳定。"
+        },
+        "kind": {
+          "enum": [
+            "structure",
+            "furniture",
+            "prop",
+            "portal",
+            "light",
+            "audio",
+            "trigger",
+            "spawn"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "kit": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{2,48}/[a-z][a-z0-9_.-]{1,48}$",
+          "description": "模块化套件 ID（骨架优先：墙体/门窗/家具优先用精确尺寸的 kit）。"
+        },
+        "parts": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": {
+            "$ref": "#/$defs/part"
+          }
+        },
+        "transform": {
+          "$ref": "#/$defs/transform"
+        },
+        "placement": {
+          "$ref": "#/$defs/placement"
+        },
+        "interaction": {
+          "$ref": "#/$defs/entityInteraction"
+        },
+        "portalId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{1,63}$",
+          "description": "kind=portal 时引用 portals[].id；跨字段一致性由 weave-check 校验。"
+        }
+      }
+    },
+    "transform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "position",
+        "rotationY"
+      ],
+      "properties": {
+        "position": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "number",
+            "minimum": -10000,
+            "maximum": 10000
+          },
+          "description": "世界坐标（米，Y-up，右手系）。"
+        },
+        "rotationY": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        "scale": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "number",
+            "minimum": 0.01,
+            "maximum": 100
+          }
+        }
+      }
+    },
+    "placement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "anchor"
+      ],
+      "properties": {
+        "anchor": {
+          "enum": [
+            "floor",
+            "wall",
+            "ceiling",
+            "free"
+          ]
+        },
+        "snapToGrid": {
+          "type": "boolean"
+        }
+      }
+    },
+    "part": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "role",
+        "primitive"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{0,47}$"
+        },
+        "role": {
+          "enum": [
+            "surface",
+            "support",
+            "seat",
+            "backrest",
+            "door",
+            "window",
+            "glass",
+            "frame",
+            "decor",
+            "emitter",
+            "striplight",
+            "collider"
+          ]
+        },
+        "primitive": {
+          "enum": [
+            "box",
+            "cylinder",
+            "plane",
+            "sphere",
+            "generated",
+            "imported"
+          ]
+        },
+        "size": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "number",
+            "minimum": 0.001,
+            "maximum": 500
+          },
+          "description": "宽/高/深（米）；generated/imported 时为目标包围盒。"
+        },
+        "offset": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "number",
+            "minimum": -500,
+            "maximum": 500
+          },
+          "description": "相对实体原点的偏移（米）。"
+        },
+        "material": {
+          "$ref": "#/$defs/material"
+        },
+        "collider": {
+          "enum": [
+            "box",
+            "convex",
+            "mesh",
+            "none"
+          ]
+        },
+        "generation": {
+          "$ref": "#/$defs/generation"
+        }
+      }
+    },
+    "material": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "baseColor",
+        "roughness"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 48
+        },
+        "baseColor": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "roughness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "metallic": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "emissive": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        }
+      }
+    },
+    "generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider"
+      ],
+      "properties": {
+        "provider": {
+          "enum": [
+            "kit",
+            "trellis2",
+            "pixal3d",
+            "hunyuan3d"
+          ]
+        },
+        "prompt": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "resolution": {
+          "enum": [
+            512,
+            1024
+          ]
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "entityInteraction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "level",
+        "graph"
+      ],
+      "properties": {
+        "level": {
+          "enum": [
+            "L0",
+            "L1",
+            "L2"
+          ]
+        },
+        "graph": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{1,63}$"
+        },
+        "event": {
+          "type": "string",
+          "pattern": "^on[A-Z][A-Za-z]+$"
+        }
+      }
+    },
+    "interaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "entity",
+        "trigger",
+        "actions"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{1,63}$"
+        },
+        "entity": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{1,63}$"
+        },
+        "trigger": {
+          "$ref": "#/$defs/trigger"
+        },
+        "actions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "items": {
+            "$ref": "#/$defs/action"
+          }
+        }
+      }
+    },
+    "trigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "select",
+            "proximity",
+            "enter",
+            "timer",
+            "custom"
+          ]
+        },
+        "distanceM": {
+          "type": "number",
+          "minimum": 0.2,
+          "maximum": 50
+        },
+        "delayS": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 3600
+        }
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "target"
+      ],
+      "properties": {
+        "op": {
+          "enum": [
+            "playAudio",
+            "stopAudio",
+            "setVisibility",
+            "setMaterial",
+            "toggleLight",
+            "emitEvent",
+            "openPortal"
+          ]
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "string",
+              "maxLength": 256
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            }
+          ]
+        },
+        "durationS": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 3600
+        }
+      }
+    },
+    "portal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "entity",
+        "target",
+        "anchor",
+        "handoff",
+        "policy",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{1,63}$"
+        },
+        "entity": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{1,63}$",
+          "description": "承载 CHW_portal 的实体（其 transform 决定门户位置与朝向）。"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "target": {
+          "$ref": "#/$defs/portalTarget"
+        },
+        "anchor": {
+          "$ref": "#/$defs/portalAnchor"
+        },
+        "handoff": {
+          "enum": [
+            "same-instance",
+            "cross-instance",
+            "new-session"
+          ]
+        },
+        "policy": {
+          "$ref": "#/$defs/portalPolicy"
+        },
+        "version": {
+          "const": "0.1"
+        }
+      }
+    },
+    "portalTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "url"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://",
+          "maxLength": 2048,
+          "description": "目标世界的 world.json HTTPS URL（SHP 世界标识）。"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "可选：目标 bundle 内容摘要，用于内容寻址与降级预览。"
+        }
+      }
+    },
+    "portalAnchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "spawnNode",
+        "position"
+      ],
+      "properties": {
+        "spawnNode": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{0,63}$",
+          "description": "目标世界 spawn 节点名（映射 OMI_spawn_point 节点名）。"
+        },
+        "position": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "number",
+            "minimum": -10000,
+            "maximum": 10000
+          }
+        },
+        "rotationY": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        }
+      }
+    },
+    "portalPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "confirm",
+        "carry",
+        "allowGuests",
+        "prefetch"
+      ],
+      "properties": {
+        "confirm": {
+          "enum": [
+            "always",
+            "once",
+            "never"
+          ]
+        },
+        "carry": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "enum": [
+              "avatar",
+              "inventory",
+              "sessionState"
+            ]
+          }
+        },
+        "allowGuests": {
+          "type": "boolean"
+        },
+        "prefetch": {
+          "enum": [
+            "none",
+            "gaze",
+            "proximity",
+            "eager"
+          ]
+        },
+        "maxPrefetchBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 134217728
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "triangles",
+        "drawCalls",
+        "textureMB",
+        "firstByteKB",
+        "maxPlayers"
+      ],
+      "properties": {
+        "triangles": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 5000000
+        },
+        "drawCalls": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 2000
+        },
+        "textureMB": {
+          "type": "number",
+          "minimum": 8,
+          "maximum": 2048
+        },
+        "firstByteKB": {
+          "type": "integer",
+          "minimum": 256,
+          "maximum": 15360
+        },
+        "maxPlayers": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compiler",
+        "version",
+        "generatedAt",
+        "seed",
+        "pipeline",
+        "inputHash"
+      ],
+      "properties": {
+        "compiler": {
+          "const": "chora-compiler"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "pipeline": {
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "items": {
+            "enum": [
+              "intake",
+              "plan",
+              "normalize",
+              "layout",
+              "assemble",
+              "generate",
+              "derive",
+              "verify",
+              "emit"
+            ]
+          },
+          "description": "九阶段管线标识，顺序即执行顺序（见 docs/03 §3）。"
+        },
+        "inputHash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "意图信封（prompt + ISS + 约束 + 编译器版本 + seed）的 SHA-256。"
+        },
+        "model": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "provider",
+            "name"
+          ],
+          "properties": {
+            "provider": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 48
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 96
+            },
+            "promptHash": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "description": "可选：规划用 LLM 的模型身份与提示词哈希（审计用）。"
+        }
+      }
+    }
+  }
+}

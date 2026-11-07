@@ -1,0 +1,733 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:choroweave:schemas:world-manifest:0.1",
+  "title": "choroweave World Manifest (world.json) v0.1",
+  "description": "SHP 世界描述符。世界标识 = 指向本文件的 HTTPS URL（ADR-05）。本文件是 World Bundle 的入口清单：入口场景、出生点、资产摘要、能力声明、门户、性能预算、内容分级与可选签名。纯静态 HTTPS 托管即可工作；房间服务为可选增强。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "title",
+    "author",
+    "license",
+    "createdAt",
+    "protocol",
+    "entry",
+    "spawn",
+    "assets",
+    "capabilities",
+    "perf",
+    "moderation"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "0.1",
+      "description": "world.json 结构版本（minor 递增只允许附加字段）。"
+    },
+    "id": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://",
+      "maxLength": 2048,
+      "description": "规范世界标识：托管后的 world.json 绝对 URL（SHOULD 与实际分发 URL 一致）。"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "author": {
+      "$ref": "#/$defs/author"
+    },
+    "license": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9.+-]{2,64}$",
+      "description": "SPDX 标识符；示例世界默认 CC0-1.0 或 CC-BY-4.0（ADR-12）。"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version"
+      ],
+      "properties": {
+        "name": {
+          "const": "SHP"
+        },
+        "version": {
+          "const": "0.1"
+        }
+      },
+      "description": "本世界发布的 SHP 版本；读者按 minor 向前兼容处理。"
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scene",
+        "format"
+      ],
+      "properties": {
+        "scene": {
+          "type": "string",
+          "pattern": "^scene/[A-Za-z0-9._/-]+\\.glb$",
+          "description": "入口场景：bundle 内相对路径的 glTF 2.0 二进制。"
+        },
+        "format": {
+          "const": "gltf-2.0"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "可选：入口场景文件摘要；仅在 bundle 实际构建完成后存在。"
+        },
+        "interactivity": {
+          "const": "KHR_interactivity",
+          "description": "对象行为标准层（L0）；未知扩展操作退化为 no-op（ADR-03）。"
+        }
+      }
+    },
+    "spawn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node",
+        "position"
+      ],
+      "properties": {
+        "node": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{0,63}$",
+          "description": "出生点节点名，映射 OMI_spawn_point（Stage 1）语义；无该扩展时用 position。"
+        },
+        "position": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "number",
+            "minimum": -10000,
+            "maximum": 10000
+          }
+        },
+        "rotationY": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "maxItems": 1024,
+      "description": "外部资产清单；每个资产以 SHA-256 内容寻址。",
+      "items": {
+        "$ref": "#/$defs/asset"
+      }
+    },
+    "capabilities": {
+      "$ref": "#/$defs/capabilities"
+    },
+    "portals": {
+      "type": "array",
+      "maxItems": 32,
+      "description": "本世界内的门户；与场景内 CHW_portal 扩展一一对应，供静态读取、预取与 weave-check 使用。",
+      "items": {
+        "$ref": "#/$defs/portal"
+      }
+    },
+    "perf": {
+      "$ref": "#/$defs/perf"
+    },
+    "moderation": {
+      "$ref": "#/$defs/moderation"
+    },
+    "bundleDigest": {
+      "$ref": "#/$defs/digest"
+    },
+    "signature": {
+      "$ref": "#/$defs/signature",
+      "description": "可选：作者 ed25519 签名（对 JCS 规范化后的本文件、排除 signature 字段）。缺省 = 未验证世界，仅允许最低风险能力（见 docs/04 §8）。"
+    }
+  },
+  "$defs": {
+    "author": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://",
+          "maxLength": 2048
+        },
+        "did": {
+          "type": "string",
+          "pattern": "^did:web:[A-Za-z0-9._-]+$",
+          "description": "可选：可移植身份（ADR-08）。"
+        },
+        "jwk": {
+          "$ref": "#/$defs/jwk"
+        }
+      }
+    },
+    "jwk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kty",
+        "crv",
+        "x"
+      ],
+      "properties": {
+        "kty": {
+          "const": "OKP"
+        },
+        "crv": {
+          "const": "Ed25519"
+        },
+        "x": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{43}$"
+        }
+      },
+      "description": "ed25519 公钥（JWK，base64url 的 32 字节 raw key）。"
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "path",
+        "sha256",
+        "bytes",
+        "mime"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{1,63}$"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^assets/[A-Za-z0-9._/-]+$",
+          "maxLength": 512,
+          "description": "bundle 内相对路径，建议 assets/<sha256>.<ext>。"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741824
+        },
+        "mime": {
+          "enum": [
+            "model/gltf-binary",
+            "image/ktx2",
+            "image/webp",
+            "image/png",
+            "audio/ogg",
+            "audio/mpeg",
+            "application/wasm"
+          ]
+        },
+        "license": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9.+-]{2,64}$"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "model"
+      ],
+      "properties": {
+        "provider": {
+          "enum": [
+            "kit",
+            "trellis2",
+            "pixal3d",
+            "hunyuan3d",
+            "authored"
+          ]
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 48
+        },
+        "params": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean"
+            ]
+          }
+        }
+      },
+      "description": "生成资产的可追溯信息（ADR-12 要求 provenance 随 bundle 发布）。"
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "interactivity",
+        "extensions",
+        "maxPlayers",
+        "audio",
+        "avatar",
+        "sync"
+      ],
+      "properties": {
+        "interactivity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "extension"
+          ],
+          "properties": {
+            "extension": {
+              "const": "KHR_interactivity"
+            }
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "enum": [
+              "CHW_portal",
+              "CHW_collider",
+              "CHW_logic",
+              "CHW_avatar"
+            ]
+          },
+          "description": "本 bundle 使用的 CHW_* 厂商扩展；未知扩展的读者必须忽略而非报错。"
+        },
+        "maxPlayers": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "audio": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "spatial",
+            "music"
+          ],
+          "properties": {
+            "spatial": {
+              "type": "boolean"
+            },
+            "music": {
+              "type": "boolean"
+            }
+          }
+        },
+        "avatar": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "format",
+            "required"
+          ],
+          "properties": {
+            "format": {
+              "enum": [
+                "gltf",
+                "vrm"
+              ]
+            },
+            "required": {
+              "type": "boolean"
+            }
+          }
+        },
+        "sync": {
+          "$ref": "#/$defs/sync"
+        }
+      }
+    },
+    "sync": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rateHz",
+        "whitelist"
+      ],
+      "properties": {
+        "rateHz": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "whitelist": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "type": "string",
+            "pattern": "^/(nodes/\\{[A-Za-z_][A-Za-z0-9_]*\\}/[A-Za-z0-9_]+|extensions/CHW_logic/props/[A-Za-z_][A-Za-z0-9_]*)(/[A-Za-z0-9_]+)*$"
+          },
+          "description": "可同步属性白名单：命名化的 glTF Object Model JSON Pointer（{name} 在加载时解析为节点索引；线上增量使用解析后的 /nodes/N/... 指针）。"
+        }
+      }
+    },
+    "portal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "entity",
+        "target",
+        "anchor",
+        "handoff",
+        "policy",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{1,63}$"
+        },
+        "entity": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{1,63}$",
+          "description": "场景内承载 CHW_portal 的节点名。"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "target": {
+          "$ref": "#/$defs/portalTarget"
+        },
+        "anchor": {
+          "$ref": "#/$defs/portalAnchor"
+        },
+        "handoff": {
+          "enum": [
+            "same-instance",
+            "cross-instance",
+            "new-session"
+          ]
+        },
+        "policy": {
+          "$ref": "#/$defs/portalPolicy"
+        },
+        "version": {
+          "const": "0.1"
+        },
+        "preview": {
+          "$ref": "#/$defs/preview"
+        }
+      }
+    },
+    "portalTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "url"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://",
+          "maxLength": 2048
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "portalAnchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "spawnNode",
+        "position"
+      ],
+      "properties": {
+        "spawnNode": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{0,63}$"
+        },
+        "position": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "number",
+            "minimum": -10000,
+            "maximum": 10000
+          }
+        },
+        "rotationY": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        }
+      }
+    },
+    "portalPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "confirm",
+        "carry",
+        "allowGuests",
+        "prefetch"
+      ],
+      "properties": {
+        "confirm": {
+          "enum": [
+            "always",
+            "once",
+            "never"
+          ]
+        },
+        "carry": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "enum": [
+              "avatar",
+              "inventory",
+              "sessionState"
+            ]
+          }
+        },
+        "allowGuests": {
+          "type": "boolean"
+        },
+        "prefetch": {
+          "enum": [
+            "none",
+            "gaze",
+            "proximity",
+            "eager"
+          ]
+        },
+        "maxPrefetchBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 134217728
+        }
+      }
+    },
+    "preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "image",
+        "sha256"
+      ],
+      "properties": {
+        "image": {
+          "type": "string",
+          "pattern": "^preview/[A-Za-z0-9._/-]+\\.(webp|png|jpg)$",
+          "maxLength": 512
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "description": "可选：门户卡片预览图（≤256 KiB，建议 512×288）。"
+    },
+    "perf": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "budget"
+      ],
+      "properties": {
+        "budget": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "triangles",
+            "drawCalls",
+            "textureMB",
+            "firstByteKB"
+          ],
+          "properties": {
+            "triangles": {
+              "type": "integer",
+              "minimum": 1000,
+              "maximum": 5000000
+            },
+            "drawCalls": {
+              "type": "integer",
+              "minimum": 8,
+              "maximum": 2000
+            },
+            "textureMB": {
+              "type": "number",
+              "minimum": 8,
+              "maximum": 2048
+            },
+            "firstByteKB": {
+              "type": "integer",
+              "minimum": 256,
+              "maximum": 15360
+            }
+          }
+        },
+        "measured": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "device",
+            "fps"
+          ],
+          "properties": {
+            "device": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 96
+            },
+            "fps": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 144
+            },
+            "triangles": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "drawCalls": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "description": "可选：实机标定值（不得用未核实数字填充）。"
+        }
+      }
+    },
+    "moderation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rating",
+        "allowGuests"
+      ],
+      "properties": {
+        "rating": {
+          "enum": [
+            "general",
+            "teen",
+            "mature"
+          ]
+        },
+        "allowGuests": {
+          "type": "boolean"
+        },
+        "policyUrl": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://",
+          "maxLength": 2048
+        },
+        "reportUrl": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://",
+          "maxLength": 2048
+        }
+      }
+    },
+    "digest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "alg",
+        "value"
+      ],
+      "properties": {
+        "alg": {
+          "const": "sha256"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "description": "bundle 内容摘要：对 bundle 内所有文件按 `sha256  <相对路径>\\n` 排序拼接后再取 SHA-256（见 docs/03 §4.3）。"
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "alg",
+        "keyId",
+        "value"
+      ],
+      "properties": {
+        "alg": {
+          "const": "ed25519"
+        },
+        "keyId": {
+          "type": "string",
+          "pattern": "^(did:web:[A-Za-z0-9._-]+|https://)",
+          "maxLength": 2048,
+          "description": "签名密钥标识：did:web 或作者 HTTPS URL；公钥见 author.jwk 或 DID 文档。"
+        },
+        "canonicalization": {
+          "const": "RFC8785-JCS"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{80,96}$"
+        },
+        "signedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

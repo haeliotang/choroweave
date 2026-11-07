@@ -1,0 +1,152 @@
+{
+  "schemaVersion": "0.1",
+  "id": "https://alice.example/worlds/pixel-rooftop/world.json",
+  "title": "像素天台 · Pixel Rooftop",
+  "description": "黄昏的日式公寓天台：低桌、红色坐垫凳、一台会放 Lo-Fi 的老收音机；北墙上一扇发光的门通往「夜行小巷」。P1 旗舰示例世界。",
+  "author": {
+    "name": "Alice",
+    "url": "https://alice.example",
+    "did": "did:web:alice.example",
+    "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "lYR2XltyhzAAVCeCCkWsbGLG7G5PIaEQCu80z78DZ60"
+    }
+  },
+  "license": "CC-BY-4.0",
+  "createdAt": "2026-11-07T09:31:00Z",
+  "updatedAt": "2026-11-07T09:31:00Z",
+  "protocol": {
+    "name": "SHP",
+    "version": "0.1"
+  },
+  "entry": {
+    "scene": "scene/world.glb",
+    "format": "gltf-2.0",
+    "interactivity": "KHR_interactivity"
+  },
+  "spawn": {
+    "node": "spawn_default",
+    "position": [
+      0,
+      0,
+      3.6
+    ],
+    "rotationY": 180
+  },
+  "assets": [
+    {
+      "id": "prop_radio",
+      "path": "assets/prop_radio.glb",
+      "sha256": "3527492b1be9fd6f897c8731d913c312458998379a896ad7ca1da9579ed9f6d5",
+      "bytes": 186000,
+      "mime": "model/gltf-binary",
+      "license": "CC0-1.0",
+      "provenance": {
+        "provider": "trellis2",
+        "model": "microsoft/TRELLIS.2",
+        "version": "2.0",
+        "params": {
+          "resolution": 512,
+          "prompt": "retro cassette radio, chunky pixel-art proportions, warm bakelite shell"
+        }
+      }
+    },
+    {
+      "id": "audio_lofi",
+      "path": "assets/lofi_loop.ogg",
+      "sha256": "bd70e44eac8733924bb8a9c722347455c8ecf05ec18f422e272e97c5bb16ec11",
+      "bytes": 412000,
+      "mime": "audio/ogg",
+      "license": "CC0-1.0",
+      "provenance": {
+        "provider": "authored",
+        "model": "choroweave-example-lofi",
+        "version": "0.1.0"
+      }
+    }
+  ],
+  "capabilities": {
+    "interactivity": {
+      "extension": "KHR_interactivity"
+    },
+    "extensions": [
+      "CHW_portal",
+      "CHW_collider",
+      "CHW_logic"
+    ],
+    "maxPlayers": 20,
+    "audio": {
+      "spatial": true,
+      "music": true
+    },
+    "avatar": {
+      "format": "gltf",
+      "required": false
+    },
+    "sync": {
+      "rateHz": 15,
+      "whitelist": [
+        "/nodes/{radio}/translation",
+        "/nodes/{radio}/rotation",
+        "/nodes/{string_lights}/translation",
+        "/extensions/CHW_logic/props/lightsOn"
+      ]
+    }
+  },
+  "portals": [
+    {
+      "id": "door_to_neon_alley",
+      "entity": "neon_door",
+      "title": "夜行小巷",
+      "target": {
+        "url": "https://hana.example/worlds/neon-alley/world.json"
+      },
+      "anchor": {
+        "spawnNode": "spawn_default",
+        "position": [
+          0,
+          0,
+          2
+        ],
+        "rotationY": 180
+      },
+      "handoff": "cross-instance",
+      "policy": {
+        "confirm": "once",
+        "carry": [
+          "avatar"
+        ],
+        "allowGuests": true,
+        "prefetch": "gaze",
+        "maxPrefetchBytes": 8388608
+      },
+      "version": "0.1",
+      "preview": {
+        "image": "preview/portal-neon-alley.webp",
+        "sha256": "9a2ffe1c97f180c78dd8956973d301789ecbaa654586df589d770a8d5db9c91a"
+      }
+    }
+  ],
+  "perf": {
+    "budget": {
+      "triangles": 180000,
+      "drawCalls": 60,
+      "textureMB": 240,
+      "firstByteKB": 6200
+    }
+  },
+  "moderation": {
+    "rating": "general",
+    "allowGuests": true,
+    "policyUrl": "https://alice.example/policies/rooftop",
+    "reportUrl": "https://alice.example/report"
+  },
+  "signature": {
+    "alg": "ed25519",
+    "keyId": "did:web:alice.example",
+    "canonicalization": "RFC8785-JCS",
+    "value": "lHCBdlwa75yQ4tKPk8WbX97QcGgXI_qeKLEgp8h5B45EfnMRfg1V6WKeyeDWDx2Mu7QKEt0CjZnZGLiTbuuVDA",
+    "signedAt": "2026-11-07T09:31:05Z"
+  }
+}

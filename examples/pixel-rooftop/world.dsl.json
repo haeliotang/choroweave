@@ -1,0 +1,1211 @@
+{
+  "dslVersion": "0.1",
+  "world": {
+    "id": "https://alice.example/worlds/pixel-rooftop/world.json",
+    "title": "像素天台 · Pixel Rooftop",
+    "license": "CC-BY-4.0",
+    "style": {
+      "name": "pixel-japanese-rooftop",
+      "palette": [
+        "#1b1f2a",
+        "#3a4257",
+        "#6b6f7a",
+        "#c9774a",
+        "#ffd9a0",
+        "#f05d5e",
+        "#5ad1c8"
+      ],
+      "pixelated": true
+    },
+    "seed": 20261107,
+    "tags": [
+      "pixel-art",
+      "rooftop",
+      "lofi",
+      "night",
+      "portal-demo"
+    ]
+  },
+  "intent": {
+    "prompt": "做一个像素风格的日式天台：黄昏，混凝土天台边缘有矮墙，一张低桌和两把红色坐垫凳，桌上放一台老式收音机，点击播放 Lo-Fi；墙上挂着一扇会发光的门，推门进入另一个世界。",
+    "iss": {
+      "schemaVersion": "0.1",
+      "specId": "6f1c2a4e-9b3d-4a7c-8e21-2f5d0c9a7b11",
+      "subject": {
+        "type": "user",
+        "id": "did:web:alice.example"
+      },
+      "source": {
+        "producer": "tacitweave",
+        "version": "0.3.1",
+        "model": "tacitweave-pref-v2",
+        "observedFrom": "2026-09-01T00:00:00Z",
+        "observedTo": "2026-11-06T23:59:59Z"
+      },
+      "confidence": 0.72,
+      "preferences": [
+        {
+          "key": "lighting",
+          "value": "warm-dim",
+          "confidence": 0.81,
+          "evidence": "observed",
+          "samples": 143,
+          "updatedAt": "2026-11-06T21:10:00Z"
+        },
+        {
+          "key": "acoustic",
+          "value": [
+            "lofi",
+            "city-ambience"
+          ],
+          "confidence": 0.74,
+          "evidence": "observed",
+          "samples": 96,
+          "updatedAt": "2026-11-05T18:40:00Z"
+        },
+        {
+          "key": "socialDensity",
+          "value": "low",
+          "confidence": 0.58,
+          "evidence": "inferred",
+          "samples": 12,
+          "updatedAt": "2026-10-28T09:02:00Z"
+        }
+      ],
+      "constraints": {
+        "accessibility": [
+          "colorBlind"
+        ],
+        "budgetUSD": 4,
+        "platform": [
+          "desktop",
+          "xr"
+        ],
+        "ratingMax": "general"
+      },
+      "avoid": [
+        {
+          "key": "lighting",
+          "strength": 0.9,
+          "note": "避免冷白荧光顶光"
+        }
+      ],
+      "privacy": {
+        "disclosure": "pseudonymous",
+        "shareWithNode": false
+      },
+      "expiresAt": "2026-12-31T00:00:00Z",
+      "integrity": {
+        "alg": "sha256",
+        "value": "6141789f0df1d1fc2a9f4e8a206cd2e70e4df615ca11a638e6bc02ac1c0af5d8"
+      }
+    },
+    "constraints": {
+      "maxTriangles": 180000,
+      "maxDrawCalls": 60,
+      "maxTextureMB": 240,
+      "maxFirstByteKB": 6200,
+      "rating": "general",
+      "accessibility": [
+        "colorBlind"
+      ]
+    }
+  },
+  "space": {
+    "kind": "rooftop",
+    "dimensions": {
+      "width": 12,
+      "depth": 9,
+      "height": 3.2
+    },
+    "environment": {
+      "timeOfDay": "dusk",
+      "weather": "clear",
+      "ambientLight": {
+        "color": "#8899bb",
+        "intensity": 0.55
+      },
+      "mood": "calm",
+      "audio": {
+        "track": "audio/city_hum.ogg",
+        "loop": true
+      }
+    }
+  },
+  "entities": [
+    {
+      "id": "roof_floor",
+      "kind": "structure",
+      "label": "天台地面",
+      "kit": "choroweave.kit/roof_slab",
+      "parts": [
+        {
+          "name": "slab",
+          "role": "surface",
+          "primitive": "box",
+          "size": [
+            12,
+            0.3,
+            9
+          ],
+          "offset": [
+            0,
+            -0.15,
+            0
+          ],
+          "material": {
+            "name": "concrete_tile",
+            "baseColor": "#6b6f7a",
+            "roughness": 0.92
+          },
+          "collider": "box"
+        },
+        {
+          "name": "tile_grid",
+          "role": "decor",
+          "primitive": "plane",
+          "size": [
+            11.6,
+            0.02,
+            8.6
+          ],
+          "offset": [
+            0,
+            0.002,
+            0
+          ],
+          "material": {
+            "name": "tile_grid",
+            "baseColor": "#565a64",
+            "roughness": 0.95
+          },
+          "collider": "none"
+        }
+      ],
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationY": 0
+      },
+      "placement": {
+        "anchor": "floor",
+        "snapToGrid": true
+      }
+    },
+    {
+      "id": "parapet_west",
+      "kind": "structure",
+      "label": "西侧矮墙",
+      "kit": "choroweave.kit/parapet",
+      "parts": [
+        {
+          "name": "wall",
+          "role": "surface",
+          "primitive": "box",
+          "size": [
+            0.25,
+            1.1,
+            9
+          ],
+          "offset": [
+            0,
+            0.55,
+            0
+          ],
+          "material": {
+            "name": "concrete_wall",
+            "baseColor": "#7a7f8c",
+            "roughness": 0.9
+          },
+          "collider": "box"
+        },
+        {
+          "name": "cap",
+          "role": "frame",
+          "primitive": "box",
+          "size": [
+            0.32,
+            0.06,
+            9
+          ],
+          "offset": [
+            0,
+            1.13,
+            0
+          ],
+          "material": {
+            "name": "concrete_cap",
+            "baseColor": "#9aa0ad",
+            "roughness": 0.85
+          },
+          "collider": "none"
+        }
+      ],
+      "transform": {
+        "position": [
+          -5.875,
+          0,
+          0
+        ],
+        "rotationY": 0
+      },
+      "placement": {
+        "anchor": "floor",
+        "snapToGrid": true
+      }
+    },
+    {
+      "id": "parapet_north",
+      "kind": "structure",
+      "label": "北侧矮墙",
+      "kit": "choroweave.kit/parapet",
+      "parts": [
+        {
+          "name": "wall",
+          "role": "surface",
+          "primitive": "box",
+          "size": [
+            12,
+            1.1,
+            0.25
+          ],
+          "offset": [
+            0,
+            0.55,
+            0
+          ],
+          "material": {
+            "name": "concrete_wall",
+            "baseColor": "#7a7f8c",
+            "roughness": 0.9
+          },
+          "collider": "box"
+        }
+      ],
+      "transform": {
+        "position": [
+          0,
+          0,
+          -4.375
+        ],
+        "rotationY": 0
+      },
+      "placement": {
+        "anchor": "floor",
+        "snapToGrid": true
+      }
+    },
+    {
+      "id": "water_tank",
+      "kind": "prop",
+      "label": "不锈钢水箱",
+      "parts": [
+        {
+          "name": "tank_body",
+          "role": "surface",
+          "primitive": "cylinder",
+          "size": [
+            1.6,
+            1.8,
+            1.6
+          ],
+          "offset": [
+            0,
+            0.9,
+            0
+          ],
+          "material": {
+            "name": "brushed_steel",
+            "baseColor": "#aeb6c2",
+            "roughness": 0.35,
+            "metallic": 0.8
+          },
+          "collider": "convex"
+        },
+        {
+          "name": "tank_cap",
+          "role": "decor",
+          "primitive": "cylinder",
+          "size": [
+            1.7,
+            0.12,
+            1.7
+          ],
+          "offset": [
+            0,
+            1.86,
+            0
+          ],
+          "material": {
+            "name": "steel_cap",
+            "baseColor": "#8f97a3",
+            "roughness": 0.4,
+            "metallic": 0.8
+          },
+          "collider": "none"
+        }
+      ],
+      "transform": {
+        "position": [
+          -4.4,
+          0,
+          -3.2
+        ],
+        "rotationY": 0
+      },
+      "placement": {
+        "anchor": "floor",
+        "snapToGrid": false
+      }
+    },
+    {
+      "id": "izakaya_table",
+      "kind": "furniture",
+      "label": "低桌",
+      "kit": "choroweave.kit/table_low",
+      "parts": [
+        {
+          "name": "tabletop",
+          "role": "surface",
+          "primitive": "box",
+          "size": [
+            1.6,
+            0.08,
+            0.9
+          ],
+          "offset": [
+            0,
+            0.38,
+            0
+          ],
+          "material": {
+            "name": "dark_wood",
+            "baseColor": "#7a4a32",
+            "roughness": 0.7
+          },
+          "collider": "box"
+        },
+        {
+          "name": "trestle_a",
+          "role": "support",
+          "primitive": "box",
+          "size": [
+            0.08,
+            0.38,
+            0.8
+          ],
+          "offset": [
+            -0.62,
+            0.19,
+            0
+          ],
+          "material": {
+            "name": "dark_wood",
+            "baseColor": "#7a4a32",
+            "roughness": 0.7
+          },
+          "collider": "box"
+        },
+        {
+          "name": "trestle_b",
+          "role": "support",
+          "primitive": "box",
+          "size": [
+            0.08,
+            0.38,
+            0.8
+          ],
+          "offset": [
+            0.62,
+            0.19,
+            0
+          ],
+          "material": {
+            "name": "dark_wood",
+            "baseColor": "#7a4a32",
+            "roughness": 0.7
+          },
+          "collider": "box"
+        }
+      ],
+      "transform": {
+        "position": [
+          0.4,
+          0,
+          0.2
+        ],
+        "rotationY": 8
+      },
+      "placement": {
+        "anchor": "floor",
+        "snapToGrid": false
+      }
+    },
+    {
+      "id": "stool_red",
+      "kind": "furniture",
+      "label": "红色坐垫凳",
+      "kit": "choroweave.kit/stool_cushion",
+      "parts": [
+        {
+          "name": "seat",
+          "role": "seat",
+          "primitive": "box",
+          "size": [
+            0.42,
+            0.09,
+            0.42
+          ],
+          "offset": [
+            0,
+            0.44,
+            0
+          ],
+          "material": {
+            "name": "red_cushion",
+            "baseColor": "#c0392b",
+            "roughness": 0.88
+          },
+          "collider": "box"
+        },
+        {
+          "name": "legs",
+          "role": "support",
+          "primitive": "box",
+          "size": [
+            0.36,
+            0.4,
+            0.36
+          ],
+          "offset": [
+            0,
+            0.2,
+            0
+          ],
+          "material": {
+            "name": "black_metal",
+            "baseColor": "#2b2b2b",
+            "roughness": 0.5,
+            "metallic": 0.6
+          },
+          "collider": "box"
+        }
+      ],
+      "transform": {
+        "position": [
+          -0.5,
+          0,
+          0.9
+        ],
+        "rotationY": 24
+      },
+      "placement": {
+        "anchor": "floor",
+        "snapToGrid": false
+      }
+    },
+    {
+      "id": "radio",
+      "kind": "prop",
+      "label": "老式收音机",
+      "parts": [
+        {
+          "name": "body",
+          "role": "surface",
+          "primitive": "generated",
+          "size": [
+            0.36,
+            0.2,
+            0.16
+          ],
+          "offset": [
+            0,
+            0.1,
+            0
+          ],
+          "material": {
+            "name": "radio_bakelite",
+            "baseColor": "#8c5a2b",
+            "roughness": 0.55
+          },
+          "collider": "box",
+          "generation": {
+            "provider": "trellis2",
+            "prompt": "retro cassette radio, chunky pixel-art proportions, warm bakelite shell",
+            "resolution": 512,
+            "seed": 20261107
+          }
+        },
+        {
+          "name": "dial",
+          "role": "decor",
+          "primitive": "cylinder",
+          "size": [
+            0.05,
+            0.03,
+            0.05
+          ],
+          "offset": [
+            0.11,
+            0.1,
+            0.09
+          ],
+          "material": {
+            "name": "dial_brass",
+            "baseColor": "#d9a441",
+            "roughness": 0.3,
+            "metallic": 0.7
+          },
+          "collider": "none"
+        },
+        {
+          "name": "speaker_grille",
+          "role": "decor",
+          "primitive": "plane",
+          "size": [
+            0.16,
+            0.1,
+            0.01
+          ],
+          "offset": [
+            -0.07,
+            0.1,
+            0.085
+          ],
+          "material": {
+            "name": "grille_fabric",
+            "baseColor": "#3d2a1c",
+            "roughness": 0.95
+          },
+          "collider": "none"
+        },
+        {
+          "name": "antenna",
+          "role": "decor",
+          "primitive": "cylinder",
+          "size": [
+            0.02,
+            0.28,
+            0.02
+          ],
+          "offset": [
+            -0.14,
+            0.24,
+            0
+          ],
+          "material": {
+            "name": "antenna_chrome",
+            "baseColor": "#cfd6e0",
+            "roughness": 0.25,
+            "metallic": 0.9
+          },
+          "collider": "none"
+        }
+      ],
+      "transform": {
+        "position": [
+          0.4,
+          0.42,
+          0.25
+        ],
+        "rotationY": 8,
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "placement": {
+        "anchor": "free",
+        "snapToGrid": false
+      },
+      "interaction": {
+        "level": "L0",
+        "graph": "play_lofi",
+        "event": "onSelect"
+      }
+    },
+    {
+      "id": "string_lights",
+      "kind": "light",
+      "label": "串灯",
+      "parts": [
+        {
+          "name": "cable",
+          "role": "striplight",
+          "primitive": "box",
+          "size": [
+            7,
+            0.015,
+            0.015
+          ],
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "material": {
+            "name": "cable_black",
+            "baseColor": "#1a1a1a",
+            "roughness": 0.9
+          },
+          "collider": "none"
+        },
+        {
+          "name": "bulbs",
+          "role": "emitter",
+          "primitive": "box",
+          "size": [
+            7,
+            0.1,
+            0.1
+          ],
+          "offset": [
+            0,
+            -0.05,
+            0
+          ],
+          "material": {
+            "name": "warm_bulb",
+            "baseColor": "#ffd9a0",
+            "roughness": 0.6,
+            "emissive": "#ffd9a0"
+          },
+          "collider": "none"
+        }
+      ],
+      "transform": {
+        "position": [
+          0.2,
+          2.55,
+          -2.2
+        ],
+        "rotationY": 0
+      },
+      "placement": {
+        "anchor": "free",
+        "snapToGrid": false
+      },
+      "interaction": {
+        "level": "L0",
+        "graph": "toggle_string_lights",
+        "event": "onSelect"
+      }
+    },
+    {
+      "id": "rooftop_hum",
+      "kind": "audio",
+      "label": "城市底噪",
+      "parts": [
+        {
+          "name": "hum_emitter",
+          "role": "emitter",
+          "primitive": "box",
+          "size": [
+            0.3,
+            0.3,
+            0.3
+          ],
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "material": {
+            "name": "invisible_emitter",
+            "baseColor": "#000000",
+            "roughness": 1
+          },
+          "collider": "none"
+        }
+      ],
+      "transform": {
+        "position": [
+          0,
+          2.4,
+          0
+        ],
+        "rotationY": 0
+      },
+      "placement": {
+        "anchor": "free",
+        "snapToGrid": false
+      },
+      "interaction": {
+        "level": "L0",
+        "graph": "ambient_hum",
+        "event": "onEnter"
+      }
+    },
+    {
+      "id": "neon_door",
+      "kind": "portal",
+      "label": "发光之门",
+      "parts": [
+        {
+          "name": "frame",
+          "role": "frame",
+          "primitive": "box",
+          "size": [
+            1.2,
+            2.3,
+            0.18
+          ],
+          "offset": [
+            0,
+            1.15,
+            0
+          ],
+          "material": {
+            "name": "neon_frame",
+            "baseColor": "#1b1f2a",
+            "roughness": 0.4,
+            "emissive": "#5ad1c8"
+          },
+          "collider": "box"
+        },
+        {
+          "name": "panel",
+          "role": "door",
+          "primitive": "box",
+          "size": [
+            1,
+            2.05,
+            0.06
+          ],
+          "offset": [
+            0,
+            1.08,
+            0.1
+          ],
+          "material": {
+            "name": "portal_glow",
+            "baseColor": "#12313a",
+            "roughness": 0.3,
+            "emissive": "#5ad1c8"
+          },
+          "collider": "none"
+        },
+        {
+          "name": "handle",
+          "role": "decor",
+          "primitive": "sphere",
+          "size": [
+            0.07,
+            0.07,
+            0.07
+          ],
+          "offset": [
+            0.36,
+            1.05,
+            0.16
+          ],
+          "material": {
+            "name": "handle_brass",
+            "baseColor": "#d9a441",
+            "roughness": 0.3,
+            "metallic": 0.8
+          },
+          "collider": "none"
+        }
+      ],
+      "transform": {
+        "position": [
+          3.1,
+          0,
+          -3.6
+        ],
+        "rotationY": -35
+      },
+      "placement": {
+        "anchor": "floor",
+        "snapToGrid": true
+      },
+      "interaction": {
+        "level": "L0",
+        "graph": "enter_neon_alley",
+        "event": "onSelect"
+      },
+      "portalId": "door_to_neon_alley"
+    },
+    {
+      "id": "neon_door_threshold",
+      "kind": "trigger",
+      "label": "门前感应区",
+      "parts": [
+        {
+          "name": "threshold",
+          "role": "collider",
+          "primitive": "plane",
+          "size": [
+            1.4,
+            0.02,
+            0.8
+          ],
+          "offset": [
+            0,
+            0.01,
+            0.45
+          ],
+          "material": {
+            "name": "threshold_invisible",
+            "baseColor": "#000000",
+            "roughness": 1
+          },
+          "collider": "none"
+        }
+      ],
+      "transform": {
+        "position": [
+          3.1,
+          0,
+          -3.6
+        ],
+        "rotationY": -35
+      },
+      "placement": {
+        "anchor": "floor",
+        "snapToGrid": false
+      },
+      "interaction": {
+        "level": "L0",
+        "graph": "preview_neon_alley",
+        "event": "onEnter"
+      }
+    },
+    {
+      "id": "potted_plant",
+      "kind": "prop",
+      "label": "角落盆栽",
+      "parts": [
+        {
+          "name": "pot",
+          "role": "support",
+          "primitive": "cylinder",
+          "size": [
+            0.32,
+            0.4,
+            0.32
+          ],
+          "offset": [
+            0,
+            0.2,
+            0
+          ],
+          "material": {
+            "name": "terracotta",
+            "baseColor": "#b5623c",
+            "roughness": 0.9
+          },
+          "collider": "convex"
+        },
+        {
+          "name": "leaves",
+          "role": "decor",
+          "primitive": "generated",
+          "size": [
+            0.6,
+            0.7,
+            0.6
+          ],
+          "offset": [
+            0,
+            0.72,
+            0
+          ],
+          "material": {
+            "name": "pixel_leaves",
+            "baseColor": "#2f7d4f",
+            "roughness": 0.85
+          },
+          "collider": "none",
+          "generation": {
+            "provider": "trellis2",
+            "prompt": "small potted monstera, pixel-art style, low-poly",
+            "resolution": 512,
+            "seed": 20261108
+          }
+        }
+      ],
+      "transform": {
+        "position": [
+          -3.2,
+          0,
+          1.6
+        ],
+        "rotationY": 12
+      },
+      "placement": {
+        "anchor": "floor",
+        "snapToGrid": false
+      }
+    },
+    {
+      "id": "vending_machine",
+      "kind": "prop",
+      "label": "自动贩卖机",
+      "parts": [
+        {
+          "name": "cabinet",
+          "role": "surface",
+          "primitive": "box",
+          "size": [
+            1.1,
+            1.9,
+            0.75
+          ],
+          "offset": [
+            0,
+            0.95,
+            0
+          ],
+          "material": {
+            "name": "vending_red",
+            "baseColor": "#a83232",
+            "roughness": 0.55
+          },
+          "collider": "box"
+        },
+        {
+          "name": "screen",
+          "role": "glass",
+          "primitive": "plane",
+          "size": [
+            0.9,
+            0.62,
+            0.02
+          ],
+          "offset": [
+            0,
+            1.35,
+            0.39
+          ],
+          "material": {
+            "name": "vending_glow",
+            "baseColor": "#f2f2e6",
+            "roughness": 0.2,
+            "emissive": "#f8f0c8"
+          },
+          "collider": "none"
+        },
+        {
+          "name": "button_panel",
+          "role": "decor",
+          "primitive": "box",
+          "size": [
+            0.5,
+            0.18,
+            0.03
+          ],
+          "offset": [
+            0,
+            0.75,
+            0.39
+          ],
+          "material": {
+            "name": "panel_black",
+            "baseColor": "#232323",
+            "roughness": 0.4
+          },
+          "collider": "none"
+        }
+      ],
+      "transform": {
+        "position": [
+          -4.6,
+          0,
+          2.4
+        ],
+        "rotationY": 90
+      },
+      "placement": {
+        "anchor": "floor",
+        "snapToGrid": true
+      }
+    },
+    {
+      "id": "spawn_default",
+      "kind": "spawn",
+      "label": "默认出生点",
+      "parts": [
+        {
+          "name": "marker",
+          "role": "decor",
+          "primitive": "plane",
+          "size": [
+            1,
+            0.01,
+            1
+          ],
+          "offset": [
+            0,
+            0.01,
+            0
+          ],
+          "material": {
+            "name": "spawn_marker",
+            "baseColor": "#5ad1c8",
+            "roughness": 1
+          },
+          "collider": "none"
+        }
+      ],
+      "transform": {
+        "position": [
+          0,
+          0,
+          3.6
+        ],
+        "rotationY": 180
+      },
+      "placement": {
+        "anchor": "floor",
+        "snapToGrid": true
+      }
+    }
+  ],
+  "interactions": [
+    {
+      "id": "play_lofi",
+      "entity": "radio",
+      "trigger": {
+        "type": "select"
+      },
+      "actions": [
+        {
+          "op": "playAudio",
+          "target": "audio/lofi_loop.ogg",
+          "value": 0.6,
+          "durationS": 180
+        },
+        {
+          "op": "setMaterial",
+          "target": "radio/dial",
+          "value": "#ffb347",
+          "durationS": 0.2
+        }
+      ]
+    },
+    {
+      "id": "toggle_string_lights",
+      "entity": "string_lights",
+      "trigger": {
+        "type": "select"
+      },
+      "actions": [
+        {
+          "op": "toggleLight",
+          "target": "string_lights",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "preview_neon_alley",
+      "entity": "neon_door_threshold",
+      "trigger": {
+        "type": "proximity",
+        "distanceM": 2.5
+      },
+      "actions": [
+        {
+          "op": "emitEvent",
+          "target": "portal/preview",
+          "value": "door_to_neon_alley"
+        }
+      ]
+    },
+    {
+      "id": "enter_neon_alley",
+      "entity": "neon_door",
+      "trigger": {
+        "type": "select"
+      },
+      "actions": [
+        {
+          "op": "openPortal",
+          "target": "door_to_neon_alley"
+        }
+      ]
+    },
+    {
+      "id": "ambient_hum",
+      "entity": "rooftop_hum",
+      "trigger": {
+        "type": "enter",
+        "delayS": 1
+      },
+      "actions": [
+        {
+          "op": "playAudio",
+          "target": "audio/city_hum.ogg",
+          "value": 0.35,
+          "durationS": 0
+        }
+      ]
+    }
+  ],
+  "portals": [
+    {
+      "id": "door_to_neon_alley",
+      "entity": "neon_door",
+      "title": "夜行小巷",
+      "target": {
+        "url": "https://hana.example/worlds/neon-alley/world.json"
+      },
+      "anchor": {
+        "spawnNode": "spawn_default",
+        "position": [
+          0,
+          0,
+          2
+        ],
+        "rotationY": 180
+      },
+      "handoff": "cross-instance",
+      "policy": {
+        "confirm": "once",
+        "carry": [
+          "avatar"
+        ],
+        "allowGuests": true,
+        "prefetch": "gaze",
+        "maxPrefetchBytes": 8388608
+      },
+      "version": "0.1"
+    }
+  ],
+  "budget": {
+    "triangles": 180000,
+    "drawCalls": 60,
+    "textureMB": 240,
+    "firstByteKB": 6200,
+    "maxPlayers": 20
+  },
+  "provenance": {
+    "compiler": "chora-compiler",
+    "version": "0.1.0",
+    "generatedAt": "2026-11-07T09:30:00Z",
+    "seed": 20261107,
+    "pipeline": [
+      "intake",
+      "plan",
+      "normalize",
+      "layout",
+      "assemble",
+      "generate",
+      "derive",
+      "verify",
+      "emit"
+    ],
+    "inputHash": "eac6744c305cc9bb9cff1b421441b632dd37c942791956124d541c8116320be6",
+    "model": {
+      "provider": "choroweave",
+      "name": "planner-llm/2026-11",
+      "promptHash": "071c3ffd41c7de1d3bc0dfbaf40af8a17753e193460be9d59763565d8a99e904"
+    }
+  }
+}

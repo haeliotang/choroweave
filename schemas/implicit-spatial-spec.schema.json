@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:choroweave:schemas:implicit-spatial-spec:0.1",
+  "title": "Implicit Spatial Spec (ISS) v0.1 — choroweave ⟷ tacitweave 契约",
+  "description": "tacitweave 从用户行为与偏好中提炼的隐性空间偏好规格。choroweave 只消费本契约，不依赖 tacitweave 的代码与模型；ISS 缺失、过期或低置信时必须能退化为显式意图 + 默认值。ADR-01：两仓库独立孵化，契约独立版本化。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "specId", "subject", "source", "confidence", "preferences", "constraints", "privacy"],
+  "properties": {
+    "schemaVersion": { "const": "0.1" },
+    "specId": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "description": "规格实例 ID（UUIDv4 形状）；用于审计与回放。"
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id"],
+      "properties": {
+        "type": { "enum": ["user", "group"] },
+        "id": {
+          "type": "string",
+          "pattern": "^(did:web:[A-Za-z0-9._-]+|[A-Za-z0-9._-]{2,64})$",
+          "description": "用户/群体标识；优先 did:web，其次临时匿名 ID。"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["producer", "version", "observedFrom", "observedTo"],
+      "properties": {
+        "producer": { "const": "tacitweave" },
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "model": { "type": "string", "minLength": 1, "maxLength": 96 },
+        "observedFrom": { "type": "string", "format": "date-time" },
+        "observedTo": { "type": "string", "format": "date-time" }
+      },
+      "description": "规格由谁、基于哪段时间的观察产生（provenance）。"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "整体置信度；< 0.4 时编译器 MUST 只用于排序候选，不得覆盖显式意图。"
+    },
+    "preferences": {
+      "type": "array",
+      "maxItems": 64,
+      "description": "偏好项；编译为 Spatial-DSL 的默认值与风格参数，不改变硬约束。",
+      "items": { "$ref": "#/$defs/preference" }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["accessibility", "platform"],
+      "properties": {
+        "accessibility": {
+          "type": "array",
+          "maxItems": 6,
+          "items": { "enum": ["seated", "reducedMotion", "highContrast", "colorBlind", "lowVision"] }
+        },
+        "budgetUSD": { "type": "number", "minimum": 0, "maximum": 1000 },
+        "platform": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": { "enum": ["desktop", "mobile", "xr"] }
+        },
+        "ratingMax": { "enum": ["general", "teen", "mature"] }
+      }
+    },
+    "avoid": {
+      "type": "array",
+      "maxItems": 32,
+      "description": "负向偏好（“不要什么”）；编译器 MUST 将其作为硬性排除项。",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["key", "strength"],
+        "properties": {
+          "key": { "$ref": "#/$defs/preferenceKey" },
+          "strength": { "type": "number", "minimum": 0.5, "maximum": 1 },
+          "note": { "type": "string", "maxLength": 280 }
+        }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disclosure", "shareWithNode"],
+      "properties": {
+        "disclosure": { "enum": ["anonymous", "pseudonymous", "persistent"] },
+        "shareWithNode": {
+          "type": "boolean",
+          "description": "是否允许把本规格的派生结果披露给编译所用节点（默认 false）。"
+        }
+      }
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "过期时间；过期后按“置信度 = 0”处理，仅用于 A/B 排序。"
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alg", "value"],
+      "properties": {
+        "alg": { "const": "sha256" },
+        "value": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      },
+      "description": "可选：对 JCS 规范化后（排除 integrity）内容的摘要。"
+    }
+  },
+  "$defs": {
+    "preferenceKey": {
+      "enum": ["lighting", "palette", "acoustic", "clutter", "scale", "privacy", "socialDensity", "motion", "timeOfDay"]
+    },
+    "preference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "value", "confidence", "evidence"],
+      "properties": {
+        "key": { "$ref": "#/$defs/preferenceKey" },
+        "value": {
+          "oneOf": [
+            { "type": "string", "maxLength": 128 },
+            { "type": "number" },
+            { "type": "boolean" },
+            { "type": "array", "maxItems": 8, "items": { "type": "string", "maxLength": 48 } }
+          ],
+          "description": "语义值；枚举含义由 key 定义（见 docs/03 §8.2 映射表）。"
+        },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "evidence": { "enum": ["observed", "stated", "inferred"] },
+        "samples": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}
