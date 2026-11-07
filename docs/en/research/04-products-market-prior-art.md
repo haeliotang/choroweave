@@ -164,7 +164,6 @@ Also worth noting: the social VR game made by Spatial's in-house studio Wooster 
 - Free + open source; worlds must be self-hosted or hosted by a provider; v1 was "buy a world once as an Ethereum NFT" with largely closed code; v2 moved to open source + the `.hyp` format + Blender tooling + AI agent (Eliza OS) integration; there is a $HY token. [Official docs]
 - 310★ / 117 forks / 30 open issues, created 2024-12-22, last commit 2026-04-21. [GitHub API]
 - **The fork-to-star ratio of 0.38** shows that "deploy your own copy" is the main usage — real evidence of "personal server" demand, but also evidence that **no network effect formed**: every fork is an island.
-
 > **Direct implication for choroweave**: Hyperfy proves "self-hosted worlds + a web client" is technically feasible and wanted; it does not prove "how islands interconnect". **The interconnection layer (addressing, identity, discovery, settlement) is precisely the only part choroweave is worth building.**
 
 ### 3.4 AI-generated worlds / games: three routes, three limitations
@@ -342,6 +341,7 @@ The minimum viable wedge supported by data has three characteristics:
 ---
 ## 6. Risks and unknowns
 ### 6.1 Explicit data gaps (not verified in this report; must not be cited as fact)
+
 | Gap | Note |
 |---|---|
 | Second Life 2026 MAU / DAU | Linden Lab does not disclose; only that the platform still operates |

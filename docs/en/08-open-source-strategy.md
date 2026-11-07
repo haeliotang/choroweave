@@ -260,9 +260,9 @@ Selection criteria: independent artists with existing 3D assets (Blender/GLB/Mar
 
 ### 7.2 Four revenue lines
 
-| Revenue line | Customer | Content | Indicative pricing (estimate, C) | Start |
+| Revenue line | Customer | What's included | Indicative pricing (estimate, C) | Start |
 |---|---|---|---|---|
-| **Hosting node service** | Creators/communities who cannot operate servers | One-click hosting (TLS/domain/backup/monitoring/upgrades), optional custom domain | **$9–29/world/month** (includes 20 GB egress + 1 room); enterprise tier $99–299/month | Pilot at the end of P2, official in P3 |
+| **Hosting node service** | Creators/communities who cannot operate servers | One-click hosting (TLS/domain/backup/monitoring/upgrades), optional custom domain | **$9–29/world/month** (includes 20 GB egress + 1 room); enterprise tier $99–299/month | Pilot at end of P2, general availability in P3 |
 | **Enterprise private deployment** | Brands/schools/museums/enterprises | Private node + SSO + audit + offline asset pipeline + training | **$15k–80k/project** (one-off) + 20% annual support | P3 |
 | **Support contract / SLA** | Organizations with live events, hosters | Response times, version support, migration assistance, security advisories | **$5k–50k/year** | P3 |
 | **Training and content services** | Teams/institutions | Workshops, template customization, showcase production | **$2k–15k/project** | P3–P4 |
