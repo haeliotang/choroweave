@@ -24,7 +24,7 @@
 
 | 阶段 | 时间 | 一句话目标 | Exit Criteria（退出条件） | 门 |
 |---|---|---|---|---|
-| **P0** 协议验证 | M0–M2 | 手工造两个世界，用一扇门连起来；SHP v0.1 冻结 | 两个自托管节点可互跳；`weave-check` 可验证；无 AI 参与 | **G0** |
+| **P0** 协议验证 | M0–M2（G0 = 2027-01-25） | 手工造两个世界，用一扇门连起来；SHP v0.1 冻结 | 双向传送 10/10；`weave-check` 22/22；≥1 外部开发者复现；无 AI | **G0** |
 | **P1** 编译器 MVP | M2–M6 | 一句话生成单房间；可进入、可交互、可与另一世界互跳 | 20 条评测提示词中 ≥70% 产出可玩世界；热切换 < 1.5s | **G1** |
 | **P2** 多人网络 | M6–M12 | 真人多人房间 + 门户穿越 + 自托管节点 + 化身 | 20 人房间稳定 30 分钟；跨节点串门 demo；规范 v0.5 | **G2** |
 | **P3** 生态与智能体 | M12–M18 | 常驻 Agent、空间演化、社区节点网络 | 100 个公开世界 / 10 个第三方节点；Agent 接待 demo | **G3** |
@@ -76,7 +76,7 @@ gantt
 
 | 门 | 时点 | Go 条件（全部满足） | No-Go / 降级动作 |
 |---|---|---|---|
-| **G0** | M2 / 2027-01 | 两节点互跳 10/10 成功；SHP v0.1 冻结（0 blocker）；`weave-check` 22/22 通过（[`04`](04-spatial-hyperlink-protocol.md) §12 全量用例）；全程 0 次生成模型调用；≥1 名外部开发者复现 | 缩范围为"单节点 + 内部门户"，SHP 降级为"单节点世界包规范"；**不扩编**，重估协议路线 |
+| **G0** | M2 / 2027-01-25 | 两节点互跳 10/10 成功；SHP v0.1 冻结（0 blocker）；`weave-check` 22/22 通过（[`04`](04-spatial-hyperlink-protocol.md) §12 全量用例）；全程 0 次生成模型调用；≥1 名外部开发者复现 | 缩范围为"单节点 + 内部门户"，SHP 降级为"单节点世界包规范"；**不扩编**，重估协议路线 |
 | **G1** | M6 / 2027-05 | 20 条评测 ≥70% 可玩（`PR-20`）；热切换 p95 < 1.5s（`HHT`）；Desktop 60fps（`FT`）；2 条安全用例 100% 拒绝；`CPR` 100% | 50–70%：承诺改为"模板优先 + 生成增强"，目标下修至 50%，P1 顺延 1 个月，暂不进 P2；<50%：停止自研编译，转"套件 + Agent 工具链"（重大转向，需资助方签字） |
 | **G2** | M12 / 2027-11 | 20 人房间稳定 30 分钟（`RS-30`）；一键自托管节点（`NBS`）由非作者跑通；跨节点串门 demo；规范 v0.5 冻结 | 稳定性不达标：退回 8 人房间 + 异步观演（录制回放），推迟 P3 常驻 Agent |
 | **G3** | M18 / 2028-05 | 100 个公开世界 / 10 个第三方节点；`W1R` 次周回访率 ≥25%；Agent 接待 demo | 第三方节点 <5：停止"节点联邦"叙事，转"托管服务 + 单节点多世界"；P4 标准路线降级为"跟随 MSF"（不提交 conformance） |
@@ -92,9 +92,20 @@ gantt
 
 **目标**：在没有 AI 的情况下，手工造两个世界 + 一扇门，把"世界描述符 / 寻址 / 门户 / 进入握手 / 节点发现 / 一致性验证"跑通并冻结为 SHP v0.1。P0 是"协议的正确性测试"，不是产品。
 
+**工作包（P0-1 → P0-4，严格顺序）**
+
+| ID | 工作包 | 交付与验收 |
+|---|---|---|
+| P0-1 | 两个真实世界 + Babylon 最小运行时 | `pixel-rooftop`（`https://alice.example/worlds/pixel-rooftop/world.json`）与 `neon-alley`（`https://hana.example/worlds/neon-alley/world.json`）分别部署到两个自托管节点；第一人称漫游可用；两世界均可进入；**0 次生成模型调用** |
+| P0-2 | SHP 门户穿越 | 目标发现 → 能力检查 → 用户确认 → 房间/场景切换 → 失败回滚；双向 **10/10** 成功，`HHT` p95 <1.5s |
+| P0-3 | `weave-check` 22 条一致性用例 | 把 [`04`](04-spatial-hyperlink-protocol.md) §12 的 22 条要求实现为可执行测试；好样本 **22/22**，坏样本必须失败并定位 |
+| P0-4 | CI 与外部复现 | GitHub Actions 跑 `validate + weave-check + 双节点冒烟`；外部开发者按 runbook 在 30 分钟内独立部署两节点并互跳（**≥1 人**记录） |
+
+> 顺序约束：P0-1 未过不做 P0-2；P0-2 未过不做 P0-4。P0-3 可与 P0-2 并行编写用例，但门禁以 22/22 全绿为准。工作流 W1–W4 是持续工作；对应关系：P0-1≈W2+W3，P0-2≈W3，P0-3≈W1+W4，P0-4≈W4。
+
 **工作流**
 - W1 协议与 Schema：`world.json` v0.1、`CHW_portal`/`CHW_collider`/`CHW_logic` 字段冻结；SHP v0.1 文本 + 一致性用例清单（对齐 [`04`](04-spatial-hyperlink-protocol.md)）。
-- W2 两个手工世界：`pixel-rooftop`（天台 + 收音机 + 墙上门）与 `pixel-night-market`（第二个世界，部署在另一个节点；**暂名，以 03 定稿为准**），全部由套件手工摆放，无生成模型。
+- W2 两个手工世界：`pixel-rooftop`（天台 + 收音机 + 墙上门）与 `neon-alley`（第二个世界，部署在另一个节点 `hana.example`；ID/URL 已冻结，见 06 §2.1），全部由套件手工摆放，无生成模型。
 - W3 参考运行时：Babylon.js 8.x 场景加载、第一人称漫游、输入抽象、门户切换状态机（预取 → 校验 → 确认 → 加入 → 切换 → 回滚）、WebGL2 默认。
 - W4 节点与一致性：`@choroweave/node` 静态托管 + `/.well-known/weave-node.json` 发现 + 可选单房间 WSP v0.1 编解码（定义但不要求多人可用）；`@choroweave/check` 的 `world.json`/glTF/门户/预算校验。
 
@@ -104,7 +115,7 @@ gantt
 |---|---|---|
 | SHP v0.1（寻址、描述符、门户、握手、降级） | `docs/04` + `@choroweave/protocol` | 外部实现者仅凭文档可写出最小门户查看器 |
 | `world.json` v0.1 Schema + `CHW_portal`/`CHW_collider`/`CHW_logic` | `schemas/`、`schemas/world-manifest.schema.json` | Schema 可校验两示例世界，0 error |
-| 两个手工世界（跨两个自托管节点） | `examples/pixel-rooftop/`、`examples/pixel-night-market/` | 两节点可互跳，门的位置/朝向正确 |
+| 两个手工世界（跨两个自托管节点） | `examples/pixel-rooftop/`、`examples/neon-alley/` | 两节点可互跳，门的位置/朝向正确 |
 | 进入/门户切换（P0 最小查看器） | `apps/playground`（P1 起正式化为 `@choroweave/runtime`，见 §8 对齐 1） | 热切换 p95 < 1.5s；目标离线有降级页 |
 | 一致性套件 | `@choroweave/check`（`weave-check` CLI） | [`04`](04-spatial-hyperlink-protocol.md) §12 的 22 条用例全通过 |
 | 节点发现与签名 | `@choroweave/node` + `@choroweave/protocol` | ed25519 签名验证；`weave-check` 覆盖 |
@@ -127,7 +138,7 @@ gantt
 
 **目标**：让"一句话 → 可玩世界"在受控范围内成立：LLM 只产出受 Schema 约束的 Spatial-DSL，确定性管线负责布局、装配、碰撞、LOD、行为图与校验。**这是产品的第一次对外承诺。**
 
-**工作流**
+
 - W1 意图层：`@choroweave/dsl`（AST + Schema + 语义校验）；tacitweave 的 **ISS** 作为可选输入（契约见 `03` §8），P1 只消费不生产。
 - W2 骨架与装配：确定性布局求解（房间/墙体/门窗/灯光/可达性）+ 套件库 + `@choroweave/assembler`（glb 装配、碰撞凸包、LOD、材质烘焙、尺度归一）。
 - W3 资产：`@choroweave/provider-trellis`（TRELLIS.2 MIT，默认）+ `@choroweave/provider-kit`（模块化套件，比例与碰撞的保证）；Hunyuan provider 仅作可选插件，默认关闭（R-07）。
@@ -139,7 +150,7 @@ gantt
 **Exit Criteria（可测）**
 1. 20 条评测提示词中 **≥70%** 产出可玩世界（`PR-20` 定义见 §5.1：加权总分 ≥3.5 且 可玩性 ≥3 且 安全 ≥3）。
 2. 编译产物通过 glTF Validator + `KHR_interactivity` strictValidation **100%**；行为图无未声明外部引用。
-3. `HHT` p95 <1.5s（编译版世界 → `pixel-night-market`）；`CST` p95 <5s。
+3. `HHT` p95 <1.5s（编译版世界 → `neon-alley`）；`CST` p95 <5s。
 4. Standard 档 `CPW` ≤ **$8/世界**（与 `00` §8 一致；02 ADR-09 的工程估算区间 $0.5–8，口径见 [`07`](07-risks-compliance.md) §3）；耗时目标按 **draft ≤10 min / standard ≤20 min**（`00` §8 已按裁决同步；02 ADR-09 的 "standard 20–40 min" 是可行性估算，非交付目标）。
 5. 安全用例（2/20）100% 拒绝或降级；世界包无任意 JS。
 
@@ -155,11 +166,11 @@ gantt
 
 **目标**：真人在场：20 人房间、化身、语音、跨节点串门、事件巡游。**P2 是"网络效应"的第一次真实检验。**
 
-**工作流**
+
 - W1 实时层：`@choroweave/protocol` WSP v0.2（WebSocket 权威 + 抽象出 WebTransport/WebRTC 后端；**位姿 15Hz**（[`03`](03-architecture.md) §5.4 默认，可配置 10–20Hz）、快照 1 次/秒 + 增量、客户端插值）；LiveKit 语音（自托管，Apache-2.0）。
 - W2 房间服与节点：`@choroweave/node` 房间服务 v0.1（20 CCU/房间，可选静态模式）；一键自托管（`docker compose up` 或 `npx @choroweave/node init`）；`/.well-known/weave-node.json` 能力协商升级。
 - W3 化身与状态：`CHW_avatar` v0.1（glTF 人形替身，P2 评估 VRM/three-vrm 适配）；同步白名单（glTF Object Model JSON Pointer）；进入/离开/门户穿越时的状态交接。
-- W4 巡游产品：活动世界模板（放映厅/展陈/夜市）+ 巡游 schedule 协议（P2 提案：节点侧 `/.well-known/weave-events.json`，**需经 04 的 RFC 流程**）；`pixel-night-market` 作为活动节点。
+- W4 巡游产品：活动世界模板（放映厅/展陈/夜市）+ 巡游 schedule 协议（P2 提案：节点侧 `/.well-known/weave-events.json`，**需经 04 的 RFC 流程**）；`neon-alley` 作为活动节点。
 - W5 规范 v0.5：SHP v0.5（多人房间、能力协商、跨节点信任、废弃策略）+ conformance 用例扩到 80 条。
 
 **交付物**：WSP v0.2 与 SHP v0.5、`@choroweave/node` 房间服 v0.1 + 一键自托管、`@choroweave/runtime` 多人适配、`CHW_avatar` v0.1、LiveKit 集成、跨节点串门 demo（三节点）、巡游活动模板、20 人压测报告。
@@ -183,7 +194,7 @@ gantt
 
 **目标**：从"能玩的 demo"变成"有人持续来、有人自己部署"的网络：发现层、常驻 Agent、空间演化、L2 沙箱、节点生态。
 
-**工作流**
+
 - W1 发现与索引：`choroweave/discover`（可选服务，非协议强制）：世界索引、标签、活动日历、节点健康；`world.json` 增加可选 `indexing` 声明（**P3 提案，需经 RFC**；04 v0.1 当前无此字段）。
 - W2 常驻 Agent（节点侧）：Agent runtime（接待/导览/问答/活动主持）；L1 精选联网模块（五子棋/答题/钓鱼等参数化）；Agent 行为只能通过白名单 API 与 `CHW_logic` 声明的能力；对话与工具调用留审计日志。
 - W3 空间演化：`world.json` 版本 diff + 增量发布 + 门户兼容（旧门指向新版本的迁移规则）；内容哈希与签名。
@@ -212,7 +223,7 @@ gantt
 
 **目标**：把"能跑"变成"可被第三方实现"：WebXR 深度适配、SHP v1.0、conformance 生态、治理移交。
 
-**工作流**
+
 - W1 WebXR：Quest 3 72fps 预算落地（draw call/三角形/显存门禁进引擎启动检查）；visionOS Safari 双轨（WebXR 主 + `<model>`/Immersive API 增强降级路径，见 [`research/03`](research/03-runtime-standards.md) §3.3）；`XR-Low/Mid/Apple` 三档设备矩阵实测标定。
 - W2 WebTransport 默认：WSP v1.0 传输层切换；WebRTC DataChannel 兜底；LiveKit 语音默认。
 - W3 标准：SHP v1.0 冻结；`CHW_portal` 提交 OMI Stage 1（W3C CG）；与 MSF "Web of Worlds"/X3D 4.1 Anchor/Inline 的映射文档；Khronos glTF 社区提交（对齐 glTF 2.1 外部引用语义，见 [`research/03`](research/03-runtime-standards.md) §3.1.1）。
@@ -251,7 +262,7 @@ gantt
 | 运行时/图形 | 1.0 | Babylon.js、WebXR、门户状态机、性能门禁 | P0 门户切换、P2 化身/多人适配、P4 72fps |
 | 编译器/ML | 1.0 | Spatial-DSL、确定性装配、生成 provider、验证-修复循环 | P1 编译管线与评测集 |
 | 协议/后端 | 1.0 | SHP/WSP、节点、房间服、安全与签名 | P0 节点/一致性、P2 房间服、P3 Agent 宿主 |
-| 设计/技术美术（0.5） | 0.5 | 套件库、showcase 世界、可玩性调优 | 像素天台/夜市、模板与资产包 |
+| 设计/技术美术（0.5） | 0.5 | 套件库、showcase 世界、可玩性调优 | 像素天台/夜行小巷、模板与资产包 |
 | 社区/产品（0.5） | 0.5 | 评测组织、创作者计划、文档与发布 | 评测报告、showcase、Discord/GitHub |
 
 **成本分解（月，估算）**：人力 $39k–52k；基础设施（对象存储/CDN/CI/域名/测试设备）$2k–5k；模型调用与生成 GPU $0.5k–2k；法务/合规/许可审阅 $2k–4k；差旅/社区/活动 $1k–2k。合计 **$45k–65k/月**；24 个月约 **$1.1–1.6M**（含 P4 安全审计一次性支出的摊薄）。
@@ -390,7 +401,7 @@ gantt
 |---|---|---|
 | M0 | 2026-11 | 路线图冻结；P0 启动 |
 | M1 | 2026-12 | 两手工世界成形；握手状态机 v0.1 |
-| M2 | 2027-01 | **G0**：SHP v0.1 + weave-check + 双节点互跳 |
+| M2 | 2027-01-25 | **G0**：SHP v0.1 + weave-check 22/22 + 双节点互跳 10/10 + 外部复现 |
 | M3 | 2027-02 | 骨架编译管线贯通（套件 + 布局） |
 | M5 | 2027-04 | 评测集 20 条跑通；修复循环 ≤3 轮 |
 | M6 | 2027-05 | **G1**：PR-20 ≥70% + HHT <1.5s |

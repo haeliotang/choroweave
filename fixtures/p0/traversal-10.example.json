@@ -1,0 +1,19 @@
+{
+  "fixture": "p0",
+  "worlds": {
+    "a": "https://alice.example/worlds/pixel-rooftop/world.json",
+    "b": "https://hana.example/worlds/neon-alley/world.json"
+  },
+  "jumps": [
+    { "n": 1, "from": "a", "to": "b", "expect": "ok" },
+    { "n": 2, "from": "b", "to": "a", "expect": "ok" },
+    { "n": 3, "from": "a", "to": "b", "expect": "ok" },
+    { "n": 4, "from": "b", "to": "a", "expect": "ok" },
+    { "n": 5, "from": "a", "to": "b", "expect": "ok" },
+    { "n": 6, "from": "b", "to": "a", "expect": "ok" },
+    { "n": 7, "from": "a", "to": "b", "expect": "ok" },
+    { "n": 8, "from": "b", "to": "a", "expect": "ok" },
+    { "n": 9, "from": "a", "to": "b", "expect": "ok" },
+    { "n": 10, "from": "b", "to": "a", "expect": "ok", "note": "target restarted once before this jump" }
+  ]
+}

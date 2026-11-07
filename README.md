@@ -48,6 +48,7 @@ All claims are evidence-graded (A = primary source, B = third-party test/report,
 | [`docs/en/research/`](docs/en/research/) | Four primary research reports (spatial networks / generative 3D / runtime standards / market) |
 | [`schemas/`](schemas/) | JSON Schemas for Spatial-DSL, `world.json`, and the tacitweave ISS contract |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | The flagship example world ("pixel rooftop"), DSL + signed manifest |
+| [`fixtures/p0/`](fixtures/p0/README.md) | Frozen two-world P0 fixtures (canonical IDs/URLs, hosts mapping, 10-jump script) |
 | [`scripts/validate.mjs`](scripts/validate.mjs) | Zero-dependency repo self-check (schemas, example, signatures, links) |
 
 > **Language note:** the plan is **English-first**. English documents live under [`docs/en/`](docs/en/); the Chinese originals remain under [`docs/`](docs/) with a language banner. A full Chinese README is at [`README.zh-CN.md`](README.zh-CN.md).

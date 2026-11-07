@@ -74,10 +74,37 @@
 | Browser | Chrome/Edge ≥ latest two stable versions (WebGL2 required at minimum); Quest Browser smoke test; desktop Safari is not promised in P1 (WebXR/WebGPU status in [`research/03`](research/03-runtime-standards.md) §3.2) |
 | Network | ① LAN (HHT baseline); ② public broadband; ③ Fast 4G emulation (1.6 Mbps / 750 kbps / 150 ms) for CST and constrained-network degradation |
 | Hardware | Desktop: 4 cores / 16 GB / integrated GPU is enough; XR devices: Quest 2 or Pico 4 (XR-Low smoke test), Quest 3 (gate from P2) |
-| Asset prerequisites | [`schemas/spatial-dsl.schema.json`](../../schemas/spatial-dsl.schema.json), [`schemas/world-manifest.schema.json`](../../schemas/world-manifest.schema.json), [`examples/pixel-rooftop/`](../../examples/pixel-rooftop/) (a first version exists); a second world (working name `pixel-night-market`) is created within P0 — examples and schemas follow the finalized 03/04 |
+| Asset prerequisites | [`schemas/spatial-dsl.schema.json`](../../schemas/spatial-dsl.schema.json), [`schemas/world-manifest.schema.json`](../../schemas/world-manifest.schema.json), [`examples/pixel-rooftop/`](../../examples/pixel-rooftop/) (a first version exists); a second world `neon-alley` (`https://hana.example/worlds/neon-alley/world.json`, see §2.1) is created in P0-1 — examples and schemas follow the finalized 03/04 |
 | Identity | No accounts in P0 (local random identity + node signature); P1 optional Passkey local identity, no cross-node migration (`did:web` from P2) |
 | Telemetry | Off by default; explicit opt-in to enable; aggregated metrics only (see [`07`](07-risks-compliance.md) §7) |
 | Data | No minors' data; no biometric data; user assets are not uploaded to the project's servers (self-hosting first) |
+
+---
+
+## 2.1 P0 work packages, two-world fixtures and gate (2027-01-25)
+
+**Work packages (P0-1 → P0-4)**
+
+| ID | Work package | Deliverable and acceptance |
+|---|---|---|
+| P0-1 | Two real worlds + minimal Babylon runtime | Build `pixel-rooftop` and `neon-alley` from simple geometry, deploy on two nodes; first-person roaming + portal trigger work; zero generative calls |
+| P0-2 | SHP portal traversal | Discovery → capability check → confirmation → switch → rollback; bidirectional 10/10, `HHT` p95 <1.5 s |
+| P0-3 | `weave-check` | 22 conformance cases executable; good fixtures 22/22, bad fixtures fail with diagnostics |
+| P0-4 | CI + external reproduction | `pnpm test:p0` in CI; an external developer deploys two nodes and traverses both ways within 30 minutes |
+
+**Frozen two-world fixtures (ID / URL / directory)**
+
+| World ID | Node domain | Canonical URL (must match distribution) | Fixture directory | Notes |
+|---|---|---|---|---|
+| `pixel-rooftop` | `alice.example` (Node A) | `https://alice.example/worlds/pixel-rooftop/world.json` | `examples/pixel-rooftop/` | `world.json.id` already points here |
+| `neon-alley` | `hana.example` (Node B) | `https://hana.example/worlds/neon-alley/world.json` | `examples/neon-alley/` (created in P0-1) | the portal target in `pixel-rooftop/world.json` already points here |
+
+- **Frozen**: world IDs, URLs, portal ID `door_to_neon_alley`, spawn node `spawn_default`; changes require an SHP minor version bump + fixture update — no "decide during implementation".
+- **Local fixture**: map `alice.example` / `hana.example` to `127.0.0.1` via `/etc/hosts`; issue certs for both domains from a local CA (mkcert); reverse-proxy port 443 so canonical URLs stay unchanged (or inject `--resolve` in the test runtime).
+- **Fixture files (created in P0)**: `fixtures/p0/hosts`, `fixtures/p0/nodes.yaml` (node dirs/ports/certs), `fixtures/p0/traversal-10.json` (10 bidirectional jumps), `fixtures/p0/golden/` (golden copies of both signed `world.json` files).
+- **CI gates**: `pnpm test:p0` (10/10 + 22/22) and `node scripts/validate.mjs --strict` are blocking.
+- **Fixture spec**: [`fixtures/p0/README.md`](../../fixtures/p0/README.md) (hosts example, 10-jump script, golden-copy convention).
+- **G0 decision gate**: **2027-01-25**; exit = bidirectional 10/10 + `weave-check` 22/22 + ≥1 external developer reproduction + zero generative calls.
 
 ---
 
@@ -108,7 +135,7 @@
 | **US-P1-03** | Creator (Lin Lan) | 3 of their own GLBs + an exhibition description | Compile an exhibition space | The 3 works are placed on walls/pedestals, have labels, and there is a door to a second world | Proportion error ≤30%; walkable and standable; labels readable |
 | **US-P1-04** | Small-community host (Azhe) | A "screening room" template | Compile and set the event-time copy | Produces a screening room for 8 people (single-user acceptance in P1; multi-user in P2), with correct screen orientation and sittable seats | Seat/screen scale correct; `CPR` 100% |
 | **US-P1-05** | Visitor | Entering a world with a radio | Walk up and click the radio | Plays Lo-Fi (`KHR_interactivity` L0 behavior graph + audio); **respects browser autoplay policy** (first playback needs a user gesture) | No error without a gesture, only a "click to play" hint; playback starts <300ms after the gesture |
-| **US-P1-06** | Visitor | In front of the door on the wall of the generated world | Activate the portal to `pixel-night-market` | Prefetch → confirm → switch; **HHT p95 <1.5s**; after returning, the original world's state is preserved (radio still playing, position unchanged) | 5 round trips with consistent state |
+| **US-P1-06** | Visitor | In front of the door on the wall of the generated world | Activate the portal to `neon-alley` | Prefetch → confirm → switch; **HHT p95 <1.5s**; after returning, the original world's state is preserved (radio still playing, position unchanged) | 5 round trips with consistent state |
 | **US-P1-07** | Creator | An over-budget world (triangles/DCs/textures exceed XR-Mid) | Run the compiler | Automatically degrade LOD/textures/instancing and produce a report; if still over budget, `weave-check` fails with a location | After degradation it fits the XR-Mid budget; the report includes a before/after comparison |
 | **US-P1-08** | Visitor/creator | The prompt contains harmful intent (violent gameplay) | Compile | **Refuse the original intent, explain the boundary, and generate a safe alternative world** (e.g. a "water-gun / capture-the-flag playground") | 0 violent gameplay; the alternative world is playable; the refusal copy is readable |
 | **US-P1-09** | Creator (Lin Lan) | A compiled exhibition world | `choroweave publish --to ./node` | Publish to a self-hosted node; get an HTTPS URL + signed manifest + share link (`weave://` alias optional) | The link opens for others; signature verifiable; publishing finishes within 1 minute |
@@ -125,7 +152,7 @@
 ### 5.1 Setting
 
 - **World 1 · Pixel Rooftop**: dusk pixel-art style; ground/railings/water tower (per `examples/pixel-rooftop`); an old radio (click to play Lo-Fi); a glowing door on one wall (`CHW_portal` → World 2).
-- **World 2 · Pixel Night Market** (`pixel-night-market`, deployed on **another node**; working name, per the finalized 03): lanterns, noodle stalls, neon signs; one return door.
+- **World 2 · Neon Alley** (`neon-alley`, deployed on **another node** `hana.example`; IDs and URLs frozen, see §2.1): neon signs, awnings, wet alley; one door back to the rooftop.
 - **Goal**: from "one sentence" to "two worlds round-tripped with state preserved" in **under 8 minutes**; no white screens and no raw, untranslated error dialogs at any point.
 
 ### 5.2 Prerequisites
@@ -145,8 +172,8 @@ Desktop Chrome (WebGL2); `@choroweave/*` P1 build; two local/public nodes; the d
 | S7 | Open the share URL in an incognito window | The world is operable; `CST` p95 <5s; clean console | ≤5s | Slow-network timeout → loading page + progress + cancellable |
 | S8 | Walk to the radio → click | Lo-Fi plays (<300ms after the user gesture); click again to pause; state preserved | ≤1s | Autoplay blocked → show a "click to play" hint (no error) |
 | S9 | Walk toward the glowing door on the wall (≤3m) | The door highlights; target world name + target domain + permission notice shown; proximity prefetch starts | ≤1.5s | Cross-origin prefetch fails → show "target node not responding", retry still allowed |
-| S10 | Confirm entry | Atomic switch: save avatar/position → join target session → load the night market; **HHT <1.5s**; identity and appearance carry over | ≤1.5s | Target room full/refused → enter read-only preview + notice; roll back to the original world with state intact |
-| S11 | Find the return door in the night market → activate | Back on the rooftop; the radio is still playing and the position is preserved; night-market state does not leak into the rooftop | ≤1.5s | Return target offline → static preview + "visit later" (US-P0-04) |
+| S10 | Confirm entry | Atomic switch: save avatar/position → join target session → load Neon Alley; **HHT <1.5s**; identity and appearance carry over | ≤1.5s | Target room full/refused → enter read-only preview + notice; roll back to the original world with state intact |
+| S11 | Find the return door in Neon Alley → activate | Back on the rooftop; the radio is still playing and the position is preserved; Neon Alley state does not leak into the rooftop | ≤1.5s | Return target offline → static preview + "visit later" (US-P0-04) |
 | S12 | Wrap-up: full-bundle `weave-check` + export | Report shows 0 errors; export World Bundle + SHA-256 + SBOM; build reproducible | ≤30s | Validation fails → block share-link generation and point to the location |
 
 ### 5.4 Demo acceptance criteria
@@ -273,13 +300,13 @@ Desktop Chrome (WebGL2); `@choroweave/*` P1 build; two local/public nodes; the d
 | CLI | `choroweave` (aggregate CLI: `build/preview/publish/eval`) | Complete `--help`; semantic exit codes (0 success / 1 validation failure / 2 bad arguments / 3 internal error) |
 | Conformance suite | `weave-check` (CLI + the 22 cases in [`04`](04-spatial-hyperlink-protocol.md) §12, expanded to 80 in P2) | Good samples all pass, bad samples all fail; stable JSON report |
 | Schemas | [`schemas/spatial-dsl.schema.json`](../../schemas/spatial-dsl.schema.json), [`schemas/world-manifest.schema.json`](../../schemas/world-manifest.schema.json) | 0 errors for both example worlds; fields consistent with [`04`](04-spatial-hyperlink-protocol.md) |
-| Examples | [`examples/pixel-rooftop/`](../../examples/pixel-rooftop/), `examples/pixel-night-market/` | Pass `weave-check`; include a hand-built vs compiled comparison |
+| Examples | [`examples/pixel-rooftop/`](../../examples/pixel-rooftop/), `examples/neon-alley/` | Pass `weave-check`; include a hand-built vs compiled comparison |
 | Node image | `ghcr.io/choroweave/node:<version>` (Docker) | Start a node with one command; `node doctor` passes |
 | Docs | 02/03/04/05/06 (this file) + [README](../../README.md) navigation | All relative links reachable |
 | Supply chain | CycloneDX SBOM + artifact SHA-256 manifest + license scan report | 0 GPL/AGPL in core packages; Hunyuan provider off by default and weights not distributed with the package |
 | Evaluation | `eval/` test set + `eval/report.json` + human scoring sheets | Reproducible; the report contains all 20 items |
 
-### 9.2 Acceptance commands (P0 gate)
+### 9.2 Acceptance commands (P0 gate, G0 = 2027-01-25)
 
 | # | Command | Expected | Gate |
 |---|---|---|---|
@@ -290,6 +317,8 @@ Desktop Chrome (WebGL2); `@choroweave/*` P1 build; two local/public nodes; the d
 | 5 | `npx @choroweave/node start --root ./dist --port 8787` | `/.well-known/weave-node.json` returns 200 with complete fields | Blocking |
 | 6 | `npx @choroweave/check --conformance --against http://localhost:8787` | 22/22 pass ([`04`](04-spatial-hyperlink-protocol.md) §12) | Blocking |
 | 7 | Two nodes, manual hop 10 times (US-P0-03) | 10/10; `HHT` p95 <1.5s | Blocking |
+| 8 | `pnpm test:p0` (`fixtures/p0/`) | Bidirectional 10/10 + `weave-check` 22/22 | Blocking |
+| 9 | External reproduction runbook (README + `fixtures/p0`) | ≥1 external developer completes two-node traversal within 30 minutes | Blocking |
 
 ### 9.3 Acceptance commands (P1 gate)
 

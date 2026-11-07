@@ -23,7 +23,7 @@
 
 | Stage | Time | One-line goal | Exit Criteria | Gate |
 |---|---|---|---|---|
-| **P0** Protocol validation | M0–M2 | Hand-build two worlds and connect them with one door; freeze SHP v0.1 | Two self-hosted nodes can jump to each other; `weave-check` verifies; no AI involved | **G0** |
+| **P0** Protocol validation | M0–M2 (G0 = 2027-01-25) | Hand-build two worlds and connect them with one door; freeze SHP v0.1 | Bidirectional traversal 10/10; `weave-check` 22/22; ≥1 external developer reproduction; no AI | **G0** |
 | **P1** Compiler MVP | M2–M6 | Generate a single room from one sentence; enterable, interactive, and able to jump to another world | ≥70% of 20 evaluation prompts produce a playable world; hot switch < 1.5s | **G1** |
 | **P2** Multiplayer network | M6–M12 | Real-people multiplayer rooms + portal traversal + self-hosted nodes + avatars | 20-person room stable for 30 minutes; cross-node visiting demo; specification v0.5 | **G2** |
 | **P3** Ecosystem and agents | M12–M18 | Resident agents, spatial evolution, community node network | 100 public worlds / 10 third-party nodes; agent reception demo | **G3** |
@@ -75,7 +75,7 @@ gantt
 
 | Gate | Timing | Go conditions (all must hold) | No-Go / degraded action |
 |---|---|---|---|
-| **G0** | M2 / 2027-01 | 10/10 successful jumps between two nodes; SHP v0.1 frozen (0 blockers); `weave-check` 22/22 passing ([`04`](04-spatial-hyperlink-protocol.md) §12 full case set); 0 generative-model calls throughout; ≥1 external developer reproduces it | Narrow scope to "single node + internal portal", degrade SHP to a "single-node world bundle specification"; **no headcount expansion**, re-evaluate the protocol route |
+| **G0** | M2 / 2027-01-25 | 10/10 successful jumps between two nodes; SHP v0.1 frozen (0 blockers); `weave-check` 22/22 passing ([`04`](04-spatial-hyperlink-protocol.md) §12 full case set); 0 generative-model calls throughout; ≥1 external developer reproduces it | Narrow scope to "single node + internal portal", degrade SHP to a "single-node world bundle specification"; **no headcount expansion**, re-evaluate the protocol route |
 | **G1** | M6 / 2027-05 | ≥70% of 20 evaluations playable (`PR-20`); hot switch p95 < 1.5s (`HHT`); Desktop 60fps (`FT`); 2 security cases 100% rejected; `CPR` 100% | 50–70%: change the promise to "template-first + generation-enhanced", lower the target to 50%, delay P1 by 1 month, do not enter P2 yet; <50%: stop the in-house compiler, pivot to "suite + agent toolchain" (major pivot requiring funder sign-off) |
 | **G2** | M12 / 2027-11 | 20-person room stable for 30 minutes (`RS-30`); one-click self-hosted node (`NBS`) completed by a non-author; cross-node visiting demo; specification v0.5 frozen | Stability not met: fall back to 8-person rooms + asynchronous viewing (recorded playback), postpone the P3 resident agent |
 | **G3** | M18 / 2028-05 | 100 public worlds / 10 third-party nodes; `W1R` week-2 return rate ≥25%; agent reception demo | <5 third-party nodes: stop the "node federation" narrative, pivot to "hosted service + single node, multiple worlds"; degrade the P4 standards route to "follow MSF" (no conformance submission) |
@@ -91,9 +91,20 @@ gantt
 
 **Goal**: with no AI, hand-build two worlds + one door, and run through and freeze "world manifest / addressing / portal / traversal handshake / node discovery / conformance verification" as SHP v0.1. P0 is "a correctness test of the protocol", not a product.
 
+**Work packages (P0-1 → P0-4, strict order)**
+
+| ID | Work package | Deliverable and acceptance |
+|---|---|---|
+| P0-1 | Two real worlds + minimal Babylon runtime | `pixel-rooftop` (`https://alice.example/worlds/pixel-rooftop/world.json`) and `neon-alley` (`https://hana.example/worlds/neon-alley/world.json`) deployed on two self-hosted nodes; first-person roaming; both worlds enterable; **zero generative-model calls** |
+| P0-2 | SHP portal traversal | Discovery → capability check → user confirmation → room/scene switch → rollback on failure; bidirectional **10/10**, `HHT` p95 <1.5 s |
+| P0-3 | `weave-check` 22 conformance cases | Implement the 22 requirements in [`04`](04-spatial-hyperlink-protocol.md) §12 as executable tests; good fixtures **22/22**, bad fixtures must fail with diagnostics |
+| P0-4 | CI + external reproduction | GitHub Actions runs `validate + weave-check + two-node smoke`; an external developer follows the runbook to deploy two nodes and traverse both ways in 30 minutes (**≥1** recorded) |
+
+> Ordering: do not start P0-2 before P0-1 passes; do not start P0-4 before P0-2 passes. P0-3 can be written in parallel with P0-2, but the gate requires 22/22 green. W1–W4 are continuous workstreams; mapping: P0-1≈W2+W3, P0-2≈W3, P0-3≈W1+W4, P0-4≈W4.
+
 **Workstreams**
 - W1 Protocol and schema: `world.json` v0.1; freeze fields for `CHW_portal`/`CHW_collider`/`CHW_logic`; SHP v0.1 text + conformance case list (aligned with [`04`](04-spatial-hyperlink-protocol.md)).
-- W2 Two hand-built worlds: `pixel-rooftop` (rooftop + radio + door in the wall) and `pixel-night-market` (the second world, deployed on a different node; **working title, subject to 03's final naming**), all placed by hand with the suite, no generative model.
+- W2 Two hand-built worlds: `pixel-rooftop` (rooftop + radio + door in the wall) and `neon-alley` (the second world, deployed on another node `hana.example`; IDs/URLs frozen, see 06 §2.1), all placed by hand with the suite, no generative model.
 - W3 Reference runtime: Babylon.js 8.x scene loading, first-person roaming, input abstraction, portal-switch state machine (prefetch → validate → confirm → join → swap → rollback), WebGL2 by default.
 - W4 Node and conformance: `@choroweave/node` static hosting + `/.well-known/weave-node.json` discovery + optional single-room WSP v0.1 codec (defined but multiplayer usage not required); `@choroweave/check` validation of `world.json`/glTF/portals/budgets.
 
@@ -103,7 +114,7 @@ gantt
 |---|---|---|
 | SHP v0.1 (addressing, manifest, portal, handshake, degradation) | `docs/04` + `@choroweave/protocol` | An external implementer can write a minimal portal viewer from the documents alone |
 | `world.json` v0.1 Schema + `CHW_portal`/`CHW_collider`/`CHW_logic` | `schemas/`, `schemas/world-manifest.schema.json` | Schema validates both example worlds with 0 errors |
-| Two hand-built worlds (across two self-hosted nodes) | `examples/pixel-rooftop/`, `examples/pixel-night-market/` | The two nodes can jump to each other; door position/orientation correct |
+| Two hand-built worlds (across two self-hosted nodes) | `examples/pixel-rooftop/`, `examples/neon-alley/` | The two nodes can jump to each other; door position/orientation correct |
 | Entry/portal switching (P0 minimal viewer) | `apps/playground` (formalized as `@choroweave/runtime` from P1, see §8 alignment 1) | Hot switch p95 < 1.5s; degraded page when the target is offline |
 | Conformance suite | `@choroweave/check` (`weave-check` CLI) | All 22 cases in [`04`](04-spatial-hyperlink-protocol.md) §12 pass |
 | Node discovery and signing | `@choroweave/node` + `@choroweave/protocol` | ed25519 signature verification; covered by `weave-check` |
@@ -126,7 +137,7 @@ gantt
 
 **Goal**: make "one sentence → a playable world" hold within a controlled scope: the LLM produces only Schema-constrained Spatial-DSL, and a deterministic pipeline handles layout, assembly, collision, LOD, behavior graphs, and validation. **This is the product's first external promise.**
 
-**Workstreams**
+
 - W1 Intent layer: `@choroweave/dsl` (AST + Schema + semantic validation); tacitweave's **ISS** as an optional input (contract in `03` §8); P1 only consumes it, never produces it.
 - W2 Skeleton and assembly: deterministic layout solving (rooms/walls/doors/windows/lighting/reachability) + suite library + `@choroweave/assembler` (glb assembly, collision hulls, LOD, material baking, scale normalization).
 - W3 Assets: `@choroweave/provider-trellis` (TRELLIS.2, MIT, default) + `@choroweave/provider-kit` (modular suite, guaranteeing proportions and collision); the Hunyuan provider is an optional plugin only, off by default (R-07).
@@ -138,7 +149,7 @@ gantt
 **Exit Criteria (testable)**
 1. **≥70%** of the 20 evaluation prompts produce a playable world (`PR-20` defined in §5.1: weighted total ≥3.5 and playability ≥3 and safety ≥3).
 2. Compiled output passes glTF Validator + `KHR_interactivity` strictValidation **100%**; behavior graphs have no undeclared external references.
-3. `HHT` p95 <1.5s (compiled world → `pixel-night-market`); `CST` p95 <5s.
+3. `HHT` p95 <1.5s (compiled world → `neon-alley`); `CST` p95 <5s.
 4. Standard tier `CPW` ≤ **$8/world** (consistent with `00` §8; 02 ADR-09's engineering estimate range is $0.5–8, see [`07`](07-risks-compliance.md) §3); time targets per **draft ≤10 min / standard ≤20 min** (`00` §8 has been synchronized per the ruling; 02 ADR-09's "standard 20–40 min" is a feasibility estimate, not a delivery target).
 5. Security cases (2/20) 100% rejected or degraded; no arbitrary JS in world bundles.
 
@@ -154,11 +165,11 @@ gantt
 
 **Goal**: real people present: 20-person rooms, avatars, voice, cross-node visiting, event cruising. **P2 is the first real test of "network effects".**
 
-**Workstreams**
+
 - W1 Real-time layer: `@choroweave/protocol` WSP v0.2 (WebSocket authoritative + abstracted WebTransport/WebRTC backends; **poses at 15Hz** ([`03`](03-architecture.md) §5.4 default, configurable 10–20Hz), snapshot once per second + deltas, client interpolation); LiveKit voice (self-hosted, Apache-2.0).
 - W2 Room service and node: `@choroweave/node` room service v0.1 (20 CCU/room, optional static mode); one-click self-hosting (`docker compose up` or `npx @choroweave/node init`); `/.well-known/weave-node.json` capability negotiation upgrade.
 - W3 Avatars and state: `CHW_avatar` v0.1 (glTF humanoid stand-in; P2 evaluates VRM/three-vrm adaptation); sync whitelist (glTF Object Model JSON Pointers); state handoff on enter/leave/portal traversal.
-- W4 Cruising product: event world templates (screening room/exhibition/night market) + a cruising schedule protocol (P2 proposal: node-side `/.well-known/weave-events.json`, **subject to 04's RFC process**); `pixel-night-market` as an event node.
+- W4 Cruising product: event world templates (screening room/exhibition/night market) + a cruising schedule protocol (P2 proposal: node-side `/.well-known/weave-events.json`, **subject to 04's RFC process**); `neon-alley` as an event node.
 - W5 Specification v0.5: SHP v0.5 (multiplayer rooms, capability negotiation, cross-node trust, deprecation policy) + conformance cases expanded to 80.
 
 **Deliverables**: WSP v0.2 and SHP v0.5, `@choroweave/node` room service v0.1 + one-click self-hosting, `@choroweave/runtime` multiplayer adaptation, `CHW_avatar` v0.1, LiveKit integration, cross-node visiting demo (three nodes), cruising event template, 20-person load-test report.
@@ -182,7 +193,7 @@ gantt
 
 **Goal**: go from "a playable demo" to "a network people keep visiting and deploy themselves": discovery layer, resident agents, spatial evolution, L2 sandbox, node ecosystem.
 
-**Workstreams**
+
 - W1 Discovery and indexing: `choroweave/discover` (optional service, not protocol-mandated): world index, tags, event calendar, node health; `world.json` gains an optional `indexing` declaration (**P3 proposal, subject to RFC**; 04 v0.1 currently has no such field).
 - W2 Resident agents (node side): agent runtime (reception/guidance/Q&A/event hosting); L1 curated networked modules (gomoku/quiz/fishing and other parameterized ones); agent behavior only through whitelisted APIs and capabilities declared by `CHW_logic`; conversations and tool calls leave audit logs.
 - W3 Spatial evolution: `world.json` version diff + incremental publishing + portal compatibility (migration rules for old doors pointing at new versions); content hashes and signatures.
@@ -211,7 +222,7 @@ gantt
 
 **Goal**: turn "it runs" into "third parties can implement it": deep WebXR adaptation, SHP v1.0, conformance ecosystem, governance handover.
 
-**Workstreams**
+
 - W1 WebXR: land the Quest 3 72fps budget (draw call/triangle/VRAM gates become engine startup checks); visionOS Safari dual track (WebXR primary + `<model>`/Immersive API enhanced degraded path, see [`research/03`](research/03-runtime-standards.md) §3.3); measured calibration across the `XR-Low/Mid/Apple` three-tier device matrix.
 - W2 WebTransport default: WSP v1.0 transport switch; WebRTC DataChannel fallback; LiveKit voice by default.
 - W3 Standards: SHP v1.0 frozen; `CHW_portal` submitted to OMI Stage 1 (W3C CG); mapping document with MSF "Web of Worlds"/X3D 4.1 Anchor/Inline; Khronos glTF community submission (aligning with glTF 2.1 external-reference semantics, see [`research/03`](research/03-runtime-standards.md) §3.1.1).
@@ -389,7 +400,7 @@ gantt
 |---|---|---|
 | M0 | 2026-11 | Roadmap frozen; P0 starts |
 | M1 | 2026-12 | Two hand-built worlds take shape; handshake state machine v0.1 |
-| M2 | 2027-01 | **G0**: SHP v0.1 + weave-check + two-node mutual jumps |
+| M2 | 2027-01-25 | **G0**: SHP v0.1 + weave-check 22/22 + two-node traversal 10/10 + external reproduction |
 | M3 | 2027-02 | Skeleton compile pipeline connected end to end (suite + layout) |
 | M5 | 2027-04 | 20-prompt evaluation set runs; repair loop ≤3 rounds |
 | M6 | 2027-05 | **G1**: PR-20 ≥70% + HHT <1.5s |

@@ -43,6 +43,7 @@ choroweave 是 **Inceptless** 矩阵中的"空间计算层"项目。它不做一
 | [`docs/research/`](docs/research/) | 四份原始调研（空间网络 / 生成式 3D / 运行时标准 / 市场先例） |
 | [`schemas/`](schemas/) | Spatial-DSL、world.json 与 ISS 契约的 JSON Schema（v0.1） |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | 旗舰示例世界"像素天台"的 DSL、签名清单与说明 |
+| [`fixtures/p0/`](fixtures/p0/README.md) | P0 双世界固定夹具（规范 ID/URL、hosts 映射、10 次跳转脚本） |
 | [`scripts/validate.mjs`](scripts/validate.mjs) | 零依赖仓库自检（Schema / 示例 / 签名 / 链接） |
 
 快速自检（Node ≥ 18，无需安装依赖）：

@@ -1,0 +1,3 @@
+# Reserved P0 test domains — do not use as public DNS.
+127.0.0.1 alice.example
+127.0.0.1 hana.example

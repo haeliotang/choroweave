@@ -74,7 +74,7 @@ Market evidence shows: **users stay for events, not for spaces** (VRChat's peak 
 
 | Phase | Time | Goal | Exit criteria (Gate) |
 |---|---|---|---|
-| **P0 Protocol validation** | M0-M2 | Hand-build two worlds, nodes link to each other; SHP v0.1 + `weave-check`; zero AI | G0: two nodes link successfully, protocol v0.1 frozen, conformance suite runnable |
+| **P0 Protocol validation** | M0–M2 (gate **2027-01-25**) | Hand-build two worlds, nodes traverse both ways; SHP v0.1 + `weave-check`; zero AI | G0: bidirectional traversal **10/10**, `weave-check` **22/22**, ≥1 external developer reproduction, zero generative calls |
 | **P1 Compiler MVP** | M2-M6 | One sentence → a playable single-room world; entry, object interaction, two-world traversal; flagship demo | G1: ≥70% of 20 evaluations playable, hot switch <1.5s, desktop 60fps |
 | **P2 Multiplayer networking** | M6-M12 | 20-person rooms, WebTransport, one-click self-hosted node deployment, avatars/access gating | G2: 20 people stable for 30 minutes, cross-node traversal demo, spec v0.5 |
 | **P3 Ecosystem and agents** | M12-M18 | Resident Agent reception, spatial evolution, community node network, 3DGS visual experiments | G3: 100 public worlds / 10 third-party nodes, next-week return rate ≥25% |

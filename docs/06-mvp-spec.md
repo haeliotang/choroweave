@@ -75,10 +75,35 @@
 | 浏览器 | Chrome/Edge ≥ 最新两个稳定版（WebGL2 必保底）；Quest Browser 冒烟；Safari 桌面不在 P1 承诺内（WebXR/WebGPU 状态见 [`research/03`](research/03-runtime-standards.md) §3.2） |
 | 网络 | ① 局域网（HHT 基准）；② 公网宽带；③ Fast 4G 模拟（1.6 Mbps / 750 kbps / 150 ms）用于 CST 与弱网降级 |
 | 硬件 | Desktop：4 核 / 16 GB / 集显可跑；XR 设备：Quest 2 或 Pico 4（XR-Low 冒烟）、Quest 3（P2 起门禁） |
-| 资产前置 | `schemas/spatial-dsl.schema.json`、`schemas/world-manifest.schema.json`、`examples/pixel-rooftop/`（已有初版）；第二个世界（暂名 `pixel-night-market`）在 P0 内建立——示例与 Schema 以 03/04 定稿为准 |
+| 资产前置 | `schemas/spatial-dsl.schema.json`、`schemas/world-manifest.schema.json`、`examples/pixel-rooftop/`（已有初版）；第二个世界 `neon-alley`（`https://hana.example/worlds/neon-alley/world.json`，见 §2.1）在 P0-1 内建立——示例与 Schema 以 03/04 定稿为准 |
 | 身份 | P0 无账号（本地随机身份 + 节点签名）；P1 可选 Passkey 本地身份，不做跨节点迁移（P2 起 `did:web`） |
 | 遥测 | 默认关闭；开启需显式 opt-in，只上报聚合指标（见 [`07`](07-risks-compliance.md) §7） |
 | 数据 | 不采集未成年人数据；不采集生物特征；不上传用户资产到项目方服务器（自托管优先） |
+
+## 2.1 P0 工作包、双世界夹具与门禁（2027-01-25）
+
+**工作包（P0-1 → P0-4）**
+
+| ID | 工作包 | 交付与验收 |
+|---|---|---|
+| P0-1 | 两个真实世界 + Babylon 最小运行时 | 用简单几何体搭建 `pixel-rooftop` 与 `neon-alley`，分别部署到两个节点；第一人称漫游、门户触发可用；0 次生成调用 |
+| P0-2 | SHP 门户穿越 | 发现 → 能力检查 → 确认 → 切换 → 回滚；双向 10/10，`HHT` p95 <1.5s |
+| P0-3 | `weave-check` | 22 条一致性用例可执行；好样本 22/22，坏样本失败并定位 |
+| P0-4 | CI + 外部复现 | `pnpm test:p0` 进 CI；外部开发者 30 分钟内独立部署两节点并互跳 |
+
+**已冻结的双世界夹具（ID / URL / 目录）**
+
+| 世界 ID | 节点域 | 规范 URL（必须与实际分发一致） | 夹具目录 | 说明 |
+|---|---|---|---|---|
+| `pixel-rooftop` | `alice.example`（Node A） | `https://alice.example/worlds/pixel-rooftop/world.json` | `examples/pixel-rooftop/` | `world.json.id` 已指向该 URL |
+| `neon-alley` | `hana.example`（Node B） | `https://hana.example/worlds/neon-alley/world.json` | `examples/neon-alley/`（P0-1 建立） | `pixel-rooftop/world.json` 的门户目标已指向该 URL |
+
+- **冻结项**：世界 ID、URL、门户 ID `door_to_neon_alley`、出生点 `spawn_default`；变更需 SHP minor 版本升级 + 夹具同步，不接受"实现时再定"。
+- **本地夹具**：`/etc/hosts` 将 `alice.example` / `hana.example` 映射到 `127.0.0.1`；本地 CA（mkcert）签发两域证书；反向代理占用 443 以保持规范 URL 不变（或由测试运行时注入 `--resolve`）。
+- **夹具文件（P0 建立）**：`fixtures/p0/hosts`、`fixtures/p0/nodes.yaml`（两节点目录/端口/证书）、`fixtures/p0/traversal-10.json`（10 次双向跳转脚本）、`fixtures/p0/golden/`（两份签名 `world.json` 的黄金副本）。
+- **CI 门禁**：`pnpm test:p0`（10/10 + 22/22）与 `node scripts/validate.mjs --strict` 均为阻断项。
+- **夹具说明**：[`fixtures/p0/README.md`](../fixtures/p0/README.md)（hosts 示例、10 次跳转脚本、golden 副本约定）。
+- **G0 决策门**：**2027-01-25**；退出标准 = 双向 10/10 + `weave-check` 22/22 + ≥1 名外部开发者复现 + 0 次生成调用。
 
 ---
 
@@ -109,7 +134,7 @@
 | **US-P1-03** | 创作者（林岚） | 3 个自己的 GLB + 一段布展描述 | 编译一个展陈空间 | 3 个作品按墙面/展台摆放、有展签、有门去第二个世界 | 比例误差 ≤30%；可走可站；展签可读 |
 | **US-P1-04** | 小社区主（阿哲） | 一个"放映厅"模板 | 编译并设置活动时间文案 | 生成可容纳 8 人的放映厅（P1 单机验收，多人 P2），屏幕朝向正确、座位可坐 | 座位/屏幕尺度正确；`CPR` 100% |
 | **US-P1-05** | 访客 | 进入带收音机的世界 | 走近并点击收音机 | 播放 Lo-Fi（`KHR_interactivity` L0 行为图 + 音频）；**遵守浏览器自动播放策略**（首次需用户手势） | 无手势时不报错、提示"点击播放"；手势后 <300ms 起播 |
-| **US-P1-06** | 访客 | 在生成世界的墙上门前 | 激活门户到 `pixel-night-market` | 预取 → 确认 → 切换；**HHT p95 <1.5s**；返回后原世界状态保留（收音机仍开、位置不变） | 往返 5 次状态一致 |
+| **US-P1-06** | 访客 | 在生成世界的墙上门前 | 激活门户到 `neon-alley` | 预取 → 确认 → 切换；**HHT p95 <1.5s**；返回后原世界状态保留（收音机仍开、位置不变） | 往返 5 次状态一致 |
 | **US-P1-07** | 创作者 | 一个超预算的世界（三角形/DC/贴图超 XR-Mid） | 运行编译 | 自动降级 LOD/贴图/实例化并给出报告；仍超则 `weave-check` 失败并定位 | 降级后进入 XR-Mid 预算；报告含前后对比 |
 | **US-P1-08** | 访客/创作者 | 提示词包含有害意图（暴力玩法） | 编译 | **拒绝原意图、说明边界，并生成安全替代世界**（如"水枪/夺旗游乐场"） | 0 暴力玩法；替代世界可玩；拒绝文案可读 |
 | **US-P1-09** | 创作者（林岚） | 编译好的展陈世界 | `choroweave publish --to ./node` | 发布到自托管节点，得到 HTTPS URL + 签名 manifest + 分享链接（`weave://` 别名可选） | 链接可被他人打开；签名可验；发布 1 分钟内完成 |
@@ -126,7 +151,7 @@
 ### 5.1 设定
 
 - **世界 1 · 像素天台**：黄昏像素风；地面/护栏/水塔（以 `examples/pixel-rooftop` 为准）；一台老收音机（点击播 Lo-Fi）；一面墙上有发光门（`CHW_portal` → 世界 2）。
-- **世界 2 · 像素夜市**（`pixel-night-market`，部署在**另一个节点**；暂名，以 03 定稿为准）：灯笼、面摊、霓虹招牌；一扇返回门。
+- **世界 2 · 夜行小巷（Neon Alley）**（`neon-alley`，部署在**另一个节点** `hana.example`；ID 与 URL 已冻结，见 §2.1）：霓虹招牌、雨棚、湿漉巷道；一扇返回天台的门。
 - **目标**：**8 分钟内**从"一句话"走到"两个世界往返且状态保留"；全程不出现白屏、不出现英文报错弹窗。
 
 ### 5.2 前置
@@ -146,8 +171,8 @@ Desktop Chrome（WebGL2）；`@choroweave/*` P1 版本；两个本地/公网节�
 | S7 | 用分享 URL 在无痕窗口打开 | 世界可操作；`CST` p95 <5s；控制台干净 | ≤5s | 弱网超时 → 加载页 + 进度 + 可取消 |
 | S8 | 走近收音机 → 点击 | 播放 Lo-Fi（用户手势后 <300ms）；再次点击暂停；状态保留 | ≤1s | 自动播放被拦截 → 显示"点击播放"提示（不报错） |
 | S9 | 走向墙上的发光门（≤3m） | 门高亮；显示目标世界名 + 目标域名 + 权限说明；开始邻近预取 | ≤1.5s | 跨域预取失败 → 显示"目标节点未响应"，仍允许重试 |
-| S10 | 确认进入 | 原子切换：保存化身/位置 → 加入目标会话 → 加载夜市；**HHT <1.5s**；身份与外观延续 | ≤1.5s | 目标房间满/拒绝 → 进入只读预览 + 提示；回滚到原世界且状态不丢 |
-| S11 | 在夜市找返回门 → 激活 | 回到天台；收音机仍在播放、位置保留；夜市状态不污染天台 | ≤1.5s | 返回目标离线 → 静态预览 + "稍后再访"（US-P0-04） |
+| S10 | 确认进入 | 原子切换：保存化身/位置 → 加入目标会话 → 加载夜行小巷；**HHT <1.5s**；身份与外观延续 | ≤1.5s | 目标房间满/拒绝 → 进入只读预览 + 提示；回滚到原世界且状态不丢 |
+| S11 | 在夜行小巷找返回门 → 激活 | 回到天台；收音机仍在播放、位置保留；小巷状态不污染天台 | ≤1.5s | 返回目标离线 → 静态预览 + "稍后再访"（US-P0-04） |
 | S12 | 收尾：`weave-check` 全包校验 + 导出 | 报告 0 error；导出 World Bundle + SHA-256 + SBOM；可重复构建 | ≤30s | 校验失败 → 阻断分享链接生成，给定位 |
 
 ### 5.4 演示判定
@@ -274,13 +299,13 @@ Desktop Chrome（WebGL2）；`@choroweave/*` P1 版本；两个本地/公网节�
 | CLI | `choroweave`（聚合 CLI：`build/preview/publish/eval`） | `--help` 完整；退出码语义化（0 成功 / 1 校验失败 / 2 参数错 / 3 内部错） |
 | 一致性套件 | `weave-check`（CLI + [`04`](04-spatial-hyperlink-protocol.md) §12 的 22 条用例，P2 扩到 80） | 好样本全过、坏样本全失败；JSON 报告稳定 |
 | Schema | `schemas/spatial-dsl.schema.json`、`schemas/world-manifest.schema.json` | 两示例世界 0 error；与 [`04`](04-spatial-hyperlink-protocol.md) 字段一致 |
-| 示例 | `examples/pixel-rooftop/`、`examples/pixel-night-market/` | 通过 `weave-check`；含手工版与编译版对照说明 |
+| 示例 | `examples/pixel-rooftop/`、`examples/neon-alley/` | 通过 `weave-check`；含手工版与编译版对照说明 |
 | 节点镜像 | `ghcr.io/choroweave/node:<version>`（Docker） | 一条命令起节点；`node doctor` 通过 |
 | 文档 | 02/03/04/05/06（本文件） + README 导航 | 相对链接全部可达 |
 | 供应链 | CycloneDX SBOM + 产物 SHA-256 清单 + 许可证扫描报告 | 0 GPL/AGPL 进入核心包；Hunyuan provider 默认关闭且不随包分发权重 |
 | 评测 | `eval/` 测试集 + `eval/report.json` + 人工评分表 | 可复现；报告含 20 条明细 |
 
-### 9.2 验收命令（P0 门）
+### 9.2 验收命令（P0 门，G0 = 2027-01-25）
 
 | # | 命令 | 预期 | 门禁 |
 |---|---|---|---|
@@ -291,6 +316,8 @@ Desktop Chrome（WebGL2）；`@choroweave/*` P1 版本；两个本地/公网节�
 | 5 | `npx @choroweave/node start --root ./dist --port 8787` | `/.well-known/weave-node.json` 200 且字段完整 | 阻断 |
 | 6 | `npx @choroweave/check --conformance --against http://localhost:8787` | 22/22 通过（[`04`](04-spatial-hyperlink-protocol.md) §12） | 阻断 |
 | 7 | 双节点手工互跳 10 次（US-P0-03） | 10/10；`HHT` p95 <1.5s | 阻断 |
+| 8 | `pnpm test:p0`（`fixtures/p0/`） | 双向 10/10 + `weave-check` 22/22 | 阻断 |
+| 9 | 外部复现 runbook（README + `fixtures/p0`） | ≥1 名外部开发者 30 分钟内独立完成两节点互跳 | 阻断 |
 
 ### 9.3 验收命令（P1 门）
 
