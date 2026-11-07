@@ -269,7 +269,7 @@ async function arrive(origin, targetWorld) {
     body: JSON.stringify({ targetWorld, sessionId, nonce }),
   });
   const doc = await res.json();
-  if (!res.ok) throw new Error(`arrive failed: ${doc.error || res.status}`);
+  if (!res.ok) throw Object.assign(new Error(`arrive failed: ${doc.error || res.status}`), { code: doc.error });
   const consumed = await fetch(`${origin}/arrive/consume`, {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -280,7 +280,8 @@ async function arrive(origin, targetWorld) {
   return { token: doc.token, sessionId };
 }
 
-async function traverse(portal) {
+async function traverse(portal, opts = {}) {
+  if (opts.gesture === false) throw Object.assign(new Error("E_GESTURE_REQUIRED"), { code: "E_GESTURE_REQUIRED" });
   if (state.busy) return;
   state.busy = true;
   showLoading(`traversing to ${portal.title || "target world"}…`);
@@ -288,14 +289,25 @@ async function traverse(portal) {
   let next = null;
   try {
     if (FAIL_DEMO && !state.failedOnce) { state.failedOnce = true; throw new Error("simulated target node offline (demo)"); }
+    let singlePlayer = false;
     if (IS_LIVE) {
       const target = new URL(portal.target.url);
       assertTrusted(target.origin);
       await verifyNode(target.origin);
-      await arrive(target.origin, portal.target.url);
+      try {
+        await arrive(target.origin, portal.target.url);
+      } catch (err) {
+        if (err.code === "E_ROOM_FULL") {
+          singlePlayer = true;
+          showToast("target room is full — entering single-player preview");
+        } else {
+          throw err;
+        }
+      }
     }
     const local = resolveLocal(portal.target.url);
     next = await loadWorld(local, portal.target.url);
+    next.singlePlayer = singlePlayer;
     state.active = next;
     if (previous && previous !== next) previous.scene.dispose();
     updateHud(next);
@@ -363,11 +375,13 @@ async function boot() {
       world: state.active?.manifest.id ?? null,
       busy: state.busy,
       nearPortal: state.active ? nearPortal(state.active) : false,
+      singlePlayer: Boolean(state.active?.singlePlayer),
       prefetched: [...state.prefetched.keys()],
       budget: { used: budget.used, limit: budget.limit, aborted: budget.aborted },
       trust: state.trust ? Object.keys(state.trust) : [],
     }),
     traverse: () => (state.active?.portal ? traverse(state.active.portal) : Promise.reject(new Error("no portal"))),
+    autoTraverse: () => (state.active?.portal ? traverse(state.active.portal, { gesture: false }) : Promise.reject(new Error("no portal"))),
     enterDialog: () => (state.active ? openPortalDialog(state.active) : null),
     teleportToPortal: () => {
       const w = state.active;

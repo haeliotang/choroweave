@@ -27,6 +27,9 @@ const ORIGIN = arg("origin", `https://${NAME}.example:${PORT}`);
 const PEER = arg("peer", NAME === "alice" ? "https://hana.example:8444" : "https://alice.example:8443");
 const CLIENT_DIST = arg("client-dist", null);
 const TOKEN_TTL_MS = Number(process.env.P0_TOKEN_TTL_MS || 5000);
+const RATE_LIMIT = Number(process.env.P0_RATE_LIMIT || 60); // requests per 10s per client IP
+const ROOM_FULL = args.includes("--room-full");
+const PRIVATE = args.includes("--private");
 
 const worldId = NAME === "alice" ? "pixel-rooftop" : "neon-alley";
 const worldPath = join(ROOT, "worlds", worldId, "world.json");
@@ -51,7 +54,7 @@ function descriptor() {
   const doc = {
     protocol: { name: "SHP", version: "0.1" },
     node: { id: `did:web:${NAME}.example`, origin: ORIGIN, publicKey: publicJwk },
-    capabilities: { arrive: true, trustAnchors: true, maxPlayers: 20 },
+    capabilities: { arrive: true, trustAnchors: true, maxPlayers: 20, roomFull: ROOM_FULL, private: PRIVATE },
     worlds: [{ id: live.id, url: live.id, title: live.title }],
   };
   const value = sign(null, Buffer.from(canonicalize(doc)), privateKey).toString("base64url");
@@ -72,6 +75,18 @@ const CORS = {
   "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
   "Access-Control-Allow-Headers": "content-type",
 };
+const rateBuckets = new Map();
+function rateLimited(ip) {
+  const now = Date.now();
+  let b = rateBuckets.get(ip);
+  if (!b || now - b.start > 10_000) { b = { start: now, count: 0 }; rateBuckets.set(ip, b); }
+  b.count += 1;
+  return b.count > RATE_LIMIT;
+}
+function clientIp(req) {
+  return req.socket?.remoteAddress || "unknown";
+}
+
 function send(res, code, body, headers = {}) {
   res.writeHead(code, { ...CORS, "Cache-Control": "no-store", ...headers });
   if (typeof body === "string" || Buffer.isBuffer(body)) res.end(body);
@@ -129,7 +144,10 @@ const server = createServer(
         return send(res, 200, readFileSync(trust), { "Content-Type": "application/json" });
       }
       if (url.pathname === "/arrive" && req.method === "POST") {
+        if (rateLimited(clientIp(req))) return sendJson(res, 429, { error: "E_RATE_LIMITED", retryAfterSec: 10 });
         const body = await readJson(req);
+        if (PRIVATE) return sendJson(res, 404, { error: "E_NOT_FOUND" });
+        if (ROOM_FULL) return sendJson(res, 409, { error: "E_ROOM_FULL" });
         if (body.targetWorld !== live.id) return sendJson(res, 400, { error: "E_WRONG_WORLD" });
         if (!/^[A-Za-z0-9_-]{8,64}$/.test(body.sessionId || "")) return sendJson(res, 400, { error: "E_BAD_SESSION" });
         if (!/^[A-Za-z0-9_-]{16,64}$/.test(body.nonce || "")) return sendJson(res, 400, { error: "E_BAD_NONCE" });
@@ -142,6 +160,7 @@ const server = createServer(
         return sendJson(res, 200, { token, expiresAt: exp, world: live.id, sessionId: body.sessionId, node: ORIGIN });
       }
       if (url.pathname === "/arrive/consume" && req.method === "POST") {
+        if (rateLimited(clientIp(req))) return sendJson(res, 429, { error: "E_RATE_LIMITED", retryAfterSec: 10 });
         const body = await readJson(req);
         const rec = tokens.get(body.token);
         if (!rec) return sendJson(res, 404, { error: "E_TOKEN_UNKNOWN" });
@@ -175,6 +194,6 @@ const server = createServer(
 
 server.listen(PORT, "127.0.0.1", () => {
   console.log(`[p0-node ${NAME}] ${ORIGIN} -> ${worldId} (peer ${PEER})`);
-  console.log(`[p0-node ${NAME}] token ttl ${TOKEN_TTL_MS}ms; pid ${process.pid}`);
+  console.log(`[p0-node ${NAME}] token ttl ${TOKEN_TTL_MS}ms; rate ${RATE_LIMIT}/10s; roomFull=${ROOM_FULL} private=${PRIVATE}; pid ${process.pid}`);
 });
 for (const sig of ["SIGINT", "SIGTERM"]) process.on(sig, () => server.close(() => process.exit(0)));

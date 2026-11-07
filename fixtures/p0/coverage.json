@@ -1,0 +1,28 @@
+{
+  "schema": "p0-coverage/0.1",
+  "note": "Coverage of the 22 SHP conformance cases by suite. Mock is the authoritative 22-case suite; live layers cover protocol/runtime paths only.",
+  "cases": [
+    { "id": "WC-SHP-001", "title": "minimal valid world.json", "layers": ["mock", "live-node"] },
+    { "id": "WC-SHP-002", "title": "unknown fields/extensions ignored", "layers": ["mock"] },
+    { "id": "WC-SHP-003", "title": "id vs distribution URL warning", "layers": ["mock"] },
+    { "id": "WC-SHP-004", "title": "signature valid/tamper/wrong key", "layers": ["mock", "live-node"] },
+    { "id": "WC-SHP-005", "title": "JCS canonicalization", "layers": ["mock", "live-node"] },
+    { "id": "WC-SHP-006", "title": "CHW_portal fields/enums", "layers": ["mock", "live-node"] },
+    { "id": "WC-SHP-007", "title": "viewer without CHW_portal support", "layers": ["mock"] },
+    { "id": "WC-SHP-008", "title": "hostile targets rejected", "layers": ["mock", "live-browser"] },
+    { "id": "WC-SHP-009", "title": "target digest mismatch", "layers": ["mock"] },
+    { "id": "WC-SHP-010", "title": "handoff modes + stage order", "layers": ["mock", "live-browser"] },
+    { "id": "WC-SHP-011", "title": "target failure keeps source intact", "layers": ["mock", "live-browser"] },
+    { "id": "WC-SHP-012", "title": "arrive token replay", "layers": ["live-node"] },
+    { "id": "WC-SHP-013", "title": "arrive token expiry", "layers": ["live-node"] },
+    { "id": "WC-SHP-014", "title": "room full -> single-player fallback", "layers": ["mock", "live-hardening", "live-browser"] },
+    { "id": "WC-SHP-015", "title": "sync whitelist enforcement", "layers": ["mock", "live-browser"] },
+    { "id": "WC-SHP-016", "title": "prefetch budget", "layers": ["mock", "live-browser"] },
+    { "id": "WC-SHP-017", "title": "private world not enumerable", "layers": ["mock", "live-hardening"] },
+    { "id": "WC-SHP-018", "title": "unsigned world cannot carry avatar", "layers": ["mock"] },
+    { "id": "WC-SHP-019", "title": "major version mismatch", "layers": ["mock"] },
+    { "id": "WC-SHP-020", "title": "no user gesture -> no traversal", "layers": ["mock", "live-browser"] },
+    { "id": "WC-SHP-021", "title": "preview text escaping", "layers": ["mock"] },
+    { "id": "WC-SHP-022", "title": "portal cycle warn/block", "layers": ["mock"] }
+  ]
+}

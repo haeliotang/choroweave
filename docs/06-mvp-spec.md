@@ -103,6 +103,7 @@
 - **夹具文件**：`worlds/*/world.json` 与 `worlds/*/scene/world.glb`（`scripts/build-p0-worlds.mjs` 确定性生成）、`fixtures/p0/hosts.example`（hosts 映射）、`fixtures/p0/traversal-10.example.json`（10 次双向跳转脚本）、`scripts/e2e-p0.mjs`（headless 10/10 + 回滚）。
 - **CI 门禁**：`pnpm test:p0`（10/10 + 22/22）与 `node scripts/validate.mjs --strict` 均为阻断项。
 - **夹具说明**：[`fixtures/p0/README.md`](../fixtures/p0/README.md)（hosts 示例、10 次跳转脚本、golden 副本约定）。
+- **实现状态**：见 [`p0-status.md`](p0-status.md)。
 - **G0 决策门**：**2027-01-25**；退出标准 = 双向 10/10 + `weave-check` 22/22 + ≥1 名外部开发者复现 + 0 次生成调用。
 
 ---

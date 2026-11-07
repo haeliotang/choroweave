@@ -9,3 +9,5 @@ node_modules/
 .npm-cache/
 apps/*/dist/
 .p0-tls/
+.p0-reports/
+artifacts/

@@ -3,7 +3,7 @@
 > **把人的意图即时编译为可执行、可共在、可互访的 3D 空间，并让这些空间像网页一样互相链接。**
 > English (primary): [README.md](README.md) · 英文文档入口：[docs/en/](docs/en/README.md) · 仓库：<https://github.com/haeliotang/choroweave>
 
-> **状态（2026-11）：设计阶段 + P0-1/P0-2 原型。** 现已可运行：两个手搭世界、带门户穿越/回滚的 Babylon.js 9 运行器、**两个独立 HTTPS SHP 节点**（签名描述符 + pinned 信任锚 + 一次性 `arrive` token）；mock 一致性 **22/22**、live 节点一致性 **12/12**、live 浏览器 E2E **10/10 + 回滚**（[详情](docs/p0-status.md)）。**P0 验收仍未达成**（外部复现 + 全量 live 用例映射）。参与方式：[CONTRIBUTING.md](CONTRIBUTING.md) · 安全报告：[SECURITY.md](SECURITY.md)。
+> **状态（2026-11）：设计阶段 + P0-1/P0-2 加固。** 现已可运行：两个手搭世界、Babylon.js 9 运行器、**两个独立 HTTPS SHP 节点**（签名描述符 + pinned 信任锚 + 一次性 `arrive` token、限流、room-full/私有处理、密钥轮换）；mock **44/44**（2×22）、live 节点 **12/12**、加固 **4/4**、live 浏览器 **15/15**（10 次穿越 + 回滚 + 手势 + room-full + 预算 + 白名单），统一报告 PASS（[详情](docs/p0-status.md)）。**P0 验收仍需外部复现**；runbook：[docs/reproduce-p0.md](docs/reproduce-p0.md)。参与方式：[CONTRIBUTING.md](CONTRIBUTING.md) · 安全报告：[SECURITY.md](SECURITY.md)。
 
 choroweave 是 **Inceptless** 矩阵中的"空间计算层"项目。它不做一个封闭的元宇宙平台，而是做空间时代的 **编译器 + 超链接协议 + 参考实现**：
 
@@ -45,6 +45,7 @@ choroweave 是 **Inceptless** 矩阵中的"空间计算层"项目。它不做一
 | [`docs/research/`](docs/research/) | 四份原始调研（空间网络 / 生成式 3D / 运行时标准 / 市场先例） |
 | [`schemas/`](schemas/) | Spatial-DSL、world.json 与 ISS 契约的 JSON Schema（v0.1） |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | 旗舰示例世界"像素天台"的 DSL、签名清单与说明 |
+| [`docs/reproduce-p0.md`](docs/reproduce-p0.md) | 外部复现 runbook（P0-4 门禁） |
 | [`docs/p0-status.md`](docs/p0-status.md) | P0-1/P0-2 验证报告（mock/live 结果、性能、缺口） |
 | [`apps/playground/`](apps/playground/) | Babylon.js P0 运行器：加载 `world.json` + `scene/world.glb`、第一人称漫游、门户穿越与回滚 |
 | [`packages/check/`](packages/check/) | `weave-check` CLI + 22 条 SHP 一致性用例与测试 |
@@ -72,7 +73,11 @@ pnpm install
 pnpm run worlds:build   # 确定性生成 worlds/pixel-rooftop 与 worlds/neon-alley
 pnpm dev                # http://localhost:5173
 pnpm test:p0            # 清单校验 + 22/22 一致性用例（mock 会话）
+pnpm test:live          # live 双节点协议套件（严格 CA）
+pnpm test:hardening     # 限流、room-full、私有世界、密钥轮换
 pnpm test:e2e           # 走真实门户 UI 的 10 次双向跳转 + 回滚
+pnpm report:p0          # 统一 mock/live 一致性报告
+pnpm p0:up              # 一键启动双节点
 P0_LIVE=1 pnpm build && P0_LIVE=1 pnpm test:e2e   # 同上，但对两个 live HTTPS 节点
 ```
 

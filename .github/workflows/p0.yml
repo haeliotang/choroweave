@@ -26,15 +26,26 @@ jobs:
       - run: pnpm --filter @choroweave/playground build
       - run: node scripts/validate.mjs --strict
 
-      # P0-2: real two-node HTTPS handshake (strict CA in Node).
+      - run: mkdir -p .p0-reports
       - run: node scripts/tls-fixture.mjs
-      - run: node scripts/live-conformance.mjs
+      - run: node scripts/live-conformance.mjs --json-out .p0-reports/live-node.json
+      - run: node scripts/node-hardening.mjs --json-out .p0-reports/live-hardening.json
 
-      # P0-2: browser E2E through the actual portal UI against both nodes.
       - id: chrome
         uses: browser-actions/setup-chrome@v1
       - name: Browser E2E (live)
         env:
           P0_LIVE: "1"
           CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          P0_REPORT_OUT: .p0-reports/live-browser.json
         run: node scripts/e2e-p0.mjs
+
+      - name: Unified conformance report
+        run: node scripts/p0-report.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: p0-conformance
+          path: |
+            artifacts/p0-conformance.json
+            artifacts/p0-conformance.md
+            .p0-reports/

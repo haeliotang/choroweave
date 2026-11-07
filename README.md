@@ -5,7 +5,7 @@
 >
 > 中文版：[README.zh-CN.md](README.zh-CN.md) · Repository: <https://github.com/haeliotang/choroweave>
 
-> **Status (2026-11): design stage + P0-1/P0-2 prototype.** Runnable now: two hand-built worlds, a Babylon.js 9 playground with portal traversal/rollback, **two independent HTTPS SHP nodes** with signed descriptors + pinned trust anchors + one-time `arrive` tokens, mock conformance **22/22**, live node conformance **12/12**, and live browser E2E **10/10 + rollback** ([details](docs/en/p0-status.md)). **P0 acceptance is still not met** (external reproduction + full live conformance mapping). Contributing: [CONTRIBUTING.md](CONTRIBUTING.md) · Security: [SECURITY.md](SECURITY.md).
+> **Status (2026-11): design stage + P0-1/P0-2 hardening.** Runnable now: two hand-built worlds, a Babylon.js 9 playground, **two independent HTTPS SHP nodes** with signed descriptors + pinned trust anchors + one-time `arrive` tokens, rate limiting, room-full/private handling and key rotation; mock **44/44** (2×22), live node **12/12**, hardening **4/4**, live browser **15/15** (10 jumps + rollback + gesture + room-full + budget + whitelist), unified report PASS ([details](docs/en/p0-status.md)). **P0 acceptance still requires external reproduction**; runbook: [docs/en/reproduce-p0.md](docs/en/reproduce-p0.md). Contributing: [CONTRIBUTING.md](CONTRIBUTING.md) · Security: [SECURITY.md](SECURITY.md).
 
 choroweave is the spatial-computing layer of the **Inceptless** project family. It is *not* another closed metaverse platform: it builds the **compiler, the hyperlink protocol, and the reference implementation** for a web of worlds.
 
@@ -50,6 +50,7 @@ All claims are evidence-graded (A = primary source, B = third-party test/report,
 | [`docs/en/research/`](docs/en/research/) | Four primary research reports (spatial networks / generative 3D / runtime standards / market) |
 | [`schemas/`](schemas/) | JSON Schemas for Spatial-DSL, `world.json`, and the tacitweave ISS contract |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | The flagship example world ("pixel rooftop"), DSL + signed manifest |
+| [`docs/en/reproduce-p0.md`](docs/en/reproduce-p0.md) | External reproduction runbook (P0-4 gate) |
 | [`docs/en/p0-status.md`](docs/en/p0-status.md) | P0-1/P0-2 verification report (mock vs live results, perf, gaps) |
 | [`apps/playground/`](apps/playground/) | Babylon.js P0 viewer: loads `world.json` + `scene/world.glb`, first-person roaming, portal traversal with rollback |
 | [`packages/check/`](packages/check/) | `weave-check` CLI + 22 SHP conformance cases + tests |
@@ -77,7 +78,11 @@ pnpm install
 pnpm run worlds:build   # deterministic: worlds/pixel-rooftop + worlds/neon-alley
 pnpm dev                # http://localhost:5173
 pnpm test:p0            # manifests + 22/22 conformance cases (mock session)
+pnpm test:live          # live two-node protocol suite (strict CA)
+pnpm test:hardening     # rate limit, room-full, private world, key rotation
 pnpm test:e2e           # 10 bidirectional jumps + rollback via the real portal UI
+pnpm report:p0          # unified mock/live conformance report
+pnpm p0:up              # one-click two-node launcher
 P0_LIVE=1 pnpm build && P0_LIVE=1 pnpm test:e2e   # same, against two live HTTPS nodes
 ```
 

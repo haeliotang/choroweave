@@ -2,16 +2,33 @@
   "fixture": "p0",
   "date": "2026-11-07",
   "mode": "live",
-  "environment": "macOS 15 arm64, Node 24.11, Chrome 156 headless, SwiftShader (software GL)",
+  "environment": {
+    "host": "macOS 15 arm64, Node 24.11",
+    "headless": "Chrome 156 headless, SwiftShader (software GL)",
+    "headed": "Chrome 156 headed, macOS Metal (hardware acceleration)"
+  },
   "runs": 10,
-  "coldStartMs": 4347,
-  "warmTraversalMs": {
-    "p50": 409,
-    "p95": 499
+  "headless": {
+    "coldStartMsRange": [
+      4347,
+      6163
+    ],
+    "warmTraversalMs": {
+      "p50": 432,
+      "p95": 542
+    },
+    "note": "SwiftShader; cold start varies 4.3-6.2s between runs, sometimes above the 5s G0 target"
+  },
+  "headed": {
+    "coldStartMs": 2472,
+    "warmTraversalMs": {
+      "p50": 47,
+      "p95": 167
+    }
   },
   "targets": {
     "coldStartP95Ms": 5000,
     "warmTraversalP95Ms": 1500
   },
-  "note": "Indicative local baseline only; re-measure on real desktop hardware and in CI. Not a device benchmark."
+  "note": "Indicative single-machine baseline. Headless software GL cold start varies and can exceed 5s; headed uses Metal but is not a headset/low-end benchmark."
 }

@@ -131,6 +131,7 @@ gantt
 **Main risks**: R-18 portal phishing/trust model (P0 must already define the allowlist and safe UI); R-02 portal state-machine complexity; R-04 Quest browser performance (P0 does no XR gating, only a smoke test); R-25 key-person dependency.
 
 **KPIs (3–5)**: `HHT` p95 (<1.5s), `CST` p95 (<5s), `CPR` (100%), traversal success rate (100%), number of external reproductions (≥1).
+**Implementation status**: see [`p0-status.md`](p0-status.md) (mock/live layered results, performance, remaining gaps).
 **Decision gate**: **G0** (see table).
 
 ### 3.2 P1 Compiler MVP (M2–M6, 2027-01 → 2027-05)

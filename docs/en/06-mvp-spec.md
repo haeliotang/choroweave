@@ -104,6 +104,7 @@
 - **Fixture files**: `worlds/*/world.json` + `worlds/*/scene/world.glb` (deterministically built by `scripts/build-p0-worlds.mjs`), `fixtures/p0/hosts.example`, `fixtures/p0/traversal-10.example.json`, and `scripts/e2e-p0.mjs` (headless 10/10 + rollback).
 - **CI gates**: `pnpm test:p0` (10/10 + 22/22) and `node scripts/validate.mjs --strict` are blocking.
 - **Fixture spec**: [`fixtures/p0/README.md`](../../fixtures/p0/README.md) (hosts example, 10-jump script, golden-copy convention).
+- **Implementation status**: see [`p0-status.md`](p0-status.md).
 - **G0 decision gate**: **2027-01-25**; exit = bidirectional 10/10 + `weave-check` 22/22 + ≥1 external developer reproduction + zero generative calls.
 
 ---

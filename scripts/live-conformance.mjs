@@ -9,7 +9,7 @@
  * then shuts them down. Requires `.p0-tls/` (auto-generated) and Node >= 20.
  */
 import { spawn, execFileSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { createServer as createTcpServer } from "node:net";
 import { request as httpsRequest } from "node:https";
 import { createPublicKey, verify as cryptoVerify } from "node:crypto";
@@ -161,6 +161,8 @@ try {
   stopAll();
 }
 
+const jsonOut = process.argv.includes("--json-out") ? process.argv[process.argv.indexOf("--json-out") + 1] : null;
+if (jsonOut) writeFileSync(jsonOut, JSON.stringify({ suite: "live-node", generatedAt: new Date().toISOString(), results }, null, 2));
 const failed = results.filter((r) => !r.ok);
 console.log(`\nLIVE RESULT: ${failed.length === 0 ? "PASS" : "FAIL"} (${results.length - failed.length}/${results.length})`);
 console.log("mock suite remains separate: pnpm test:p0");

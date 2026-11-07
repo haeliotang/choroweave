@@ -32,7 +32,8 @@
 - [`../../schemas/world-manifest.schema.json`](../../schemas/world-manifest.schema.json) — `world.json` JSON Schema.
 - [`../../schemas/spatial-dsl.schema.json`](../../schemas/spatial-dsl.schema.json) — Spatial-DSL JSON Schema.
 - [`../../schemas/implicit-spatial-spec.schema.json`](../../schemas/implicit-spatial-spec.schema.json) — tacitweave ISS contract.
-- [`p0-status.md`](p0-status.md) — P0-1/P0-2 verification report (mock vs live).
+- [`p0-status.md`](p0-status.md) — P0-1/P0-2 verification report (mock vs live, hardening, perf).
+- [`reproduce-p0.md`](reproduce-p0.md) — external reproduction runbook (P0-4 gate).
 - [`../../examples/pixel-rooftop/`](../../examples/pixel-rooftop/) — signed example world.
 - [`../../scripts/validate.mjs`](../../scripts/validate.mjs) — zero-dependency repo self-check.
 
