@@ -47,7 +47,7 @@ if (liveNode) {
 } else suites.push({ id: "live-node", layer: "live", passed: 0, total: 0, ok: false, detail: "missing .p0-reports/live-node.json" });
 if (hardening) {
   const passed = hardening.results.filter((r) => r.ok).length;
-  suites.push({ id: "live-hardening", layer: "live", passed, total: hardening.results.length, ok: passed === hardening.results.length, detail: "rate limit, room-full, private world, key rotation" });
+  suites.push({ id: "live-hardening", layer: "live", passed, total: hardening.results.length, ok: passed === hardening.results.length, detail: "rate limit, session quota, room-full, private world, key rotation" });
 } else suites.push({ id: "live-hardening", layer: "live", passed: 0, total: 0, ok: false, detail: "missing .p0-reports/live-hardening.json" });
 if (browser) {
   const checks = [

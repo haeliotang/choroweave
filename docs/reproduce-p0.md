@@ -40,7 +40,7 @@ node scripts/p0-report.mjs
 |---|---|
 | mock | 44/44 |
 | live-node | 12/12 |
-| live-hardening | 4/4 |
+| live-hardening | 5/5 |
 | live-browser | 15/15（10 次穿越 + 回滚 + 手势 + room-full + 预算 + 白名单） |
 | report | `REPORT: PASS` |
 

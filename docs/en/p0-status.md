@@ -14,7 +14,7 @@
 | Two independent HTTPS nodes, signed descriptors | `scripts/serve-node.mjs`, `scripts/tls-fixture.mjs` | done |
 | Trust anchors pinned out-of-band | `.p0-tls/trust.json` (generated) | done |
 | One-time `arrive` tokens (world/session/nonce/expiry) | `scripts/serve-node.mjs` | done |
-| Rate limit, room-full, private world | `scripts/serve-node.mjs` (`P0_RATE_LIMIT`, `--room-full`, `--private`) | done |
+| Rate limit, session quota, room-full, private world | `scripts/serve-node.mjs` (`P0_RATE_LIMIT`, `P0_SESSION_QUOTA`, `--room-full`, `--private`) | done |
 | Key rotation procedure | `scripts/rotate-node-key.mjs` | done |
 | One-click node launcher | `scripts/p0-up.mjs` (`pnpm p0:up`) | done |
 | Mock conformance (22 cases × 2 worlds) | `packages/check/` | done |
@@ -44,7 +44,7 @@ Full external runbook: [`reproduce-p0.md`](reproduce-p0.md).
 |---|---|---|
 | `pnpm test:p0` | **44/44** (2 worlds × 22) | mock |
 | `live-conformance` | **12/12** | live (strict CA) |
-| `node-hardening` | **4/4** (rate limit, room-full, private, key rotation) | live |
+| `node-hardening` | **5/5** (rate limit, session quota, room-full, private, key rotation) | live |
 | `e2e-p0 --live` | **15/15** (10 jumps + rollback + gesture + room-full + budget + whitelist) | live browser |
 | Unified report | PASS | mock + live, separately labelled |
 | Performance (headed, Metal) | cold **2.47 s**, warm **p50 47 ms / p95 167 ms** | indicative |
@@ -56,7 +56,7 @@ Performance is a single-machine baseline (`fixtures/p0/perf-baseline.json`); hea
 
 [`fixtures/p0/coverage.json`](../../fixtures/p0/coverage.json) maps all 22 cases to suites. Current live coverage:
 - live-node: manifest/descriptors/signature, token issue/consume/replay/expiry, wrong world, unreachable, timeout, trust mismatch.
-- live-hardening: rate limit, room-full, private world, key rotation.
+- live-hardening: rate limit, session quota, room-full, private world, key rotation.
 - live-browser: UI confirm, 10 jumps, rollback, gesture guard, room-full fallback, prefetch budget, whitelist.
 - mock-only: unknown-field tolerance, id/URL warning, digest mismatch, unsigned carry, version mismatch, escaping, cycle guard, viewer-without-portal.
 
@@ -67,7 +67,7 @@ Performance is a single-machine baseline (`fixtures/p0/perf-baseline.json`); hea
 - Fixture CA and node keys are disposable test material; `trust.json` is a test-only pin. Never reuse in production.
 - Browser E2E pins the two fixture leaf keys with Chrome SPKI; it does **not** pass `--ignore-certificate-errors`. Node suites validate the CA chain strictly.
 - Production keeps blocking public world URLs that resolve to localhost/private ranges (SSRF / DNS rebinding); `.example` + loopback is an explicit test exception.
-- Node has per-IP rate limiting (default 60/10 s), one-time tokens and a key-rotation procedure; quotas/abuse analytics are future work.
+- Node has per-IP rate limiting (default 60/10 s), per-session token quotas (default 3/10 min), one-time tokens and a key-rotation procedure; abuse analytics remains future work.
 
 ## Remaining P0-4 work
 

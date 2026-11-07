@@ -14,7 +14,7 @@
 | 两个独立 HTTPS 节点、签名描述符 | `scripts/serve-node.mjs`、`scripts/tls-fixture.mjs` | 完成 |
 | 带外 pinned 信任锚 | `.p0-tls/trust.json`（生成） | 完成 |
 | 一次性 `arrive` token（世界/会话/nonce/有效期） | `scripts/serve-node.mjs` | 完成 |
-| 限流、room-full、私有世界 | `scripts/serve-node.mjs`（`P0_RATE_LIMIT`、`--room-full`、`--private`） | 完成 |
+| 限流、会话配额、room-full、私有世界 | `scripts/serve-node.mjs`（`P0_RATE_LIMIT`、`P0_SESSION_QUOTA`、`--room-full`、`--private`） | 完成 |
 | 密钥轮换流程 | `scripts/rotate-node-key.mjs` | 完成 |
 | 一键启动双节点 | `scripts/p0-up.mjs`（`pnpm p0:up`） | 完成 |
 | Mock 一致性（22 条 × 2 世界） | `packages/check/` | 完成 |
@@ -44,7 +44,7 @@ node scripts/p0-report.mjs                     # 统一 mock/live 报告
 |---|---|---|
 | `pnpm test:p0` | **44/44**（2 世界 × 22） | mock |
 | `live-conformance` | **12/12** | live（严格 CA） |
-| `node-hardening` | **4/4**（限流、room-full、私有、密钥轮换） | live |
+| `node-hardening` | **5/5**（限流、会话配额、room-full、私有、密钥轮换） | live |
 | `e2e-p0 --live` | **15/15**（10 次穿越 + 回滚 + 手势 + room-full + 预算 + 白名单） | live 浏览器 |
 | 统一报告 | PASS | mock + live，分层标注 |
 | 性能（headed，Metal） | 冷启动 **2.47s**，热切换 **p50 47ms / p95 167ms** | 参考值 |

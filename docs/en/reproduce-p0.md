@@ -40,7 +40,7 @@ Expected:
 |---|---|
 | mock | 44/44 |
 | live-node | 12/12 |
-| live-hardening | 4/4 |
+| live-hardening | 5/5 |
 | live-browser | 15/15 (10 jumps + rollback + gesture + room-full + budget + whitelist) |
 | report | `REPORT: PASS` |
 

@@ -5,7 +5,7 @@
 >
 > 中文版：[README.zh-CN.md](README.zh-CN.md) · Repository: <https://github.com/haeliotang/choroweave>
 
-> **Status (2026-11): design stage + P0-1/P0-2 hardening.** Runnable now: two hand-built worlds, a Babylon.js 9 playground, **two independent HTTPS SHP nodes** with signed descriptors + pinned trust anchors + one-time `arrive` tokens, rate limiting, room-full/private handling and key rotation; mock **44/44** (2×22), live node **12/12**, hardening **4/4**, live browser **15/15** (10 jumps + rollback + gesture + room-full + budget + whitelist), unified report PASS ([details](docs/en/p0-status.md)). **P0 acceptance still requires external reproduction**; runbook: [docs/en/reproduce-p0.md](docs/en/reproduce-p0.md). Contributing: [CONTRIBUTING.md](CONTRIBUTING.md) · Security: [SECURITY.md](SECURITY.md).
+> **Status (2026-11): design stage + P0-1/P0-2 hardening.** Runnable now: two hand-built worlds, a Babylon.js 9 playground, **two independent HTTPS SHP nodes** with signed descriptors + pinned trust anchors + one-time `arrive` tokens, rate limiting, session quotas, room-full/private handling and key rotation; mock **44/44** (2×22), live node **12/12**, hardening **5/5**, live browser **15/15** (10 jumps + rollback + gesture + room-full + budget + whitelist), unified report PASS ([details](docs/en/p0-status.md)). **P0 acceptance still requires external reproduction**; runbook: [docs/en/reproduce-p0.md](docs/en/reproduce-p0.md). Contributing: [CONTRIBUTING.md](CONTRIBUTING.md) · Security: [SECURITY.md](SECURITY.md).
 
 choroweave is the spatial-computing layer of the **Inceptless** project family. It is *not* another closed metaverse platform: it builds the **compiler, the hyperlink protocol, and the reference implementation** for a web of worlds.
 

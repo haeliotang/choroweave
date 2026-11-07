@@ -28,6 +28,7 @@ const PEER = arg("peer", NAME === "alice" ? "https://hana.example:8444" : "https
 const CLIENT_DIST = arg("client-dist", null);
 const TOKEN_TTL_MS = Number(process.env.P0_TOKEN_TTL_MS || 5000);
 const RATE_LIMIT = Number(process.env.P0_RATE_LIMIT || 60); // requests per 10s per client IP
+const SESSION_QUOTA = Number(process.env.P0_SESSION_QUOTA || 3); // active tokens per session / 10 min
 const ROOM_FULL = args.includes("--room-full");
 const PRIVATE = args.includes("--private");
 
@@ -76,6 +77,7 @@ const CORS = {
   "Access-Control-Allow-Headers": "content-type",
 };
 const rateBuckets = new Map();
+const sessionTokens = new Map();
 function rateLimited(ip) {
   const now = Date.now();
   let b = rateBuckets.get(ip);
@@ -154,6 +156,10 @@ const server = createServer(
         const now = Date.now();
         if (issuedNonces.has(body.nonce)) return sendJson(res, 409, { error: "E_NONCE_REPLAY" });
         issuedNonces.set(body.nonce, now + 10 * 60_000);
+        let quota = sessionTokens.get(body.sessionId);
+        if (!quota || now - quota.start > 10 * 60_000) { quota = { start: now, count: 0 }; sessionTokens.set(body.sessionId, quota); }
+        if (quota.count >= SESSION_QUOTA) return sendJson(res, 429, { error: "E_SESSION_QUOTA", quota: SESSION_QUOTA });
+        quota.count += 1;
         const token = randomBytes(24).toString("base64url");
         const exp = now + TOKEN_TTL_MS;
         tokens.set(token, { world: live.id, session: body.sessionId, nonce: body.nonce, exp, used: false });
@@ -194,6 +200,6 @@ const server = createServer(
 
 server.listen(PORT, "127.0.0.1", () => {
   console.log(`[p0-node ${NAME}] ${ORIGIN} -> ${worldId} (peer ${PEER})`);
-  console.log(`[p0-node ${NAME}] token ttl ${TOKEN_TTL_MS}ms; rate ${RATE_LIMIT}/10s; roomFull=${ROOM_FULL} private=${PRIVATE}; pid ${process.pid}`);
+  console.log(`[p0-node ${NAME}] token ttl ${TOKEN_TTL_MS}ms; rate ${RATE_LIMIT}/10s; quota ${SESSION_QUOTA}/session; roomFull=${ROOM_FULL} private=${PRIVATE}; pid ${process.pid}`);
 });
 for (const sig of ["SIGINT", "SIGTERM"]) process.on(sig, () => server.close(() => process.exit(0)));

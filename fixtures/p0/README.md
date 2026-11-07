@@ -44,7 +44,7 @@ Clients resolve `alice.example` / `hana.example` to 127.0.0.1 via a test-only re
 ```bash
 pnpm test:p0          # mock 44/44 (2 worlds × 22)
 pnpm test:live        # live node protocol 12/12
-pnpm test:hardening   # rate limit, room-full, private, key rotation
+pnpm test:hardening   # rate limit, session quota, room-full, private, key rotation
 P0_LIVE=1 pnpm build && P0_LIVE=1 pnpm test:e2e
 pnpm report:p0        # unified mock/live report
 pnpm p0:up            # one-click two-node launcher

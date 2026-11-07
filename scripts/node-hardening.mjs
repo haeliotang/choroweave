@@ -93,7 +93,16 @@ try {
   add("LIVE-13 private world", upPriv && priv.status === 404 && priv.json?.error === "E_NOT_FOUND", `status=${priv.status} code=${priv.json?.error}`);
   await stop(privNode, 9545);
 
-  // 4) key rotation: descriptor must verify with new pinned key, not the old one
+  // 4) session quota: one active token per session in this fixture
+  const quotaNode = start("hana", 9547, [], { P0_SESSION_QUOTA: "1" });
+  const quotaOrigin = "https://hana.example:9547";
+  const upQuota = await waitHealth(quotaOrigin, "hana");
+  const q1 = await arrive(quotaOrigin, "https://hana.example:8444/worlds/neon-alley/world.json", "sess-quota-01", "nonce-quota-0001");
+  const q2 = await arrive(quotaOrigin, "https://hana.example:8444/worlds/neon-alley/world.json", "sess-quota-01", "nonce-quota-0002");
+  add("LIVE-14 session quota", upQuota && q1.status === 200 && q2.status === 429 && q2.json?.error === "E_SESSION_QUOTA", `first=${q1.status} second=${q2.status}`);
+  await stop(quotaNode, 9547);
+
+  // 5) key rotation: descriptor must verify with new pinned key, not the old one
   const rotNode = start("hana", 9546);
   const rotOrigin = "https://hana.example:9546";
   const upRot = await waitHealth(rotOrigin, "hana");
@@ -109,7 +118,7 @@ try {
   const { signature, ...rest } = afterDoc || {};
   const key = createPublicKey({ key: { kty: "OKP", crv: "Ed25519", x: pinned.x }, format: "jwk" });
   const sigOk = signature && cryptoVerify(null, Buffer.from(canonicalize(rest)), key, Buffer.from(String(signature.value).replace(/-/g, "+").replace(/_/g, "/"), "base64"));
-  add("LIVE-14 key rotation", upRot && upRot2 && oldX !== afterDoc?.node?.publicKey?.x && sigOk && rotated.newX === pinned.x, `old=${String(oldX).slice(0, 8)}… new=${String(pinned.x).slice(0, 8)}…`);
+  add("LIVE-15 key rotation", upRot && upRot2 && oldX !== afterDoc?.node?.publicKey?.x && sigOk && rotated.newX === pinned.x, `old=${String(oldX).slice(0, 8)}… new=${String(pinned.x).slice(0, 8)}…`);
   await stop(rotNode2, 9546);
 
   const out = process.argv.includes("--json-out") ? process.argv[process.argv.indexOf("--json-out") + 1] : null;
