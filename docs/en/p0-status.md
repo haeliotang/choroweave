@@ -1,7 +1,7 @@
 # P0 implementation status (2026-11-07)
 
 > Scope: **P0-1** (two worlds + runtime), **P0-2** (real two-node HTTPS handshake + hardening), **P0-3** (unified conformance report), **P0-4** (external reproduction runbook; external run still pending).
-> P0 acceptance (external reproduction + LAN/public performance evidence) is **not** met; G0 remains un-granted, target **2027-01-25**. Engineering implementation is complete; see [`p0-rc.md`](p0-rc.md) for the RC/validation split. Candidate tag: `p0-rc2` (runtime baseline `95f12d8`; tooling-only delta).
+> P0 acceptance (external reproduction + LAN/public performance evidence) is **not** met; G0 remains un-granted, target **2027-01-25**. Engineering implementation is complete; see [`p0-rc.md`](p0-rc.md) for the RC/validation split. Candidate tag: `p0-rc3` (runtime baseline `95f12d8`; tooling-only delta).
 > Chinese: [`../p0-status.md`](../p0-status.md)
 
 ## What is implemented
@@ -75,7 +75,7 @@ Cold sampling uses a **fresh browser process per sample**; warm uses one page an
 - Browser E2E pins the two fixture leaf keys with Chrome SPKI; it does **not** pass `--ignore-certificate-errors`. Node suites validate the CA chain strictly.
 - Production keeps blocking public world URLs that resolve to localhost/private ranges (SSRF / DNS rebinding); `.example` + loopback is an explicit test exception.
 - Node has per-IP rate limiting (default 60/10 s), per-session token quotas (default 3/10 min), one-time tokens and a key-rotation procedure; abuse analytics remains future work.
-- Test infrastructure: perf strict gate; remote LAN/public profile validation; port conflicts are detected and reported, never killed by test tooling.
+- Test infrastructure: perf strict gate (cold/warm budgets + rollback **and** retry); remote LAN/public profiles require DNS+TLS validation of client/A/B and record addresses/TLS; port conflicts are detected and reported, never killed by test tooling. CI runs functional suites, not headed strict perf.
 
 ## Remaining P0-4 work
 

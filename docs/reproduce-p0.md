@@ -35,8 +35,8 @@ node scripts/node-hardening.mjs --json-out .p0-reports/live-hardening.json
 P0_LIVE=1 P0_REPORT_OUT=.p0-reports/live-browser.json node scripts/e2e-p0.mjs
 node scripts/p0-report.mjs
 pnpm perf:p0 --strict        # 采样冷/热切换与目标重启恢复；超预算返回非零
-# LAN/公网（需真实部署；public 拒绝私有/loopback 主机）：
-# P0_PERF_REMOTE=1 P0_PERF_PROFILE=lan P0_URL=https://... node scripts/perf-p0.mjs --strict
+# LAN/公网（需真实部署；校验客户端 + 两节点 DNS/TLS；public 拒绝私有/loopback）：
+# P0_PERF_REMOTE=1 P0_PERF_PROFILE=lan P0_URL=https://... P0_NODE_A_ORIGIN=https://... P0_NODE_B_ORIGIN=https://... node scripts/perf-p0.mjs --validate-only
 ```
 
 预期：

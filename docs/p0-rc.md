@@ -1,6 +1,6 @@
 # P0 Release Candidate 与外部验证（2026-11-07）
 
-> **运行时基线：** `95f12d8`（2026-11-07）。**RC tag：** `p0-rc2`（验证工具：strict 性能门禁、远程档案、安全端口检查；运行时文件与 `95f12d8` 相同；取代 `p0-rc1`）。可用 `git diff 95f12d8..p0-rc2 -- apps packages scripts/serve-node.mjs scripts/tls-fixture.mjs worlds schemas` 核对。
+> **运行时基线：** `95f12d8`（2026-11-07）。**RC tag：** `p0-rc3`（验证工具：strict 门禁含回滚+重试、远程 DNS/TLS 拓扑验证、安全端口检查；运行时文件与 `95f12d8` 相同；取代 `p0-rc2`）。可用 `git diff 95f12d8..p0-rc3 -- apps packages scripts/serve-node.mjs scripts/tls-fixture.mjs worlds schemas` 核对。
 > **SHP v0.1：** 候选冻结——外部验证完成前**不是最终冻结**。
 > G0：**未授予**。目标日期 **2027-01-25**。
 > English (primary): [`en/p0-rc.md`](en/p0-rc.md)
@@ -30,7 +30,7 @@ P0 现在处于 **Release Candidate / External Validation**，不是功能开发
 | 目标重启恢复 | 重启前回滚 + 重启后重试成功 | loopback | `scripts/perf-p0.mjs` |
 | CI | mock + live + 加固 + 浏览器 E2E + 报告 + artifacts | — | GitHub Actions |
 
-性能口径：冷启动**每个样本全新浏览器进程**；热切换同页真实门户 UI。`--strict` 超预算/重启失败返回非零。仅 loopback：headed 通过、headless 冷启动失败。**LAN/公网档案未测**；远程驱动会校验非 loopback/public 主机，不能仅靠标签冒充。
+性能口径：冷启动**每个样本全新浏览器进程**；热切换同页真实门户 UI。`--strict` 超预算返回非零，且现在要求**重启前回滚与重启后重试同时为真**。远程档案在采样前校验**客户端 + 两个节点的 DNS 解析与 TLS**，并把地址/TLS 明细写入报告；`--validate-only` 可只做拓扑验证。public 拒绝任何私有/loopback 解析，LAN 拒绝 loopback。仅 loopback：headed 通过、headless 冷启动失败。**CI 不跑 headed strict 性能门禁，LAN/公网档案仍未测。**
 
 ## 3. 外部验证必须记录
 

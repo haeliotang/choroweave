@@ -35,8 +35,8 @@ node scripts/node-hardening.mjs --json-out .p0-reports/live-hardening.json
 P0_LIVE=1 P0_REPORT_OUT=.p0-reports/live-browser.json node scripts/e2e-p0.mjs
 node scripts/p0-report.mjs
 pnpm perf:p0 --strict        # sampled cold/warm + restart recovery; exits non-zero on budget failure
-# LAN/public (requires real deployment; public rejects private/loopback hosts):
-# P0_PERF_REMOTE=1 P0_PERF_PROFILE=lan P0_URL=https://... node scripts/perf-p0.mjs --strict
+# LAN/public (requires real deployment; validates DNS + TLS for client/A/B; public rejects private/loopback):
+# P0_PERF_REMOTE=1 P0_PERF_PROFILE=lan P0_URL=https://... P0_NODE_A_ORIGIN=https://... P0_NODE_B_ORIGIN=https://... node scripts/perf-p0.mjs --validate-only
 ```
 
 Expected:

@@ -49,6 +49,15 @@
       "rolledBackBeforeRestart": true,
       "retriedAfterRestart": true,
       "retryMs": 50
+    },
+    "lastRun": {
+      "cold": {
+        "p95": 3568
+      },
+      "warm": {
+        "p95": 176
+      },
+      "restartGate": true
     }
   },
   "sampledHeadless": {
@@ -87,5 +96,24 @@
     },
     "lan": "P0_PERF_REMOTE=1 + non-loopback host required",
     "public": "P0_PERF_REMOTE=1 + public host required; private/loopback rejected"
+  },
+  "strictGate": {
+    "coldP95Ms": 5000,
+    "warmP95Ms": 1500,
+    "restartRequiresRollbackAndRetry": true,
+    "remoteRequiresTopologyValidation": true
+  },
+  "remoteTopology": {
+    "validated": [
+      "client",
+      "nodeA",
+      "nodeB"
+    ],
+    "checks": [
+      "dnsResolved",
+      "tlsVerified",
+      "public allPublic / lan nonLoopback"
+    ],
+    "validateOnly": "--validate-only"
   }
 }
