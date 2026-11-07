@@ -1,7 +1,7 @@
 # choroweave 24-Month Roadmap (P0–P4)
 
 > Status: Draft v0.1 · Baseline date **2026-11-07 = M0** · Audience: implementation team, funders, and community
-> Conventions: stage names (P0–P4), module names (`@choroweave/*`), and metric names are fully consistent with `internal/writing-spec.md` and [`02-tech-selection.md`](02-tech-selection.md); market figures are drawn only from [`research/04`](research/04-products-market-prior-art.md), with evidence grades: **[official]** = first-party (A) / **[third-party]** = independent institute or data vendor (B) / **[media report]** = media relay (B–C, used only for cross-validation); engineering estimates are marked **(estimate, C)**.
+> Conventions: stage names (P0–P4), module names (`@choroweave/*`), and metric names are fully consistent with the internal writing spec and [`02-tech-selection.md`](02-tech-selection.md); market figures are drawn only from [`research/04`](research/04-products-market-prior-art.md), with evidence grades: **[official]** = first-party (A) / **[third-party]** = independent institute or data vendor (B) / **[media report]** = media relay (B–C, used only for cross-validation); engineering estimates are marked **(estimate, C)**.
 > Companions: [`06-mvp-spec.md`](06-mvp-spec.md) (executable specification for P0+P1), [`07-risks-compliance.md`](07-risks-compliance.md) (risk IDs `R-xx` are referenced in this document), [`08-open-source-strategy.md`](08-open-source-strategy.md) (community/standards/commercialization).
 > Chinese version: [`../05-roadmap.md`](../05-roadmap.md)
 
@@ -19,7 +19,7 @@
 
 ## 1. Roadmap principles and conventions
 
-### 1.1 Stage definitions (copied verbatim from `internal/writing-spec.md` §3; do not rename)
+### 1.1 Stage definitions (copied verbatim from the internal writing spec §3; do not rename)
 
 | Stage | Time | One-line goal | Exit Criteria | Gate |
 |---|---|---|---|---|
@@ -31,7 +31,7 @@
 
 ### 1.2 Five non-negotiable principles
 
-1. **Protocol before AI.** P0 integrates no generative model; AI's value only becomes meaningful once the protocol can be verified (comment in `internal/writing-spec.md` §3).
+1. **Protocol before AI.** P0 integrates no generative model; AI's value only becomes meaningful once the protocol can be verified (comment in the internal writing spec §3).
 2. **Single-player before multiplayer.** Standalone playability is the experience floor; networking is an enhancement, not a prerequisite. This is a direct response to IDC 2025 headset shipments of **-42.8%** [third-party] and Web-side reachability.
 3. **Self-hosting before hosting.** Worlds are hosted at the node operator's expense; the protocol party does not underwrite hosting costs (the core cause of death for Spatial's creator platform closure on 2025-07-27 and Mozilla Hubs' shutdown on 2024-05-31, see [`research/04`](research/04-products-market-prior-art.md) §3.3). Cost model in [`07`](07-risks-compliance.md) §3.
 4. **Follow standards; do not invent a language.** World artifacts use glTF 2.0 + `KHR_interactivity` (ratified 2026-08-28) + `CHW_*` extensions; link semantics align with MSF "Web of Worlds"/X3D 4.1 Anchor/Inline ([`research/04`](research/04-products-market-prior-art.md) §3.7). Do not wait for standards, and do not build a separate spatial language.
@@ -349,7 +349,7 @@ gantt
 
 1. Gate conditions and metric definition changes: **05 is the single source of truth**; they must be recorded in this document's change log and synchronized to 06/07/08.
 2. Prompt, rubric, and script-step changes: **06 is the source of truth**, but must not change the `PR-20` decision thresholds (thresholds live in 05 §5.1).
-3. After any file change, run a cross-link and terminology check within 48 hours (see `internal/writing-spec.md` §6).
+3. After any file change, run a cross-link and terminology check within 48 hours (see the internal writing spec §6).
 
 ---
 
@@ -366,8 +366,8 @@ gantt
 
 | Check item | Result |
 |---|---|
-| Stage names/timing/Exit Criteria | Verbatim identical to `internal/writing-spec.md` §3; this document only quantifies the "testable" basis, without changing semantics |
-| Module names | Consistent with `internal/writing-spec.md` §2 (`@choroweave/*`, `pixel-rooftop`) |
+| Stage names/timing/Exit Criteria | Verbatim identical to the internal writing spec §3; this document only quantifies the "testable" basis, without changing semantics |
+| Module names | Consistent with the internal writing spec §2 (`@choroweave/*`, `pixel-rooftop`) |
 | Protocol/extension names | SHP v0.1, WSP v0.1, `CHW_portal`/`CHW_collider`/`CHW_logic`/`CHW_avatar` (P2) consistent |
 | Runtime/license | Babylon.js 8.x, WebGL2-first, code Apache-2.0 / specification CC-BY-4.0 consistent |
 | Performance budget | Reuses [`02`](02-tech-selection.md) §3 performance table and [`research/03`](research/03-runtime-standards.md) §4.4; this document adds no device tiers |

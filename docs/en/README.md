@@ -46,4 +46,4 @@ node scripts/validate.mjs --strict
 - **Risk / investment:** `05` → `07` → `08`.
 - **Evidence:** start with `research/`.
 
-> Evidence grades: **A** = primary source, **B** = third-party test/report, **C** = engineering judgement. All facts are dated "verified as of 2026-11"; unverifiable claims are marked *not verified*.
+> Evidence grades: **A** = primary source, **B** = third-party test/report, **C** = engineering judgement. Plan documents use **(A)/(B)/(C)**; research reports keep their source-style labels **[official] / [third-party] / [media-reported]** (mapping to A / B / B–C). All facts are dated "verified as of 2026-11"; unverifiable claims are marked *not verified*.

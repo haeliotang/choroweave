@@ -1,7 +1,7 @@
 # choroweave Open-Source Strategy: Repositories, Governance, Standards and a Sustainable Model
 
 > Status: Draft v0.1 · Baseline date **2026-11-07** · Audience: contributors, community, funders, prospective hosting-service customers
-> Conventions: stage names, module names and metric names are consistent with [`05-roadmap.md`](05-roadmap.md) §5.1, [`02-tech-selection.md`](02-tech-selection.md) and `internal/writing-spec.md`; market figures come from [`research/04`](research/04-products-market-prior-art.md) and carry evidence grades (**[official] / [third-party] / [media report]**); pricing and costs are **engineering estimates (C)** using the same assumptions as [`07`](07-risks-compliance.md) §3.
+> Conventions: stage names, module names and metric names are consistent with [`05-roadmap.md`](05-roadmap.md) §5.1, [`02-tech-selection.md`](02-tech-selection.md) and the internal writing spec; market figures come from [`research/04`](research/04-products-market-prior-art.md) and carry evidence grades (**[official] / [third-party] / [media report]**); pricing and costs are **engineering estimates (C)** using the same assumptions as [`07`](07-risks-compliance.md) §3.
 > Boundary: this document owns **repositories / contribution / standards / community / commercialization / governance**; risks, licensing, security and compliance are in [`07`](07-risks-compliance.md).
 > Chinese version: [`../08-open-source-strategy.md`](../08-open-source-strategy.md)
 
@@ -355,7 +355,7 @@ The commercial entity (hosting/support) is separate from the open-source project
 
 | Check | Result |
 |---|---|
-| Module/package names | Consistent with `internal/writing-spec.md` §2 (`@choroweave/*`, `pixel-rooftop`); `cliff-tavern`/`dungeon-puzzle` are new examples from `00` §11 and must be registered in 03's directory structure |
+| Module/package names | Consistent with the internal writing spec §2 (`@choroweave/*`, `pixel-rooftop`); `cliff-tavern`/`dungeon-puzzle` are new examples from `00` §11 and must be registered in 03's directory structure |
 | Licensing | Consistent: code Apache-2.0 / spec CC-BY-4.0 / examples CC0-CC-BY (ADR-12) |
 | Standards path | `CHW_` → OMI Stage 1 → MSF/Khronos is consistent with ADR-06 and `research/03` §3.8 |
 | Business model | "No UGC take rate / no centralized hosting monopoly" is consistent with `research/04` §5 conclusion 3 and `00` §9 |

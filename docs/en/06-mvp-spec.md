@@ -1,7 +1,7 @@
 # choroweave MVP Specification (P0 + P1)
 
 > Status: Draft v0.1 · Baseline date **2026-11-07** · Covers **P0 (M0–M2) + P1 (M2–M6)**
-> Conventions: stage names, module names and metric names are consistent with the dictionary in [`05-roadmap.md`](05-roadmap.md) §5.1, [`02-tech-selection.md`](02-tech-selection.md) and `internal/writing-spec.md`; device budgets follow the performance table in 02; market figures come from [`research/04`](research/04-products-market-prior-art.md) and are tagged **[official] / [third-party] / [media report]**. Engineering estimates are marked **(estimate, C)**.
+> Conventions: stage names, module names and metric names are consistent with the dictionary in [`05-roadmap.md`](05-roadmap.md) §5.1, [`02-tech-selection.md`](02-tech-selection.md) and the internal writing spec; device budgets follow the performance table in 02; market figures come from [`research/04`](research/04-products-market-prior-art.md) and are tagged **[official] / [third-party] / [media report]**. Engineering estimates are marked **(estimate, C)**.
 > Purpose: **this document is the executable specification for P0+P1** — 05 defines "what counts as done"; this document defines "how to build it, how to verify it, and what happens when it fails". Specifications from P2 onward are in 05 §3.3–§3.5.
 > Chinese version: [`../06-mvp-spec.md`](../06-mvp-spec.md)
 
@@ -15,7 +15,7 @@
 | Not covered | Multi-user rooms, avatars, voice (P2); resident agents (P3); deep WebXR adaptation and v1.0 (P4) |
 | Three criteria | ① **Reproducible**: anyone can follow the docs and produce the same result within 30 minutes; ② **Automatable**: gates are decided by CLI/scripts, not by "it looks fine"; ③ **Failure handling**: every positive path has a degradation path — "failure means a white screen" is not allowed |
 | Acceptance environment | Desktop Chrome/Edge, latest two stable versions (WebGL2 required at minimum); Quest Browser smoke test; two network profiles: public internet + constrained network (Fast 4G) |
-| Terminology | world / World Bundle / world manifest / node / portal / traversal / room / `weave-check` — see `internal/writing-spec.md` §1 |
+| Terminology | world / World Bundle / world manifest / node / portal / traversal / room / `weave-check` — see the internal writing spec §1 |
 
 ---
 
