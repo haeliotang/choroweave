@@ -2,6 +2,7 @@
 
 > Project: choroweave (intent → executable space / spatial hyperlinks)
 > Verification basis: **verified as of 2026-11-07**. Every "verified" entry gives a source URL and date; official claims and third-party measurements are labeled separately; anything that cannot be verified is written as "not verified" and not filled in.
+> Runtime note: ADR-04 said Babylon.js 8.x at research time; the implementation uses 9.x — see [`ADR-0004-babylonjs-9.md`](../../decisions/ADR-0004-babylonjs-9.md).
 > Evidence grades (aligned with [`02-tech-selection.md`](../02-tech-selection.md)): **A [official]** = official repository/license/docs/paper; **B [third-party]** = independent media, community reproduction, or third-party evaluation; **C [inference]** = engineering reasoning based on verified facts; **D [not verified]** = there is a lead but no first-hand evidence.
 > Related: [Chinese version](../../research/02-generative-3d-and-agents.md) · [00 Executive Summary](../00-executive-summary.md) · [02 Tech Selection](../02-tech-selection.md) · [03 Architecture](../03-architecture.md) · [spatial-dsl schema](../../../schemas/spatial-dsl.schema.json) · [implicit-spatial-spec schema](../../../schemas/implicit-spatial-spec.schema.json) · [pixel-rooftop example](../../../examples/pixel-rooftop) · [README](../../../README.md)
 

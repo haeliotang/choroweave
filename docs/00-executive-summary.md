@@ -30,7 +30,7 @@
 **做（In scope）**
 1. **Chôra Compiler**：意图/ISS → Spatial-DSL（内部 IR）→ 确定性装配 → World Bundle；含 6 类校验与修复循环。
 2. **Spatial Hyperlink Protocol（SHP v0.1）**：HTTPS 世界寻址、`world.json`、`CHW_portal` 门户扩展、进入握手、能力协商、签名与门禁、预取预算。
-3. **参考运行时 + 自托管节点**：Babylon.js 8.x（WebGL2-first）、WebSocket 房间（P1）→ WebTransport/WebRTC（P2+）、`weave-check` 一致性套件。
+3. **参考运行时 + 自托管节点**：Babylon.js 9.x（WebGL2-first）、WebSocket 房间（P1）→ WebTransport/WebRTC（P2+）、`weave-check` 一致性套件。
 4. **示例与模板**：像素天台等 3 个 showcase 世界 + 模块化套件库 + 官方小游戏模块（L1）。
 
 **不做（Out of scope，写进路线图与风险文档）**
@@ -48,7 +48,7 @@
 |---|---|---|
 | 世界包 | glTF 2.0 + `KHR_interactivity` + `CHW_*` + `world.json` + 内容寻址 | 私有场景格式、纯视频世界模型 |
 | 交互 | L0 行为图（默认）/ L1 精选联网模块 / L2 沙箱 WASM（P3+） | 开放任意 JS、把业务逻辑塞进行为图 |
-| 运行时 | **Babylon.js 8.x（Apache-2.0，WebGL2-first）** + Runtime Adapter | three.js（无行为图执行器）、自研引擎 |
+| 运行时 | **Babylon.js 9.x（Apache-2.0，WebGL2-first）** + Runtime Adapter | three.js（无行为图执行器）、自研引擎 |
 | 寻址/链接 | **HTTPS URL** + `.well-known` + `CHW_portal`，语义对齐 MSF WoW/X3D Anchor | 自定义 scheme、链上地址、另造空间语言 |
 | 实时 | WebSocket（P1）→ **WebTransport / WebRTC DataChannel**（P2+）+ LiveKit 语音 | Matrix 实时状态、中心化游戏服 |
 | 身份 | Passkey/OIDC → `did:web`；无区块链 | 钱包/代币、平台账号锁定 |

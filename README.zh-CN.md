@@ -3,7 +3,7 @@
 > **把人的意图即时编译为可执行、可共在、可互访的 3D 空间，并让这些空间像网页一样互相链接。**
 > English (primary): [README.md](README.md) · 英文文档入口：[docs/en/](docs/en/README.md) · 仓库：<https://github.com/haeliotang/choroweave>
 
-> **状态（2026-11）：设计阶段 + P0-1 骨架。** 方案、Schema 与 P0 夹具已就位；仓库现在包含可运行的 **P0-1 骨架**：两个手搭世界、带门户穿越/回滚的 Babylon.js 运行器、以及 22/22 一致性用例的 `weave-check`（mock 会话）。**P0 验收尚未达成**（真实握手/token 套件 + ≥1 名外部复现仍待完成）。参与方式：[CONTRIBUTING.md](CONTRIBUTING.md) · 安全报告：[SECURITY.md](SECURITY.md)。
+> **状态（2026-11）：设计阶段 + P0-1/P0-2 原型。** 现已可运行：两个手搭世界、带门户穿越/回滚的 Babylon.js 9 运行器、**两个独立 HTTPS SHP 节点**（签名描述符 + pinned 信任锚 + 一次性 `arrive` token）；mock 一致性 **22/22**、live 节点一致性 **12/12**、live 浏览器 E2E **10/10 + 回滚**（[详情](docs/p0-status.md)）。**P0 验收仍未达成**（外部复现 + 全量 live 用例映射）。参与方式：[CONTRIBUTING.md](CONTRIBUTING.md) · 安全报告：[SECURITY.md](SECURITY.md)。
 
 choroweave 是 **Inceptless** 矩阵中的"空间计算层"项目。它不做一个封闭的元宇宙平台，而是做空间时代的 **编译器 + 超链接协议 + 参考实现**：
 
@@ -45,6 +45,7 @@ choroweave 是 **Inceptless** 矩阵中的"空间计算层"项目。它不做一
 | [`docs/research/`](docs/research/) | 四份原始调研（空间网络 / 生成式 3D / 运行时标准 / 市场先例） |
 | [`schemas/`](schemas/) | Spatial-DSL、world.json 与 ISS 契约的 JSON Schema（v0.1） |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | 旗舰示例世界"像素天台"的 DSL、签名清单与说明 |
+| [`docs/p0-status.md`](docs/p0-status.md) | P0-1/P0-2 验证报告（mock/live 结果、性能、缺口） |
 | [`apps/playground/`](apps/playground/) | Babylon.js P0 运行器：加载 `world.json` + `scene/world.glb`、第一人称漫游、门户穿越与回滚 |
 | [`packages/check/`](packages/check/) | `weave-check` CLI + 22 条 SHP 一致性用例与测试 |
 | [`worlds/`](worlds/) | 生成的 P0 运行时世界（简单几何体，无生成模型） |
@@ -64,14 +65,15 @@ node scripts/validate.mjs --strict
 
 ---
 
-## P0 快速开始（P0-1 骨架）
+## P0 快速开始（P0-1/P0-2 原型）
 
 ```bash
 pnpm install
 pnpm run worlds:build   # 确定性生成 worlds/pixel-rooftop 与 worlds/neon-alley
 pnpm dev                # http://localhost:5173
 pnpm test:p0            # 清单校验 + 22/22 一致性用例（mock 会话）
-pnpm test:e2e           # 可选：10 次双向跳转 + 回滚（需 dev server 与 Chrome）
+pnpm test:e2e           # 走真实门户 UI 的 10 次双向跳转 + 回滚
+P0_LIVE=1 pnpm build && P0_LIVE=1 pnpm test:e2e   # 同上，但对两个 live HTTPS 节点
 ```
 
 操作：`WASD` 移动，鼠标拖拽视角，`E` 交互/进门，`Esc` 取消。URL 加 `?world=neon-alley` 进入另一世界；加 `&failPortal=1` 演示回滚。
@@ -79,7 +81,7 @@ pnpm test:e2e           # 可选：10 次双向跳转 + 回滚（需 dev server 
 ## 技术基线（一句话版）
 
 - **产物**：World Bundle = glTF 2.0 `.glb` + `KHR_interactivity` 行为图 + `CHW_*` 厂商扩展 + `world.json` + 内容寻址资产。
-- **运行时**：Babylon.js 8.x（Apache-2.0），**WebGL2-first**，WebGPU 特性增强；不 fork Hyperfy（GPL-3.0 且主仓低维护，且无跨世界门户原语）。
+- **运行时**：Babylon.js 9.x（Apache-2.0），**WebGL2-first**，WebGPU 特性增强；不 fork Hyperfy（GPL-3.0 且主仓低维护，且无跨世界门户原语）。
 - **逻辑**：L0 行为图（安全、可移植）/ L1 精选联网小游戏模块 / L2 能力沙箱 WASM（P3+）；不开放任意用户 JS。
 - **实时**：WebSocket 房间服（P0-P1）→ WebTransport / WebRTC DataChannel（P2+）+ LiveKit 语音；Matrix 只作可选社交桥。
 - **寻址**：HTTPS URL 即世界 ID；`weave://` 仅别名；资产 SHA-256 内容寻址。

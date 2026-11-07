@@ -1,0 +1,17 @@
+{
+  "fixture": "p0",
+  "date": "2026-11-07",
+  "mode": "live",
+  "environment": "macOS 15 arm64, Node 24.11, Chrome 156 headless, SwiftShader (software GL)",
+  "runs": 10,
+  "coldStartMs": 4347,
+  "warmTraversalMs": {
+    "p50": 409,
+    "p95": 499
+  },
+  "targets": {
+    "coldStartP95Ms": 5000,
+    "warmTraversalP95Ms": 1500
+  },
+  "note": "Indicative local baseline only; re-measure on real desktop hardware and in CI. Not a device benchmark."
+}

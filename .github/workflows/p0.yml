@@ -25,3 +25,16 @@ jobs:
       - run: pnpm --filter @choroweave/check test
       - run: pnpm --filter @choroweave/playground build
       - run: node scripts/validate.mjs --strict
+
+      # P0-2: real two-node HTTPS handshake (strict CA in Node).
+      - run: node scripts/tls-fixture.mjs
+      - run: node scripts/live-conformance.mjs
+
+      # P0-2: browser E2E through the actual portal UI against both nodes.
+      - id: chrome
+        uses: browser-actions/setup-chrome@v1
+      - name: Browser E2E (live)
+        env:
+          P0_LIVE: "1"
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+        run: node scripts/e2e-p0.mjs

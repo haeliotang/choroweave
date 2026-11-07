@@ -3,7 +3,7 @@
 > **English (primary):** [`docs/en/research/02-generative-3d-and-agents.md`](../en/research/02-generative-3d-and-agents.md) · 本页为中文版（Chinese version）。
 
 > 项目：choroweave（意图 → 可执行空间 / 空间超链接）
-> 核实口径：**截至 2026-11-07**。所有"已核实"条目均给出来源 URL 与日期；官方声明与第三方实测分开标注；无法核实的一律写"未能核实"，不做补全。
+> 核实口径：**截至 2026-11-07**。注：调研时 ADR-04 写 Babylon.js 8.x；实现采用 9.x，版本修订见 `docs/decisions/ADR-0004-babylonjs-9.md`。所有"已核实"条目均给出来源 URL 与日期；官方声明与第三方实测分开标注；无法核实的一律写"未能核实"，不做补全。
 > 证据等级（与 `docs/02-tech-selection.md` 对齐）：**A【官方】**= 官方仓库/许可证/文档/论文；**B【三方】**= 独立媒体、社区复现或第三方评测；**C【推断】**= 基于已核实事实的工程推理；**D【未核实】**= 有线索但未拿到一手证据。
 
 ---

@@ -23,7 +23,7 @@ The choroweave technical path compresses into 12 decisions. If you read only one
 | ADR-01 | choroweave incubates independently; it connects to tacitweave through the **Implicit Spatial Spec (ISS)** contract, without merging repositories | Heterogeneous tech stack/community/evolution cadence; ISS can be versioned independently | High |
 | ADR-02 | The world artifact = **World Bundle**: glTF 2.0 `.glb` + `KHR_interactivity` + `CHW_*` vendor extensions + `world.json` + content-addressed assets; **not** a private scene format | glTF is the only 3D delivery format consumed by multiple engines/tools (A) | High |
 | ADR-03 | Three logic layers: **L0** KHR_interactivity (object behavior, standard) / **L1** curated networked mini-game modules (parameterized) / **L2** capability-sandboxed WASM (P3+); the specification explicitly scopes L0 to **single-user, no UI/scripting** | Khronos specification + Babylon documentation (A) | High |
-| ADR-04 | Reference runtime = **Babylon.js 8.x (Apache-2.0)**, **WebGL2-first**, with WebGPU as feature enhancement; three.js only for 3DGS/embedding side branches; **do not fork Hyperfy** | Babylon + glTF-SampleViewer are the only two ratified-grade implementations (A) | High |
+| ADR-04 | Reference runtime = **Babylon.js 9.x (Apache-2.0; ADR-0004 rev.1)**, **WebGL2-first**, with WebGPU as feature enhancement; three.js only for 3DGS/embedding side branches; **do not fork Hyperfy** | Babylon + glTF-SampleViewer are the only two ratified-grade implementations (A) | High |
 | ADR-05 | World identity = **HTTPS URL (pointing at `world.json`)**; `weave://` is a registrable alias only; assets are SHA-256 content-addressed + CDN | Clickable/cacheable/indexable; custom schemes cannot be opened directly in chat tools (C) | High |
 | ADR-06 | **SHP = a lightweight profile aligned with MSF "Web of Worlds" + the `CHW_portal` portal extension + an entry handshake**; do not wait for OMI (no portal extension) | MSF/X3D 4.1 WoW Anchor/Inline (A/B); OMI extension list (A) | High |
 | ADR-07 | Real-time layer: WebSocket room server (P0-P1) → **WebTransport / WebRTC DataChannel** (P2+) + LiveKit voice; Matrix only as an optional social bridge, **never carrying pose** | WebTransport 92% caniuse (B); Matrix is an asynchronous event DAG (A/C) | High |
@@ -80,7 +80,7 @@ The choroweave technical path compresses into 12 decisions. If you read only one
 
 | Candidate | Key evidence | Conclusion |
 |---|---|---|
-| **Babylon.js 8.x** | Apache-2.0; the only ratified-grade general engine for KHR_interactivity (load/execute/Flow Graph/lossless export); dual WebGL2+WebGPU backends; mature WebXR; Flow Graph visual debugging (A) | **P0-P4 primary runtime** |
+| **Babylon.js 9.x** | Apache-2.0; the only ratified-grade general engine for KHR_interactivity (load/execute/Flow Graph/lossless export); dual WebGL2+WebGPU backends; mature WebXR; Flow Graph visual debugging (A) | **P0-P4 primary runtime** |
 | three.js | MIT, largest ecosystem; but **no KHR_interactivity executor**; WebGPU+XR is still half-finished: only in 2026-04 was "XR under WebGPU throws directly" changed to automatic WebGL fallback (PR #33497), and the XR framebuffer is still being refactored (#33154) (B) | 3DGS/embedding side branch |
 | PlayCanvas | Strong WebGPU/3DGS (SuperSplat/SOG), but no KHR_interactivity; suited to asset optimization and 3DGS tooling (B) | Asset pipeline |
 | Hyperfy v2 | `hyperfy-xyz/hyperfy`: GPL-3.0, 310 stars; v0.16.0 released 2025-12-18, main branch has had no commits since, dev branch last active 2026-04-21 (A). The only shipped self-hosted Web world engine, but **low maintenance on the main repo + GPL-3.0 + no cross-world portal primitive** | Learn from the design only, do not fork |
@@ -88,7 +88,7 @@ The choroweave technical path compresses into 12 decisions. If you read only one
 | Build our own engine | Cannot cover WebXR/WebGPU/physics/animation/behavior graphs/editor within 6 months | Explicitly not doing it |
 
 **Decision**:
-- The reference runtime is based on Babylon.js 8.x, **WebGL2-first** (default), with WebGPU used through feature detection for high-quality desktop preview, 3DGS, post-processing, and compute-heavy effects; **WebGL2 is the default inside XR sessions**, because the WebXR/WebGPU Binding is still an Editor's Draft, headset-browser WebGPU status could not be verified, and Babylon labels its own WebGPU-XR support experimental (A/B).
+- The reference runtime is based on Babylon.js 9.x, **WebGL2-first** (default), with WebGPU used through feature detection for high-quality desktop preview, 3DGS, post-processing, and compute-heavy effects; **WebGL2 is the default inside XR sessions**, because the WebXR/WebGPU Binding is still an Editor's Draft, headset-browser WebGPU status could not be verified, and Babylon labels its own WebGPU-XR support experimental (A/B).
 - Build a **Runtime Adapter** on top of Babylon (scene loading, input abstraction, state whitelist, portal lifecycle, avatar/network interfaces), with the goal of being "replaceable with a three.js adapter within 3 months", avoiding lock-in.
 
 **Performance budget (written into the engine startup check)**:
@@ -187,7 +187,7 @@ Scores 1-5 (5 best), weights as in section 2.
 
 | Candidate | Standards alignment | Ecosystem talent | Performance coverage | License | Maintenance | 6-month feasibility | 3-year evolution | Weighted |
 |---|---|---|---|---|---|---|---|---|
-| **Babylon.js 8 + KHR_interactivity (WebGL2-first)** | 5 | 3.5 | 4 | 5 | 4 | 4 | 5 | **4.48** |
+| **Babylon.js 9 + KHR_interactivity (WebGL2-first)** | 5 | 3.5 | 4 | 5 | 4 | 4 | 5 | **4.48** |
 | three.js + in-house behavior-graph executor | 2.5 | 5 | 4 | 5 | 5 | 2 | 3 | **3.68** |
 | PlayCanvas + in-house behavior graph | 2 | 3 | 4.5 | 4.5 | 4 | 2 | 3 | **3.13** |
 | Hyperfy v2 | 2 | 2 | 4 | 2 (GPL) | 2 (dormant) | 3 | 2 | **2.35** |

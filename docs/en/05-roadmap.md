@@ -105,7 +105,7 @@ gantt
 **Workstreams**
 - W1 Protocol and schema: `world.json` v0.1; freeze fields for `CHW_portal`/`CHW_collider`/`CHW_logic`; SHP v0.1 text + conformance case list (aligned with [`04`](04-spatial-hyperlink-protocol.md)).
 - W2 Two hand-built worlds: `pixel-rooftop` (rooftop + radio + door in the wall) and `neon-alley` (the second world, deployed on another node `hana.example`; IDs/URLs frozen, see 06 §2.1), all placed by hand with the suite, no generative model.
-- W3 Reference runtime: Babylon.js 8.x scene loading, first-person roaming, input abstraction, portal-switch state machine (prefetch → validate → confirm → join → swap → rollback), WebGL2 by default.
+- W3 Reference runtime: Babylon.js 9.x scene loading, first-person roaming, input abstraction, portal-switch state machine (prefetch → validate → confirm → join → swap → rollback), WebGL2 by default.
 - W4 Node and conformance: `@choroweave/node` static hosting + `/.well-known/weave-node.json` discovery + optional single-room WSP v0.1 codec (defined but multiplayer usage not required); `@choroweave/check` validation of `world.json`/glTF/portals/budgets.
 
 **Deliverables**
@@ -380,7 +380,7 @@ gantt
 | Stage names/timing/Exit Criteria | Verbatim identical to the internal writing spec §3; this document only quantifies the "testable" basis, without changing semantics |
 | Module names | Consistent with the internal writing spec §2 (`@choroweave/*`, `pixel-rooftop`) |
 | Protocol/extension names | SHP v0.1, WSP v0.1, `CHW_portal`/`CHW_collider`/`CHW_logic`/`CHW_avatar` (P2) consistent |
-| Runtime/license | Babylon.js 8.x, WebGL2-first, code Apache-2.0 / specification CC-BY-4.0 consistent |
+| Runtime/license | Babylon.js 9.x, WebGL2-first, code Apache-2.0 / specification CC-BY-4.0 consistent |
 | Performance budget | Reuses [`02`](02-tech-selection.md) §3 performance table and [`research/03`](research/03-runtime-standards.md) §4.4; this document adds no device tiers |
 | **Deviation 1** | 02 §6's "Quest browser WebGPU unverified" needs measured data at the P2 gate; this document lists it as **prerequisite evidence** for G2 but not a gate condition (avoiding an uncontrollable dependency) |
 | **Deviation 2** | `research/03` §4.6's "12-month roadmap recommendation" differs in granularity from this document's 24-month staging; this document prevails, and `research/03`'s recommendation serves as an internal work-order reference for P0–P2 |

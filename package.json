@@ -11,7 +11,10 @@
     "worlds:build": "node scripts/build-p0-worlds.mjs",
     "validate": "node scripts/validate.mjs --strict",
     "test:p0": "pnpm run worlds:build && pnpm --filter @choroweave/check test",
-    "test:e2e": "node scripts/e2e-p0.mjs"
+    "test:e2e": "node scripts/e2e-p0.mjs",
+    "tls:fixture": "node scripts/tls-fixture.mjs",
+    "test:live": "node scripts/live-conformance.mjs",
+    "serve:node": "node scripts/serve-node.mjs"
   },
   "devDependencies": {
     "playwright-core": "^1.65.0",

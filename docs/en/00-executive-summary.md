@@ -29,7 +29,7 @@
 **In scope**
 1. **Chôra Compiler**: intent/ISS → Spatial-DSL (internal IR) → deterministic assembly → World Bundle; includes 6 validation categories and a repair loop.
 2. **Spatial Hyperlink Protocol (SHP v0.1)**: HTTPS world addressing, `world.json`, the `CHW_portal` portal extension, entry handshake, capability negotiation, signatures and access gating, prefetch budget.
-3. **Reference runtime + self-hosted node**: Babylon.js 8.x (WebGL2-first), WebSocket rooms (P1) → WebTransport/WebRTC (P2+), the `weave-check` conformance suite.
+3. **Reference runtime + self-hosted node**: Babylon.js 9.x (WebGL2-first), WebSocket rooms (P1) → WebTransport/WebRTC (P2+), the `weave-check` conformance suite.
 4. **Samples and templates**: 3 showcase worlds including pixel rooftop + modular kit library + official mini-game modules (L1).
 
 **Out of scope (recorded in the roadmap and risk documents)**
@@ -47,7 +47,7 @@
 |---|---|---|
 | World bundle | glTF 2.0 + `KHR_interactivity` + `CHW_*` + `world.json` + content addressing | Proprietary scene format, pure video world model |
 | Interaction | L0 behavior graph (default) / L1 curated networked modules / L2 sandboxed WASM (P3+) | Open arbitrary JS, business logic crammed into the behavior graph |
-| Runtime | **Babylon.js 8.x (Apache-2.0, WebGL2-first)** + Runtime Adapter | three.js (no behavior-graph executor), in-house engine |
+| Runtime | **Babylon.js 9.x (Apache-2.0, WebGL2-first)** + Runtime Adapter | three.js (no behavior-graph executor), in-house engine |
 | Addressing/linking | **HTTPS URL** + `.well-known` + `CHW_portal`, semantics aligned with MSF WoW/X3D Anchor | Custom scheme, on-chain addresses, inventing another spatial language |
 | Realtime | WebSocket (P1) → **WebTransport / WebRTC DataChannel** (P2+) + LiveKit voice | Matrix for realtime state, centralized game servers |
 | Identity | Passkey/OIDC → `did:web`; no blockchain | Wallets/tokens, platform account lock-in |

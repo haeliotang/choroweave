@@ -155,7 +155,7 @@ This layer answers: what format world bundles use, who plays them, how to cross 
 | Activity | **High** | Khronos keeps producing (interactivity, splatting, 2.1 Town Hall, European entity); WebXR WG slower than vendor solutions |
 | Reusability | **High** | Babylon.js 5, Rapier 4, WebTransport 3, three.js 4 (rendering/3DGS only); in-house engine 1–2 (not doing it) |
 
-> **Which layer choroweave fills**: `L0 KHR_interactivity` (object behavior) + `Runtime Adapter` (scene/input/state whitelist/portal lifecycle) + Babylon.js 8.x WebGL2-first (ADR-03/04). **The standard only covers "behavior inside an asset"; world rules, multiplayer, and portals are carried by SHP/WSP.**
+> **Which layer choroweave fills**: `L0 KHR_interactivity` (object behavior) + `Runtime Adapter` (scene/input/state whitelist/portal lifecycle) + Babylon.js 9.x WebGL2-first (ADR-03/04). **The standard only covers "behavior inside an asset"; world rules, multiplayer, and portals are carried by SHP/WSP.**
 
 ### 2.4 Layer Four: Products & Market
 
@@ -445,7 +445,7 @@ This layer answers: who is making money, who is dying, and whether demand-side d
 | ADR-01 | Independent incubation; ISS contract with tacitweave | Upstream (glTF/KHR/Babylon/generative models) all version independently; ecosystem fragmentation [A1][A24][A15] | The independent repo can evolve independently; do not merge |
 | ADR-02 | World Bundle = glTF + `KHR_interactivity` + `CHW_*` + `world.json` | glTF is the only format consumed by multiple engines; no ratified portal extension [A24][A25][A6] | Use standard artifacts + vendor extensions, not proprietary formats |
 | ADR-03 | L0/L1/L2 three-layer logic | `KHR_interactivity` single-user only, no UI/scripting [A1] | L0 does object behavior only; L1/L2 carried by choroweave |
-| ADR-04 | Babylon.js 8.x, WebGL2-first; do not fork Hyperfy | The only ratified-grade general engine; three.js has no executor; Hyperfy GPL + stalled [A4][A43][A10] | Bet on Babylon, not three.js, no fork |
+| ADR-04 | Babylon.js 9.x, WebGL2-first; do not fork Hyperfy | The only ratified-grade general engine; three.js has no executor; Hyperfy GPL + stalled [A4][A43][A10] | Bet on Babylon, not three.js, no fork |
 | ADR-05 | World identity = HTTPS URL; content SHA-256 addressing + CDN | RFC 8615, ATProto/DID; CID does not guarantee availability [A26][A27][A33] | URL primary name + CID verification layer |
 | ADR-06 | SHP aligns with MSF WoW + `CHW_portal`; do not wait for OMI | WoW/X3D Anchor/Inline; OMI has no portal, OMI_link archived [A5][A6][A7] | Lightweight profile + portal handshake, not a new language |
 | ADR-07 | WS (P0–P1) → WebTransport/WebRTC + LiveKit (P2+); Matrix social bridge only | MatrixRTC 50/200 people, event DAG; WebTransport 92.37% [A21][A41][A35][B10] | Build the realtime layer ourselves; Matrix does not carry poses |

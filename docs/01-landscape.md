@@ -156,7 +156,7 @@ flowchart TB
 | 活跃度 | **高** | Khronos 持续产出（interactivity、splatting、2.1 Town Hall、欧洲实体）；WebXR WG 慢于厂商方案 |
 | 可复用性 | **高** | Babylon.js 5、Rapier 4、WebTransport 3、three.js 4（仅渲染/3DGS）；自研引擎 1–2（不做） |
 
-> **choroweave 填哪一层**：`L0 KHR_interactivity`（对象行为）+ `Runtime Adapter`（场景/输入/状态白名单/门户生命周期）+ Babylon.js 8.x WebGL2-first（ADR-03/04）。**标准只承担"资产内行为"，世界规则、多人、门户由 SHP/WSP 承担。**
+> **choroweave 填哪一层**：`L0 KHR_interactivity`（对象行为）+ `Runtime Adapter`（场景/输入/状态白名单/门户生命周期）+ Babylon.js 9.x WebGL2-first（ADR-03/04）。**标准只承担"资产内行为"，世界规则、多人、门户由 SHP/WSP 承担。**
 
 ### 2.4 第四层：产品与市场
 
@@ -446,7 +446,7 @@ flowchart TB
 | ADR-01 | 独立孵化；与 tacitweave 以 ISS 契约衔接 | 上游（glTF/KHR/Babylon/生成模型）均独立版本化；生态碎片化 [A1][A24][A15] | 独立仓库可独立演进，不合并 |
 | ADR-02 | World Bundle = glTF + `KHR_interactivity` + `CHW_*` + `world.json` | glTF 是唯一多引擎消费格式；无 ratified 门户扩展 [A24][A25][A6] | 用标准产物 + 厂商扩展，不用私有格式 |
 | ADR-03 | L0/L1/L2 三层逻辑 | `KHR_interactivity` 仅单用户、无 UI/脚本 [A1] | L0 只做对象行为；L1/L2 由 choroweave 承担 |
-| ADR-04 | Babylon.js 8.x，WebGL2-first；不 fork Hyperfy | 唯一 ratified 级通用引擎；three.js 无执行器；Hyperfy GPL+停滞 [A4][A43][A10] | 押 Babylon，不押 three.js，不 fork |
+| ADR-04 | Babylon.js 9.x，WebGL2-first；不 fork Hyperfy | 唯一 ratified 级通用引擎；three.js 无执行器；Hyperfy GPL+停滞 [A4][A43][A10] | 押 Babylon，不押 three.js，不 fork |
 | ADR-05 | 世界标识 = HTTPS URL；内容 SHA-256 寻址 + CDN | RFC 8615、ATProto/DID；CID 不保证可用 [A26][A27][A33] | URL 主名 + CID 校验层 |
 | ADR-06 | SHP 对齐 MSF WoW + `CHW_portal`；不等待 OMI | WoW/X3D Anchor/Inline；OMI 无 portal、OMI_link 归档 [A5][A6][A7] | 轻量 profile + 门户握手，而非新语言 |
 | ADR-07 | WS（P0–P1）→ WebTransport/WebRTC + LiveKit（P2+）；Matrix 仅社交桥 | MatrixRTC 50/200 人、事件 DAG；WebTransport 92.37% [A21][A41][A35][B10] | 实时层自建，Matrix 不承载位姿 |

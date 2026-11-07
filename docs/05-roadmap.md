@@ -106,7 +106,7 @@ gantt
 **工作流**
 - W1 协议与 Schema：`world.json` v0.1、`CHW_portal`/`CHW_collider`/`CHW_logic` 字段冻结；SHP v0.1 文本 + 一致性用例清单（对齐 [`04`](04-spatial-hyperlink-protocol.md)）。
 - W2 两个手工世界：`pixel-rooftop`（天台 + 收音机 + 墙上门）与 `neon-alley`（第二个世界，部署在另一个节点 `hana.example`；ID/URL 已冻结，见 06 §2.1），全部由套件手工摆放，无生成模型。
-- W3 参考运行时：Babylon.js 8.x 场景加载、第一人称漫游、输入抽象、门户切换状态机（预取 → 校验 → 确认 → 加入 → 切换 → 回滚）、WebGL2 默认。
+- W3 参考运行时：Babylon.js 9.x 场景加载、第一人称漫游、输入抽象、门户切换状态机（预取 → 校验 → 确认 → 加入 → 切换 → 回滚）、WebGL2 默认。
 - W4 节点与一致性：`@choroweave/node` 静态托管 + `/.well-known/weave-node.json` 发现 + 可选单房间 WSP v0.1 编解码（定义但不要求多人可用）；`@choroweave/check` 的 `world.json`/glTF/门户/预算校验。
 
 **交付物**
@@ -381,7 +381,7 @@ gantt
 | 阶段名/时间/Exit Criteria | 与 `internal/writing-spec.md` §3 逐字一致；本文只在"可测口径"上量化，不改语义 |
 | 模块名 | 与 `internal/writing-spec.md` §2 一致（`@choroweave/*`、`pixel-rooftop`） |
 | 协议/扩展名 | SHP v0.1、WSP v0.1、`CHW_portal`/`CHW_collider`/`CHW_logic`/`CHW_avatar`（P2）一致 |
-| 运行时/许可证 | Babylon.js 8.x、WebGL2-first、代码 Apache-2.0 / 规范 CC-BY-4.0 一致 |
+| 运行时/许可证 | Babylon.js 9.x、WebGL2-first、代码 Apache-2.0 / 规范 CC-BY-4.0 一致 |
 | 性能预算 | 沿用 [`02`](02-tech-selection.md) §3 性能表与 [`research/03`](research/03-runtime-standards.md) §4.4；本文不新增设备档位 |
 | **偏差 1** | 02 §6 的"Quest 浏览器 WebGPU 未核实"在 P2 门需要实测数据；本文把它列为 G2 的**前置证据**，但不作为门条件（避免不可控依赖） |
 | **偏差 2** | `research/03` §4.6 的"12 个月路线建议"与本文 24 个月分阶段不同粒度；以本文为准，`research/03` 的建议作为 P0–P2 的内部工作序参考 |

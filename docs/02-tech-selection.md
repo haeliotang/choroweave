@@ -24,7 +24,7 @@ choroweave 的技术路径压缩为 12 条决策。若只读一段：
 | ADR-01 | choroweave 独立孵化；与 tacitweave 以 **Implicit Spatial Spec（ISS）** 契约衔接，不合并仓库 | 技术栈/社区/演进节奏异构；ISS 可独立版本化 | 高 |
 | ADR-02 | 世界产物 = **World Bundle**：glTF 2.0 `.glb` + `KHR_interactivity` + `CHW_*` 厂商扩展 + `world.json` + 内容寻址资产；**不是**私有场景格式 | glTF 是唯一多引擎/多工具消费的 3D 交付格式（A） | 高 |
 | ADR-03 | 逻辑三层：**L0** KHR_interactivity（对象行为，标准）/ **L1** 精选联网小游戏模块（参数化）/ **L2** 能力沙箱 WASM（P3+）；规范明确 L0 **仅单用户、无 UI/脚本** | Khronos 规范 + Babylon 文档（A） | 高 |
-| ADR-04 | 参考运行时 = **Babylon.js 8.x（Apache-2.0）**，**WebGL2-first**，WebGPU 特性增强；three.js 仅 3DGS/嵌入支线；**不 fork Hyperfy** | Babylon + glTF-SampleViewer 是仅有的两个 ratified 级实现（A） | 高 |
+| ADR-04 | 参考运行时 = **Babylon.js 9.x（Apache-2.0；ADR-0004 rev.1）**，**WebGL2-first**，WebGPU 特性增强；three.js 仅 3DGS/嵌入支线；**不 fork Hyperfy** | Babylon + glTF-SampleViewer 是仅有的两个 ratified 级实现（A） | 高 |
 | ADR-05 | 世界标识 = **HTTPS URL（指向 `world.json`）**；`weave://` 仅可注册别名；资产 SHA-256 内容寻址 + CDN | 可点击/可缓存/可索引；自定义 scheme 无法在聊天工具直接打开（C） | 高 |
 | ADR-06 | **SHP = MSF "Web of Worlds" 对齐的轻量 profile + `CHW_portal` 门户扩展 + 进入握手**；不等待 OMI（无 portal 扩展） | MSF/X3D 4.1 WoW Anchor/Inline（A/B）；OMI 扩展清单（A） | 高 |
 | ADR-07 | 实时层：WebSocket 房间服（P0-P1）→ **WebTransport / WebRTC DataChannel**（P2+）+ LiveKit 语音；Matrix 仅可选社交桥，**不承载位姿** | WebTransport 92% caniuse（B）；Matrix 为异步事件 DAG（A/C） | 高 |
@@ -81,7 +81,7 @@ choroweave 的技术路径压缩为 12 条决策。若只读一段：
 
 | 候选 | 关键证据 | 结论 |
 |---|---|---|
-| **Babylon.js 8.x** | Apache-2.0；唯一 ratified 级 KHR_interactivity 通用引擎（加载/执行/Flow Graph/无损导出）；WebGL2+WebGPU 双后端；WebXR 成熟；Flow Graph 可视化调试（A） | **P0-P4 主运行时** |
+| **Babylon.js 9.x** | Apache-2.0；唯一 ratified 级 KHR_interactivity 通用引擎（加载/执行/Flow Graph/无损导出）；WebGL2+WebGPU 双后端；WebXR 成熟；Flow Graph 可视化调试（A） | **P0-P4 主运行时** |
 | three.js | MIT、生态最大；但 **无 KHR_interactivity 执行器**；WebGPU+XR 仍是半成品：2026-04 才把"WebGPU 下 XR 直接抛错"改为自动回退 WebGL（PR #33497），XR framebuffer 仍在重构（#33154）（B） | 3DGS/嵌入支线 |
 | PlayCanvas | WebGPU/3DGS 强（SuperSplat/SOG），但无 KHR_interactivity；适合资产优化与 3DGS 工具链（B） | 资产管线 |
 | Hyperfy v2 | `hyperfy-xyz/hyperfy`：GPL-3.0，310 stars；v0.16.0 发布于 2025-12-18，main 分支此后无提交、dev 分支最后活动 2026-04-21（A）。是唯一 shipped 的自托管 Web 世界引擎，但**主仓低维护 + GPL-3.0 + 无跨世界门户原语** | 只借鉴设计，不 fork |
@@ -89,7 +89,7 @@ choroweave 的技术路径压缩为 12 条决策。若只读一段：
 | 自研引擎 | 6 个月内无法同时覆盖 WebXR/WebGPU/物理/动画/行为图/编辑器 | 明确不做 |
 
 **决策**：
-- 参考运行时基于 Babylon.js 8.x，**WebGL2-first**（默认），WebGPU 通过特性探测用于桌面高质量预览、3DGS、后处理与计算密集效果；**XR 会话内默认 WebGL2**，因为 WebXR/WebGPU Binding 仍是 Editor's Draft、头显浏览器 WebGPU 状态未能核实、Babylon 的 WebGPU-XR 自标 experimental（A/B）。
+- 参考运行时基于 Babylon.js 9.x，**WebGL2-first**（默认），WebGPU 通过特性探测用于桌面高质量预览、3DGS、后处理与计算密集效果；**XR 会话内默认 WebGL2**，因为 WebXR/WebGPU Binding 仍是 Editor's Draft、头显浏览器 WebGPU 状态未能核实、Babylon 的 WebGPU-XR 自标 experimental（A/B）。
 - 在 Babylon 之上做 **Runtime Adapter**（场景加载、输入抽象、状态白名单、门户生命周期、化身/网络接口），目标是"3 个月内可替换为 three.js 适配器"，避免锁死。
 
 **性能预算（写入引擎启动检查）**：
@@ -188,7 +188,7 @@ choroweave 的技术路径压缩为 12 条决策。若只读一段：
 
 | 候选 | 标准对齐 | 生态人才 | 性能覆盖 | 许可证 | 维护活跃 | 6个月可行性 | 3年演化 | 加权 |
 |---|---|---|---|---|---|---|---|---|
-| **Babylon.js 8 + KHR_interactivity（WebGL2-first）** | 5 | 3.5 | 4 | 5 | 4 | 4 | 5 | **4.48** |
+| **Babylon.js 9 + KHR_interactivity（WebGL2-first）** | 5 | 3.5 | 4 | 5 | 4 | 4 | 5 | **4.48** |
 | three.js + 自研行为图执行器 | 2.5 | 5 | 4 | 5 | 5 | 2 | 3 | **3.68** |
 | PlayCanvas + 自研行为图 | 2 | 3 | 4.5 | 4.5 | 4 | 2 | 3 | **3.13** |
 | Hyperfy v2 | 2 | 2 | 4 | 2（GPL） | 2（停更） | 3 | 2 | **2.35** |

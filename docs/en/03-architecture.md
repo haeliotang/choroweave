@@ -15,7 +15,7 @@ The architectural goal of choroweave is one sentence: **make every segment of th
 |---|---|---|---|---|
 | **L-Compiler** | Chôra Compiler | glTF 2.0, `KHR_interactivity`, JSON Schema | Nine-stage pipeline, Spatial-DSL, deterministic assembly, validate-and-repair loop | ADR-09 |
 | **L-Protocol** | SHP / WSP | HTTPS, RFC 8615, JCS/Ed25519, glTF extension mechanism | `world.json`, `CHW_*`, entry handshake, capability negotiation, room sync whitelist | ADR-02/05/06/07 |
-| **L-Runtime** | Reference Runtime | Babylon.js 8.x, WebXR, Rapier, Web Audio | Runtime Adapter, behavior-graph host, portal lifecycle, performance governance | ADR-04 |
+| **L-Runtime** | Reference Runtime | Babylon.js 9.x, WebXR, Rapier, Web Audio | Runtime Adapter, behavior-graph host, portal lifecycle, performance governance | ADR-04 |
 | **L-Node** | Node | Node.js, WebSocket, SQLite, static HTTP | Static hosting layout, room service, short-lived token, pure-static degradation | ADR-07 |
 | **L-Tooling** | `weave-check` / CLI | JSON Schema, glTF Validator | Conformance suite, `validate.mjs` repository self-check | ADR-12 |
 
@@ -44,7 +44,7 @@ flowchart TB
   end
   subgraph Runtime["L-Runtime · @choroweave/runtime"]
     ADAPTER["Runtime Adapter (replaceable)"]
-    BABYLON["Babylon.js 8.x (WebGL2-first)"]
+    BABYLON["Babylon.js 9.x (WebGL2-first)"]
     BEHAVIOR["BehaviorHost (KHR_interactivity)"]
     PORTALMGR["PortalManager (state machine + rollback)"]
     ROOMC["RoomClient"]
@@ -90,7 +90,7 @@ flowchart TB
 |---|---|---|
 | C1 | The artifact must be **glTF 2.0 + `KHR_interactivity` + `CHW_*`**; no private scene format | ADR-02/03 |
 | C2 | World identity must be an **HTTPS URL**; `weave://` is an alias only | ADR-05 |
-| C3 | Reference runtime **Babylon.js 8.x**, **WebGL2 as a guaranteed floor**, WebGPU as feature enhancement; do not fork Hyperfy | ADR-04 |
+| C3 | Reference runtime **Babylon.js 9.x**, **WebGL2 as a guaranteed floor**, WebGPU as feature enhancement; do not fork Hyperfy | ADR-04 |
 | C4 | Three logic layers **L0/L1/L2**; L0 does not support multiplayer or UI (explicitly excluded by the specification), multiplayer/portals/world rules are built in-house | ADR-03 |
 | C5 | Real-time layer **WebSocket (P0-P1) → WebTransport/WebRTC (P2+)**; Matrix does not carry pose | ADR-07 |
 | C6 | Asset generation defaults to **TRELLIS.2 (MIT)**; Hunyuan3D is an optional provider only (region/MAU restrictions) | ADR-09 |
@@ -229,7 +229,7 @@ The example's `world.json` is already signed with a demo ed25519 key (the privat
 flowchart TB
   SHELL["App Shell (DOM overlay / routing / consent cards)"] --> CORE["Runtime Core"]
   CORE --> ADAPTER["RuntimeAdapter"]
-  ADAPTER --> BAB["Babylon.js 8.x engine"]
+  ADAPTER --> BAB["Babylon.js 9.x engine"]
   ADAPTER --> INPUT["InputAdapter (WebXR + keyboard/mouse/touch, no fixed indices)"]
   ADAPTER --> PHYS["PhysicsAdapter (Rapier WASM)"]
   ADAPTER --> AUDIO["AudioAdapter (Web Audio + HRTF)"]

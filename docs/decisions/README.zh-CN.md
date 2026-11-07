@@ -19,6 +19,7 @@ English (primary): [`README.md`](README.md)。
 | ADR-02 | World Bundle 产物格式 | `02` §3 |
 | ADR-03 | 逻辑三层（L0/L1/L2） | `02` §3 |
 | ADR-04 | Babylon.js 参考运行时、WebGL2-first | `02` §3 |
+| ADR-0004 rev.1 | Babylon.js 9.x 运行时（替代 8.x 版本表述） | [`ADR-0004-babylonjs-9.md`](ADR-0004-babylonjs-9.md) |
 | ADR-05 | HTTPS URL 寻址 | `02` §3 |
 | ADR-06 | SHP 对齐 MSF WoW、`CHW_portal` | `02` §3 |
 | ADR-07 | WebTransport/WebRTC 实时层，Matrix 仅社交桥 | `02` §3 |

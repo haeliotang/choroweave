@@ -19,6 +19,7 @@ Chinese version: [`README.zh-CN.md`](README.zh-CN.md).
 | ADR-02 | World Bundle artifact format | `02` §3 |
 | ADR-03 | Three-layer logic (L0/L1/L2) | `02` §3 |
 | ADR-04 | Babylon.js reference runtime, WebGL2-first | `02` §3 |
+| ADR-0004 rev.1 | Babylon.js 9.x runtime (supersedes the 8.x version statement) | [`ADR-0004-babylonjs-9.md`](ADR-0004-babylonjs-9.md) |
 | ADR-05 | HTTPS URL addressing | `02` §3 |
 | ADR-06 | SHP aligned with MSF WoW, `CHW_portal` | `02` §3 |
 | ADR-07 | WebTransport/WebRTC realtime, Matrix only as social bridge | `02` §3 |

@@ -5,7 +5,7 @@
 >
 > 中文版：[README.zh-CN.md](README.zh-CN.md) · Repository: <https://github.com/haeliotang/choroweave>
 
-> **Status (2026-11): design stage + P0-1 scaffold.** The plan, schemas and P0 fixtures are in place. The repository now ships a runnable **P0-1 scaffold**: two hand-built worlds, a Babylon.js playground with portal traversal/rollback, and `weave-check` with 22/22 conformance cases against a mock session. **P0 acceptance is not met yet** (real handshake/token suite + ≥1 external reproduction). Contributing: [CONTRIBUTING.md](CONTRIBUTING.md) · Security: [SECURITY.md](SECURITY.md).
+> **Status (2026-11): design stage + P0-1/P0-2 prototype.** Runnable now: two hand-built worlds, a Babylon.js 9 playground with portal traversal/rollback, **two independent HTTPS SHP nodes** with signed descriptors + pinned trust anchors + one-time `arrive` tokens, mock conformance **22/22**, live node conformance **12/12**, and live browser E2E **10/10 + rollback** ([details](docs/en/p0-status.md)). **P0 acceptance is still not met** (external reproduction + full live conformance mapping). Contributing: [CONTRIBUTING.md](CONTRIBUTING.md) · Security: [SECURITY.md](SECURITY.md).
 
 choroweave is the spatial-computing layer of the **Inceptless** project family. It is *not* another closed metaverse platform: it builds the **compiler, the hyperlink protocol, and the reference implementation** for a web of worlds.
 
@@ -50,6 +50,7 @@ All claims are evidence-graded (A = primary source, B = third-party test/report,
 | [`docs/en/research/`](docs/en/research/) | Four primary research reports (spatial networks / generative 3D / runtime standards / market) |
 | [`schemas/`](schemas/) | JSON Schemas for Spatial-DSL, `world.json`, and the tacitweave ISS contract |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | The flagship example world ("pixel rooftop"), DSL + signed manifest |
+| [`docs/en/p0-status.md`](docs/en/p0-status.md) | P0-1/P0-2 verification report (mock vs live results, perf, gaps) |
 | [`apps/playground/`](apps/playground/) | Babylon.js P0 viewer: loads `world.json` + `scene/world.glb`, first-person roaming, portal traversal with rollback |
 | [`packages/check/`](packages/check/) | `weave-check` CLI + 22 SHP conformance cases + tests |
 | [`worlds/`](worlds/) | Generated P0 runtime worlds (simple geometry, no generative models) |
@@ -69,14 +70,15 @@ node scripts/validate.mjs --strict
 
 ---
 
-## P0 quick start (P0-1 scaffold)
+## P0 quick start (P0-1/P0-2 prototype)
 
 ```bash
 pnpm install
 pnpm run worlds:build   # deterministic: worlds/pixel-rooftop + worlds/neon-alley
 pnpm dev                # http://localhost:5173
 pnpm test:p0            # manifests + 22/22 conformance cases (mock session)
-pnpm test:e2e           # optional: 10 bidirectional jumps + rollback (needs dev server + Chrome)
+pnpm test:e2e           # 10 bidirectional jumps + rollback via the real portal UI
+P0_LIVE=1 pnpm build && P0_LIVE=1 pnpm test:e2e   # same, against two live HTTPS nodes
 ```
 
 Controls: `WASD` move, mouse drag to look, `E` interact / enter portal, `Esc` cancel. Append `?world=neon-alley` to boot the other world; append `&failPortal=1` to demo the rollback path.
@@ -84,7 +86,7 @@ Controls: `WASD` move, mouse drag to look, `E` interact / enter portal, `Esc` ca
 ## Technical baseline (one line per layer)
 
 - **Artifact** — World Bundle = glTF 2.0 `.glb` + `KHR_interactivity` behavior graphs + `CHW_*` vendor extensions + `world.json` + content-addressed assets.
-- **Runtime** — Babylon.js 8.x (Apache-2.0), **WebGL2-first**, WebGPU as progressive enhancement; we do **not** fork Hyperfy (GPL-3.0, low-maintenance main repo, no cross-world portal primitive).
+- **Runtime** — Babylon.js 9.x (Apache-2.0), **WebGL2-first**, WebGPU as progressive enhancement; we do **not** fork Hyperfy (GPL-3.0, low-maintenance main repo, no cross-world portal primitive).
 - **Logic** — L0 `KHR_interactivity` (safe, portable) / L1 curated networked mini-game modules (parameterized) / L2 capability-sandboxed WASM (P3+). No arbitrary user JS.
 - **Realtime** — WebSocket room server (P0–P1) → WebTransport / WebRTC DataChannel (P2+) + LiveKit voice; Matrix is only an optional social bridge, never a pose-sync bus.
 - **Addressing** — an HTTPS URL *is* the world ID; `weave://` is only an alias; assets are SHA-256 content-addressed.

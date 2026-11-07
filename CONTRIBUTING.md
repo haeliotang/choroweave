@@ -53,7 +53,9 @@ pnpm run worlds:build
 pnpm build
 pnpm test:p0        # manifests + 22/22 conformance (mock session)
 pnpm dev            # http://localhost:5173
-pnpm test:e2e       # headless 10 bidirectional jumps + rollback (Chrome)
+pnpm test:e2e       # headless 10 bidirectional jumps + rollback through the portal UI (Chrome)
+pnpm test:live      # live two-node HTTPS protocol suite (TLS fixture)
+P0_LIVE=1 pnpm build && P0_LIVE=1 pnpm test:e2e   # live browser E2E against two HTTPS nodes
 ```
 
 - Branch naming: `feat/…`, `fix/…`, `docs/…`, `protocol/…`.

@@ -8,3 +8,4 @@ node_modules/
 .pnpm-cache/
 .npm-cache/
 apps/*/dist/
+.p0-tls/

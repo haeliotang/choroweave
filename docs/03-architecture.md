@@ -14,7 +14,7 @@ choroweave 的架构目标只有一句话：**让"意图 → 可玩世界 → �
 |---|---|---|---|---|
 | **L-Compiler** | Chôra Compiler | glTF 2.0、`KHR_interactivity`、JSON Schema | 九阶段管线、Spatial-DSL、确定性装配、验证修复循环 | ADR-09 |
 | **L-Protocol** | SHP / WSP | HTTPS、RFC 8615、JCS/Ed25519、glTF 扩展机制 | `world.json`、`CHW_*`、进入握手、能力协商、房间同步白名单 | ADR-02/05/06/07 |
-| **L-Runtime** | Reference Runtime | Babylon.js 8.x、WebXR、Rapier、Web Audio | Runtime Adapter、行为图宿主、门户生命周期、性能治理 | ADR-04 |
+| **L-Runtime** | Reference Runtime | Babylon.js 9.x、WebXR、Rapier、Web Audio | Runtime Adapter、行为图宿主、门户生命周期、性能治理 | ADR-04 |
 | **L-Node** | Node | Node.js、WebSocket、SQLite、静态 HTTP | 静态托管布局、房间服务、短期 token、纯静态降级 | ADR-07 |
 | **L-Tooling** | `weave-check` / CLI | JSON Schema、glTF Validator | 一致性套件、`validate.mjs` 仓库自检 | ADR-12 |
 
@@ -43,7 +43,7 @@ flowchart TB
   end
   subgraph Runtime["L-Runtime · @choroweave/runtime"]
     ADAPTER["Runtime Adapter（可替换）"]
-    BABYLON["Babylon.js 8.x（WebGL2-first）"]
+    BABYLON["Babylon.js 9.x（WebGL2-first）"]
     BEHAVIOR["BehaviorHost（KHR_interactivity）"]
     PORTALMGR["PortalManager（状态机 + 回滚）"]
     ROOMC["RoomClient"]
@@ -89,7 +89,7 @@ flowchart TB
 |---|---|---|
 | C1 | 产物必须是 **glTF 2.0 + `KHR_interactivity` + `CHW_*`**，不许私有场景格式 | ADR-02/03 |
 | C2 | 世界标识必须是 **HTTPS URL**；`weave://` 仅别名 | ADR-05 |
-| C3 | 参考运行时 **Babylon.js 8.x**，**WebGL2 必保底**，WebGPU 特性增强；不 fork Hyperfy | ADR-04 |
+| C3 | 参考运行时 **Babylon.js 9.x**，**WebGL2 必保底**，WebGPU 特性增强；不 fork Hyperfy | ADR-04 |
 | C4 | 逻辑三层 **L0/L1/L2**；L0 不支持多人与 UI（规范明确排除），多人/门户/世界规则自研 | ADR-03 |
 | C5 | 实时层 **WebSocket（P0-P1）→ WebTransport/WebRTC（P2+）**；Matrix 不承载位姿 | ADR-07 |
 | C6 | 资产生成默认 **TRELLIS.2（MIT）**；Hunyuan3D 仅可选 provider（地域/MAU 限制） | ADR-09 |
@@ -228,7 +228,7 @@ pixel-rooftop/
 flowchart TB
   SHELL["App Shell（DOM overlay / 路由 / 确认卡片）"] --> CORE["Runtime Core"]
   CORE --> ADAPTER["RuntimeAdapter"]
-  ADAPTER --> BAB["Babylon.js 8.x 引擎"]
+  ADAPTER --> BAB["Babylon.js 9.x 引擎"]
   ADAPTER --> INPUT["InputAdapter（WebXR + 键鼠/触控，无固定索引）"]
   ADAPTER --> PHYS["PhysicsAdapter（Rapier WASM）"]
   ADAPTER --> AUDIO["AudioAdapter（Web Audio + HRTF）"]
