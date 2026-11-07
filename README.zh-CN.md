@@ -3,7 +3,7 @@
 > **把人的意图即时编译为可执行、可共在、可互访的 3D 空间，并让这些空间像网页一样互相链接。**
 > English (primary): [README.md](README.md) · 英文文档入口：[docs/en/](docs/en/README.md) · 仓库：<https://github.com/haeliotang/choroweave>
 
-> **状态（2026-11）：设计阶段 · 方案 v0.1。** 本仓库目前包含调研、协议草案、Schema 与夹具；**P0 实现尚未开始**，没有可运行的编译器或运行时。参与方式：[CONTRIBUTING.md](CONTRIBUTING.md) · 安全报告：[SECURITY.md](SECURITY.md)。
+> **状态（2026-11）：设计阶段 + P0-1 骨架。** 方案、Schema 与 P0 夹具已就位；仓库现在包含可运行的 **P0-1 骨架**：两个手搭世界、带门户穿越/回滚的 Babylon.js 运行器、以及 22/22 一致性用例的 `weave-check`（mock 会话）。**P0 验收尚未达成**（真实握手/token 套件 + ≥1 名外部复现仍待完成）。参与方式：[CONTRIBUTING.md](CONTRIBUTING.md) · 安全报告：[SECURITY.md](SECURITY.md)。
 
 choroweave 是 **Inceptless** 矩阵中的"空间计算层"项目。它不做一个封闭的元宇宙平台，而是做空间时代的 **编译器 + 超链接协议 + 参考实现**：
 
@@ -45,6 +45,10 @@ choroweave 是 **Inceptless** 矩阵中的"空间计算层"项目。它不做一
 | [`docs/research/`](docs/research/) | 四份原始调研（空间网络 / 生成式 3D / 运行时标准 / 市场先例） |
 | [`schemas/`](schemas/) | Spatial-DSL、world.json 与 ISS 契约的 JSON Schema（v0.1） |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | 旗舰示例世界"像素天台"的 DSL、签名清单与说明 |
+| [`apps/playground/`](apps/playground/) | Babylon.js P0 运行器：加载 `world.json` + `scene/world.glb`、第一人称漫游、门户穿越与回滚 |
+| [`packages/check/`](packages/check/) | `weave-check` CLI + 22 条 SHP 一致性用例与测试 |
+| [`worlds/`](worlds/) | 生成的 P0 运行时世界（简单几何体，无生成模型） |
+| [`scripts/build-p0-worlds.mjs`](scripts/build-p0-worlds.mjs) | P0 夹具的确定性世界/GLB 生成器 |
 | [`fixtures/p0/`](fixtures/p0/README.md) | P0 双世界固定夹具（规范 ID/URL、hosts 映射、10 次跳转脚本） |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | 贡献范围、证据规则、DCO、RFC/ADR 流程 |
 | [`SECURITY.md`](SECURITY.md) | 私密漏洞报告与安全范围 |
@@ -59,6 +63,18 @@ node scripts/validate.mjs --strict
 > 说明：`docs/internal/` 为写作流程留档，非交付内容，可忽略。
 
 ---
+
+## P0 快速开始（P0-1 骨架）
+
+```bash
+pnpm install
+pnpm run worlds:build   # 确定性生成 worlds/pixel-rooftop 与 worlds/neon-alley
+pnpm dev                # http://localhost:5173
+pnpm test:p0            # 清单校验 + 22/22 一致性用例（mock 会话）
+pnpm test:e2e           # 可选：10 次双向跳转 + 回滚（需 dev server 与 Chrome）
+```
+
+操作：`WASD` 移动，鼠标拖拽视角，`E` 交互/进门，`Esc` 取消。URL 加 `?world=neon-alley` 进入另一世界；加 `&failPortal=1` 演示回滚。
 
 ## 技术基线（一句话版）
 

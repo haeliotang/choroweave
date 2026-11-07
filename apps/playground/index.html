@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>choroweave P0 · playground</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --fg: #e9eef5;
+        --dim: #9aa7b8;
+        --accent: #49d3ff;
+        --danger: #ff6b7a;
+        --panel: rgba(12, 16, 24, 0.86);
+        --border: rgba(120, 160, 200, 0.28);
+      }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; margin: 0; background: #080b11; overflow: hidden; }
+      body { font: 14px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--fg); }
+      #app { position: fixed; inset: 0; }
+      canvas { width: 100%; height: 100%; display: block; outline: none; }
+
+      .hud { position: fixed; left: 16px; top: 16px; z-index: 10; pointer-events: none; }
+      .title { font-weight: 650; letter-spacing: 0.2px; }
+      .sub { color: var(--dim); font-size: 12px; }
+      .badge { display: inline-block; padding: 2px 8px; border: 1px solid var(--border); border-radius: 999px; font-size: 11px; color: var(--dim); margin-left: 8px; }
+      .hint { position: fixed; left: 16px; bottom: 16px; z-index: 10; color: var(--dim); font-size: 12px; line-height: 1.7; pointer-events: none; }
+      kbd { border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; color: var(--fg); font-size: 11px; }
+
+      .prompt { position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%); z-index: 12; display: none;
+        background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; white-space: nowrap; }
+      .prompt.show { display: block; }
+      .prompt strong { color: var(--accent); }
+
+      .loading { position: fixed; inset: 0; z-index: 30; display: none; align-items: center; justify-content: center;
+        background: rgba(6, 9, 14, 0.72); backdrop-filter: blur(2px); }
+      .loading.show { display: flex; }
+      .spinner { width: 22px; height: 22px; border: 2px solid rgba(255,255,255,0.2); border-top-color: var(--accent);
+        border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 12px; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+
+      dialog { border: 1px solid var(--border); border-radius: 12px; background: var(--panel); color: var(--fg);
+        padding: 20px 22px; max-width: 440px; width: min(440px, calc(100vw - 32px)); }
+      dialog::backdrop { background: rgba(0,0,0,0.55); }
+      dialog h2 { margin: 0 0 6px; font-size: 17px; }
+      dialog .meta { color: var(--dim); font-size: 12px; margin-bottom: 14px; word-break: break-all; }
+      dialog .actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+      button { font: inherit; border-radius: 8px; border: 1px solid var(--border); padding: 8px 14px; cursor: pointer; background: transparent; color: var(--fg); }
+      button.primary { background: var(--accent); color: #04121a; border-color: transparent; font-weight: 650; }
+      button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+      .toast { position: fixed; left: 50%; top: 24px; transform: translateX(-50%); z-index: 40; max-width: min(680px, calc(100vw - 32px));
+        display: none; padding: 10px 14px; border-radius: 10px; background: rgba(60, 12, 18, 0.92); border: 1px solid rgba(255,107,122,0.5); }
+      .toast.show { display: block; }
+    </style>
+  </head>
+  <body>
+    <div id="app"><canvas id="renderCanvas" touch-action="none"></canvas></div>
+
+    <div class="hud">
+      <div><span class="title" id="worldTitle">loading…</span><span class="badge" id="worldBadge">P0</span></div>
+      <div class="sub" id="worldSub"></div>
+    </div>
+
+    <div class="prompt" id="portalPrompt">
+      <strong id="portalTitle">portal</strong>
+      <span class="sub"> · press <kbd>E</kbd> or click to inspect</span>
+    </div>
+
+    <div class="hint">
+      <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> move · mouse look · <kbd>E</kbd> interact · <kbd>Esc</kbd> cancel</div>
+      <div id="fps" class="sub"></div>
+    </div>
+
+    <div class="loading" id="loading"><div class="spinner"></div><span id="loadingText">loading world…</span></div>
+    <div class="toast" id="toast"></div>
+
+    <dialog id="portalDialog">
+      <h2 id="dialogTitle">Enter another world?</h2>
+      <div class="meta" id="dialogMeta"></div>
+      <div class="sub">This is a signed-or-unsigned SHP world bundle. Traversal is a transaction: if the target fails to load, you stay here with state intact.</div>
+      <div class="actions">
+        <button id="cancelBtn" type="button">Cancel</button>
+        <button id="enterBtn" class="primary" type="button">Enter</button>
+      </div>
+    </dialog>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

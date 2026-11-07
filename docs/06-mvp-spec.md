@@ -75,7 +75,7 @@
 | 浏览器 | Chrome/Edge ≥ 最新两个稳定版（WebGL2 必保底）；Quest Browser 冒烟；Safari 桌面不在 P1 承诺内（WebXR/WebGPU 状态见 [`research/03`](research/03-runtime-standards.md) §3.2） |
 | 网络 | ① 局域网（HHT 基准）；② 公网宽带；③ Fast 4G 模拟（1.6 Mbps / 750 kbps / 150 ms）用于 CST 与弱网降级 |
 | 硬件 | Desktop：4 核 / 16 GB / 集显可跑；XR 设备：Quest 2 或 Pico 4（XR-Low 冒烟）、Quest 3（P2 起门禁） |
-| 资产前置 | `schemas/spatial-dsl.schema.json`、`schemas/world-manifest.schema.json`、`examples/pixel-rooftop/`（已有初版）；第二个世界 `neon-alley`（`https://hana.example/worlds/neon-alley/world.json`，见 §2.1）在 P0-1 内建立——示例与 Schema 以 03/04 定稿为准 |
+| 资产前置 | `schemas/spatial-dsl.schema.json`、`schemas/world-manifest.schema.json`、`examples/pixel-rooftop/`（已有初版）；运行时双世界 `worlds/pixel-rooftop/`、`worlds/neon-alley/`（由 `scripts/build-p0-worlds.mjs` 生成，见 §2.1）；设计示例 `examples/pixel-rooftop/` 保留用于 P1 编译器 |
 | 身份 | P0 无账号（本地随机身份 + 节点签名）；P1 可选 Passkey 本地身份，不做跨节点迁移（P2 起 `did:web`） |
 | 遥测 | 默认关闭；开启需显式 opt-in，只上报聚合指标（见 [`07`](07-risks-compliance.md) §7） |
 | 数据 | 不采集未成年人数据；不采集生物特征；不上传用户资产到项目方服务器（自托管优先） |
@@ -95,12 +95,12 @@
 
 | 世界 ID | 节点域 | 规范 URL（必须与实际分发一致） | 夹具目录 | 说明 |
 |---|---|---|---|---|
-| `pixel-rooftop` | `alice.example`（Node A） | `https://alice.example/worlds/pixel-rooftop/world.json` | `examples/pixel-rooftop/` | `world.json.id` 已指向该 URL |
-| `neon-alley` | `hana.example`（Node B） | `https://hana.example/worlds/neon-alley/world.json` | `examples/neon-alley/`（P0-1 建立） | `pixel-rooftop/world.json` 的门户目标已指向该 URL |
+| `pixel-rooftop` | `alice.example`（Node A） | `https://alice.example/worlds/pixel-rooftop/world.json` | `worlds/pixel-rooftop/`（P0 运行时；设计示例见 `examples/pixel-rooftop/`） | `world.json.id` 已指向该 URL |
+| `neon-alley` | `hana.example`（Node B） | `https://hana.example/worlds/neon-alley/world.json` | `worlds/neon-alley/`（P0 运行时） | `pixel-rooftop/world.json` 的门户目标已指向该 URL |
 
 - **冻结项**：世界 ID、URL、门户 ID `door_to_neon_alley`、出生点 `spawn_default`；变更需 SHP minor 版本升级 + 夹具同步，不接受"实现时再定"。
 - **本地夹具**：`/etc/hosts` 将 `alice.example` / `hana.example` 映射到 `127.0.0.1`；本地 CA（mkcert）签发两域证书；反向代理占用 443 以保持规范 URL 不变（或由测试运行时注入 `--resolve`）。
-- **夹具文件（P0 建立）**：`fixtures/p0/hosts`、`fixtures/p0/nodes.yaml`（两节点目录/端口/证书）、`fixtures/p0/traversal-10.json`（10 次双向跳转脚本）、`fixtures/p0/golden/`（两份签名 `world.json` 的黄金副本）。
+- **夹具文件**：`worlds/*/world.json` 与 `worlds/*/scene/world.glb`（`scripts/build-p0-worlds.mjs` 确定性生成）、`fixtures/p0/hosts.example`（hosts 映射）、`fixtures/p0/traversal-10.example.json`（10 次双向跳转脚本）、`scripts/e2e-p0.mjs`（headless 10/10 + 回滚）。
 - **CI 门禁**：`pnpm test:p0`（10/10 + 22/22）与 `node scripts/validate.mjs --strict` 均为阻断项。
 - **夹具说明**：[`fixtures/p0/README.md`](../fixtures/p0/README.md)（hosts 示例、10 次跳转脚本、golden 副本约定）。
 - **G0 决策门**：**2027-01-25**；退出标准 = 双向 10/10 + `weave-check` 22/22 + ≥1 名外部开发者复现 + 0 次生成调用。
@@ -117,7 +117,7 @@
 | **US-P0-02** | 创作者 | 一个已发布的 `world.json` URL | 在 Desktop 浏览器打开该 URL | 世界在 **CST p95 <5s** 内可操作（可移动、可看）；控制台无未捕获异常 | 冷缓存 10 次采样；`FT` 在 Desktop 预算内 |
 | **US-P0-03** | 小社区主 | 站在 `pixel-rooftop` 的 `CHW_portal` 前 | 激活门户（点击/靠近） | 依次发生：邻近预取 → 目标域名与权限展示 → 用户确认 → 加入目标会话 → 场景原子切换；**HHT p95 <1.5s** | 10 次热切换；失败有回滚 |
 | **US-P0-04** | 创作者 | 门户目标节点已离线 | 激活门户 | 3s 内展示**最后已知世界的静态预览** + "稍后再访" + 返回按钮；不白屏、不崩溃 | 断网/停服两场景各 3 次；返回后原世界状态未损 |
-| **US-P0-05** | 开发者 | 一个 World Bundle 目录 | 运行 `weave-check ./examples/pixel-rooftop` | 输出结构化报告（JSON + 人类可读），exit code 反映结果；故意的坏样本必须失败 | 好样本 22/22 通过（[`04`](04-spatial-hyperlink-protocol.md) §12 全量）；坏样本（改 1 字节/删 collider/伪造 portal URL）全部失败并给诊断 |
+| **US-P0-05** | 开发者 | 一个 World Bundle 目录 | 运行 `pnpm exec weave-check ./worlds/pixel-rooftop --conformance` | 输出结构化报告（JSON + 人类可读），exit code 反映结果；故意的坏样本必须失败 | 好样本 22/22 通过（[`04`](04-spatial-hyperlink-protocol.md) §12 全量）；坏样本（改 1 字节/删 collider/伪造 portal URL）全部失败并给诊断 |
 | **US-P0-06** | 安全/节点运营者 | 一个被篡改的 `world.json`（签名不匹配） | 运行 `weave-check` 或让运行时加载 | 拒绝加载并说明"manifest 签名不匹配"；不执行任何行为图 | 篡改检测 100%；不产生副作用 |
 | **US-P0-07** | 新加入开发者 | 一台干净机器 + README | 按文档操作 30 分钟 | 本地起两个节点、两个世界互跳、跑通 `weave-check` | 外部复现 ≥1 人；记录耗时 |
 
@@ -150,7 +150,7 @@
 
 ### 5.1 设定
 
-- **世界 1 · 像素天台**：黄昏像素风；地面/护栏/水塔（以 `examples/pixel-rooftop` 为准）；一台老收音机（点击播 Lo-Fi）；一面墙上有发光门（`CHW_portal` → 世界 2）。
+- **世界 1 · 像素天台**：黄昏像素风；地面/护栏/水塔（以 `worlds/pixel-rooftop` 为准）；一台老收音机（点击播 Lo-Fi）；一面墙上有发光门（`CHW_portal` → 世界 2）。
 - **世界 2 · 夜行小巷（Neon Alley）**（`neon-alley`，部署在**另一个节点** `hana.example`；ID 与 URL 已冻结，见 §2.1）：霓虹招牌、雨棚、湿漉巷道；一扇返回天台的门。
 - **目标**：**8 分钟内**从"一句话"走到"两个世界往返且状态保留"；全程不出现白屏、不出现英文报错弹窗。
 
@@ -299,7 +299,7 @@ Desktop Chrome（WebGL2）；`@choroweave/*` P1 版本；两个本地/公网节�
 | CLI | `choroweave`（聚合 CLI：`build/preview/publish/eval`） | `--help` 完整；退出码语义化（0 成功 / 1 校验失败 / 2 参数错 / 3 内部错） |
 | 一致性套件 | `weave-check`（CLI + [`04`](04-spatial-hyperlink-protocol.md) §12 的 22 条用例，P2 扩到 80） | 好样本全过、坏样本全失败；JSON 报告稳定 |
 | Schema | `schemas/spatial-dsl.schema.json`、`schemas/world-manifest.schema.json` | 两示例世界 0 error；与 [`04`](04-spatial-hyperlink-protocol.md) 字段一致 |
-| 示例 | `examples/pixel-rooftop/`、`examples/neon-alley/` | 通过 `weave-check`；含手工版与编译版对照说明 |
+| 示例/运行时 | `worlds/pixel-rooftop/`、`worlds/neon-alley/`（P0 运行时）；`examples/pixel-rooftop/`（P1 设计示例） | 通过 `weave-check`；运行时夹具由脚本生成、可复现 |
 | 节点镜像 | `ghcr.io/choroweave/node:<version>`（Docker） | 一条命令起节点；`node doctor` 通过 |
 | 文档 | 02/03/04/05/06（本文件） + README 导航 | 相对链接全部可达 |
 | 供应链 | CycloneDX SBOM + 产物 SHA-256 清单 + 许可证扫描报告 | 0 GPL/AGPL 进入核心包；Hunyuan provider 默认关闭且不随包分发权重 |
@@ -312,7 +312,7 @@ Desktop Chrome（WebGL2）；`@choroweave/*` P1 版本；两个本地/公网节�
 | 1 | `pnpm install --frozen-lockfile` | 0 error | 阻断 |
 | 2 | `pnpm -r build` | 全部包构建成功 | 阻断 |
 | 3 | `node scripts/validate.mjs` | Schema/示例/链接全通过 | 阻断 |
-| 4 | `npx @choroweave/check ./examples/pixel-rooftop --budget xr-mid` | exit 0；报告 0 error | 阻断 |
+| 4 | `pnpm exec weave-check ./worlds/pixel-rooftop --conformance` | exit 0；22/22；报告 0 error | 阻断 |
 | 5 | `npx @choroweave/node start --root ./dist --port 8787` | `/.well-known/weave-node.json` 200 且字段完整 | 阻断 |
 | 6 | `npx @choroweave/check --conformance --against http://localhost:8787` | 22/22 通过（[`04`](04-spatial-hyperlink-protocol.md) §12） | 阻断 |
 | 7 | 双节点手工互跳 10 次（US-P0-03） | 10/10；`HHT` p95 <1.5s | 阻断 |

@@ -5,7 +5,7 @@
 >
 > 中文版：[README.zh-CN.md](README.zh-CN.md) · Repository: <https://github.com/haeliotang/choroweave>
 
-> **Status (2026-11): design stage — plan v0.1.** This repository contains research, protocol drafts, schemas and fixtures; **P0 implementation has not started**, and there is no runnable compiler or runtime yet. Contributing: [CONTRIBUTING.md](CONTRIBUTING.md) · Security: [SECURITY.md](SECURITY.md).
+> **Status (2026-11): design stage + P0-1 scaffold.** The plan, schemas and P0 fixtures are in place. The repository now ships a runnable **P0-1 scaffold**: two hand-built worlds, a Babylon.js playground with portal traversal/rollback, and `weave-check` with 22/22 conformance cases against a mock session. **P0 acceptance is not met yet** (real handshake/token suite + ≥1 external reproduction). Contributing: [CONTRIBUTING.md](CONTRIBUTING.md) · Security: [SECURITY.md](SECURITY.md).
 
 choroweave is the spatial-computing layer of the **Inceptless** project family. It is *not* another closed metaverse platform: it builds the **compiler, the hyperlink protocol, and the reference implementation** for a web of worlds.
 
@@ -50,6 +50,10 @@ All claims are evidence-graded (A = primary source, B = third-party test/report,
 | [`docs/en/research/`](docs/en/research/) | Four primary research reports (spatial networks / generative 3D / runtime standards / market) |
 | [`schemas/`](schemas/) | JSON Schemas for Spatial-DSL, `world.json`, and the tacitweave ISS contract |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | The flagship example world ("pixel rooftop"), DSL + signed manifest |
+| [`apps/playground/`](apps/playground/) | Babylon.js P0 viewer: loads `world.json` + `scene/world.glb`, first-person roaming, portal traversal with rollback |
+| [`packages/check/`](packages/check/) | `weave-check` CLI + 22 SHP conformance cases + tests |
+| [`worlds/`](worlds/) | Generated P0 runtime worlds (simple geometry, no generative models) |
+| [`scripts/build-p0-worlds.mjs`](scripts/build-p0-worlds.mjs) | Deterministic world/GLB builder for the P0 fixtures |
 | [`fixtures/p0/`](fixtures/p0/README.md) | Frozen two-world P0 fixtures (canonical IDs/URLs, hosts mapping, 10-jump script) |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contribution scope, evidence rules, DCO, RFC/ADR process |
 | [`SECURITY.md`](SECURITY.md) | Private vulnerability reporting and security scope |
@@ -64,6 +68,18 @@ node scripts/validate.mjs --strict
 ```
 
 ---
+
+## P0 quick start (P0-1 scaffold)
+
+```bash
+pnpm install
+pnpm run worlds:build   # deterministic: worlds/pixel-rooftop + worlds/neon-alley
+pnpm dev                # http://localhost:5173
+pnpm test:p0            # manifests + 22/22 conformance cases (mock session)
+pnpm test:e2e           # optional: 10 bidirectional jumps + rollback (needs dev server + Chrome)
+```
+
+Controls: `WASD` move, mouse drag to look, `E` interact / enter portal, `Esc` cancel. Append `?world=neon-alley` to boot the other world; append `&failPortal=1` to demo the rollback path.
 
 ## Technical baseline (one line per layer)
 

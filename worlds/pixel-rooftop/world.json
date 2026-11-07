@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "0.1",
+  "id": "https://alice.example/worlds/pixel-rooftop/world.json",
+  "title": "Pixel Rooftop (P0)",
+  "description": "Hand-built P0 rooftop: concrete floor, parapet, table, radio, glowing door to Neon Alley.",
+  "author": {
+    "name": "Alice",
+    "url": "https://alice.example",
+    "did": "did:web:alice.example"
+  },
+  "license": "CC-BY-4.0",
+  "createdAt": "2026-11-07T00:00:00Z",
+  "updatedAt": "2026-11-07T00:00:00Z",
+  "protocol": {
+    "name": "SHP",
+    "version": "0.1"
+  },
+  "entry": {
+    "scene": "scene/world.glb",
+    "format": "gltf-2.0",
+    "interactivity": "KHR_interactivity"
+  },
+  "spawn": {
+    "node": "spawn_default",
+    "position": [
+      0,
+      0,
+      3.8
+    ],
+    "rotationY": 180
+  },
+  "assets": [],
+  "capabilities": {
+    "interactivity": {
+      "extension": "KHR_interactivity"
+    },
+    "extensions": [
+      "CHW_portal"
+    ],
+    "maxPlayers": 20,
+    "audio": {
+      "spatial": false,
+      "music": false
+    },
+    "avatar": {
+      "format": "gltf",
+      "required": false
+    },
+    "sync": {
+      "rateHz": 15,
+      "whitelist": [
+        "/nodes/{radio}/translation",
+        "/nodes/{radio}/rotation",
+        "/extensions/CHW_logic/props/lightsOn"
+      ]
+    }
+  },
+  "portals": [
+    {
+      "id": "door_to_neon_alley",
+      "entity": "neon_door",
+      "title": "Neon Alley",
+      "target": {
+        "url": "https://hana.example/worlds/neon-alley/world.json"
+      },
+      "anchor": {
+        "spawnNode": "spawn_default",
+        "position": [
+          0,
+          1.1,
+          -4.7
+        ],
+        "rotationY": 180
+      },
+      "handoff": "cross-instance",
+      "policy": {
+        "confirm": "once",
+        "carry": [
+          "avatar"
+        ],
+        "allowGuests": true,
+        "prefetch": "proximity",
+        "maxPrefetchBytes": 8388608
+      },
+      "version": "0.1"
+    }
+  ],
+  "perf": {
+    "budget": {
+      "triangles": 12000,
+      "drawCalls": 64,
+      "textureMB": 8,
+      "firstByteKB": 3072
+    }
+  },
+  "moderation": {
+    "rating": "general",
+    "allowGuests": true
+  }
+}

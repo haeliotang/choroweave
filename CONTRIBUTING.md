@@ -47,10 +47,13 @@ If you are unsure where something belongs, open a Discussion or a blank issue; w
 # Plan-repo self-check (Node >= 18, no install needed)
 node scripts/validate.mjs --strict
 
-# P0 (once the scaffold lands)
+# P0 scaffold
 pnpm install --frozen-lockfile
-pnpm -r build
-pnpm test:p0
+pnpm run worlds:build
+pnpm build
+pnpm test:p0        # manifests + 22/22 conformance (mock session)
+pnpm dev            # http://localhost:5173
+pnpm test:e2e       # headless 10 bidirectional jumps + rollback (Chrome)
 ```
 
 - Branch naming: `feat/…`, `fix/…`, `docs/…`, `protocol/…`.

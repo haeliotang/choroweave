@@ -115,7 +115,7 @@ gantt
 |---|---|---|
 | SHP v0.1（寻址、描述符、门户、握手、降级） | `docs/04` + `@choroweave/protocol` | 外部实现者仅凭文档可写出最小门户查看器 |
 | `world.json` v0.1 Schema + `CHW_portal`/`CHW_collider`/`CHW_logic` | `schemas/`、`schemas/world-manifest.schema.json` | Schema 可校验两示例世界，0 error |
-| 两个手工世界（跨两个自托管节点） | `examples/pixel-rooftop/`、`examples/neon-alley/` | 两节点可互跳，门的位置/朝向正确 |
+| 两个手工世界（跨两个自托管节点） | `worlds/pixel-rooftop/`、`worlds/neon-alley/`（由 `scripts/build-p0-worlds.mjs` 生成） | 两节点可互跳，门的位置/朝向正确 |
 | 进入/门户切换（P0 最小查看器） | `apps/playground`（P1 起正式化为 `@choroweave/runtime`，见 §8 对齐 1） | 热切换 p95 < 1.5s；目标离线有降级页 |
 | 一致性套件 | `@choroweave/check`（`weave-check` CLI） | [`04`](04-spatial-hyperlink-protocol.md) §12 的 22 条用例全通过 |
 | 节点发现与签名 | `@choroweave/node` + `@choroweave/protocol` | ed25519 签名验证；`weave-check` 覆盖 |

@@ -1,14 +1,14 @@
 # P0 fixtures — frozen two-world traversal harness
 
 > Spec: [`docs/en/06-mvp-spec.md`](../../docs/en/06-mvp-spec.md) §2.1 · 中文：[`docs/06-mvp-spec.md`](../../docs/06-mvp-spec.md) §2.1
-> Status: **specification only** (created with the plan; files are populated during P0-1).
+> Status: **fixture spec + generated runtime worlds**. `worlds/` is rebuilt deterministically by `scripts/build-p0-worlds.mjs`.
 
 ## Canonical worlds
 
 | World ID | Node | Canonical URL (must match distribution) | Directory |
 |---|---|---|---|
-| `pixel-rooftop` | Node A — `alice.example` | `https://alice.example/worlds/pixel-rooftop/world.json` | `examples/pixel-rooftop/` |
-| `neon-alley` | Node B — `hana.example` | `https://hana.example/worlds/neon-alley/world.json` | `examples/neon-alley/` (P0-1) |
+| `pixel-rooftop` | Node A — `alice.example` | `https://alice.example/worlds/pixel-rooftop/world.json` | `worlds/pixel-rooftop/` |
+| `neon-alley` | Node B — `hana.example` | `https://hana.example/worlds/neon-alley/world.json` | `worlds/neon-alley/` |
 
 Frozen identifiers: world IDs, canonical URLs, portal `door_to_neon_alley`, spawn `spawn_default`.
 Any change requires an SHP minor version bump and a fixture update.
