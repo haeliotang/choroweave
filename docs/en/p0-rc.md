@@ -57,7 +57,13 @@ Performance notes: cold start uses a **fresh browser process** per sample; warm 
 | SHP v0.1 final freeze | ⬜ after feedback |
 | G0 review | ⬜ 2027-01-25 target |
 
-## 5. Freeze policy
+## 5. G0 evidence bundle
+
+Use [`g0-evidence.md`](g0-evidence.md) when proposing G0. Required artifacts: RC identity, deployment information, external functional reproduction, environment-specific performance reproduction, `remoteTopology`, browser perf report, unified conformance report. **`--validate-only PASS` alone is not evidence of performance or correct SHP service.** External reproduction records functionality and performance separately.
+
+Topology validation proves DNS/TLS reachability and address classification for the configured endpoints; it does not prove the browser used the expected network path or that the endpoints serve the correct Choroweave worlds.
+
+## 6. Freeze policy
 
 - Runtime and protocol files are frozen at the RC baseline; only validation tooling, docs, and test fixes may land before G0.
 - Any runtime change after the RC requires a new RC tag, re-running all suites, and an explicit note in the external reproduction issue.
