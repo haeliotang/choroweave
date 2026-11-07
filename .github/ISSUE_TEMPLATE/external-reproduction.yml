@@ -1,0 +1,61 @@
+name: External reproduction (P0)
+description: Record an independent attempt to deploy the two P0 nodes and traverse both ways.
+title: "[repro] "
+labels: ["reproduction", "p0"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form records an **external reproduction**. Do not include secrets, private keys or personal data.
+        Target: two nodes, `pixel-rooftop` ↔ `neon-alley`, bidirectional 10/10, `weave-check` 22/22, within 30 minutes.
+  - type: input
+    id: commit
+    attributes:
+      label: Commit / date tested
+      placeholder: f8f2e75 (2026-11-07)
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: macOS 15, Node 22, Chrome 140, LAN, local mkcert CA
+    validations:
+      required: true
+  - type: dropdown
+    id: result
+    attributes:
+      label: Overall result
+      options:
+        - Fully reproduced (10/10 + 22/22)
+        - Partially reproduced (describe where it stopped)
+        - Blocked by documentation gap
+        - Blocked by bug
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps actually run
+      description: Commands, hosts/cert setup, node roots, URLs used. Enough for someone else to repeat.
+    validations:
+      required: true
+  - type: textarea
+    id: timing
+    attributes:
+      label: Time breakdown
+      description: Setup / node A / node B / traversal / weave-check / debugging.
+  - type: textarea
+    id: issues
+    attributes:
+      label: Documentation gaps or bugs found
+      description: Quote the sentence or command that failed; suggest a fix if you can.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I used the frozen URLs (alice.example / hana.example) and did not modify the signed example manifests.
+          required: true
+        - label: I did not include secrets or personal data.
+          required: true

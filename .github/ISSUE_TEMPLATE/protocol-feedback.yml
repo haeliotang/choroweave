@@ -1,0 +1,66 @@
+name: Protocol feedback (SHP / world.json)
+description: Report a design flaw, ambiguity, or interoperability risk in the Spatial Hyperlink Protocol.
+title: "[protocol] "
+labels: ["protocol", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for stress-testing SHP. Please keep one issue per topic and cite the exact section.
+        Security-sensitive reports must **not** be filed here — see SECURITY.md.
+  - type: input
+    id: doc-section
+    attributes:
+      label: Document and section
+      description: e.g. docs/en/04-spatial-hyperlink-protocol.md §7.3 traversal handshake
+      placeholder: docs/en/04-spatial-hyperlink-protocol.md §…
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Addressing / world identity
+        - world.json manifest field
+        - CHW_portal / portal semantics
+        - Traversal handshake / rollback
+        - Trust, signature, JCS canonicalization
+        - Capability negotiation / degradation
+        - Conformance case / weave-check
+        - Privacy / visitor disclosure / access policy
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is ambiguous, underspecified, or exploitable? Include a concrete scenario.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior / proposed resolution
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact and who is affected
+      description: Implementers, node operators, visitors, or the standard itself.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence (A/B/C, sources, prior art)
+      description: Cite specs, implementations, or standards. Mark anything unverified.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I did not include exploit details for a security issue (those go to SECURITY.md).
+          required: true
+        - label: I cited the exact section and, where possible, a prior-art standard.
+          required: true

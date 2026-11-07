@@ -5,6 +5,8 @@
 >
 > 中文版：[README.zh-CN.md](README.zh-CN.md) · Repository: <https://github.com/haeliotang/choroweave>
 
+> **Status (2026-11): design stage — plan v0.1.** This repository contains research, protocol drafts, schemas and fixtures; **P0 implementation has not started**, and there is no runnable compiler or runtime yet. Contributing: [CONTRIBUTING.md](CONTRIBUTING.md) · Security: [SECURITY.md](SECURITY.md).
+
 choroweave is the spatial-computing layer of the **Inceptless** project family. It is *not* another closed metaverse platform: it builds the **compiler, the hyperlink protocol, and the reference implementation** for a web of worlds.
 
 | Pillar | Job | Analogy |
@@ -49,6 +51,8 @@ All claims are evidence-graded (A = primary source, B = third-party test/report,
 | [`schemas/`](schemas/) | JSON Schemas for Spatial-DSL, `world.json`, and the tacitweave ISS contract |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | The flagship example world ("pixel rooftop"), DSL + signed manifest |
 | [`fixtures/p0/`](fixtures/p0/README.md) | Frozen two-world P0 fixtures (canonical IDs/URLs, hosts mapping, 10-jump script) |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contribution scope, evidence rules, DCO, RFC/ADR process |
+| [`SECURITY.md`](SECURITY.md) | Private vulnerability reporting and security scope |
 | [`scripts/validate.mjs`](scripts/validate.mjs) | Zero-dependency repo self-check (schemas, example, signatures, links) |
 
 > **Language note:** the plan is **English-first**. English documents live under [`docs/en/`](docs/en/); the Chinese originals remain under [`docs/`](docs/) with a language banner. A full Chinese README is at [`README.zh-CN.md`](README.zh-CN.md).

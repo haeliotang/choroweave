@@ -3,6 +3,8 @@
 > **把人的意图即时编译为可执行、可共在、可互访的 3D 空间，并让这些空间像网页一样互相链接。**
 > English (primary): [README.md](README.md) · 英文文档入口：[docs/en/](docs/en/README.md) · 仓库：<https://github.com/haeliotang/choroweave>
 
+> **状态（2026-11）：设计阶段 · 方案 v0.1。** 本仓库目前包含调研、协议草案、Schema 与夹具；**P0 实现尚未开始**，没有可运行的编译器或运行时。参与方式：[CONTRIBUTING.md](CONTRIBUTING.md) · 安全报告：[SECURITY.md](SECURITY.md)。
+
 choroweave 是 **Inceptless** 矩阵中的"空间计算层"项目。它不做一个封闭的元宇宙平台，而是做空间时代的 **编译器 + 超链接协议 + 参考实现**：
 
 | 构件 | 作用 | 一句话类比 |
@@ -44,6 +46,8 @@ choroweave 是 **Inceptless** 矩阵中的"空间计算层"项目。它不做一
 | [`schemas/`](schemas/) | Spatial-DSL、world.json 与 ISS 契约的 JSON Schema（v0.1） |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | 旗舰示例世界"像素天台"的 DSL、签名清单与说明 |
 | [`fixtures/p0/`](fixtures/p0/README.md) | P0 双世界固定夹具（规范 ID/URL、hosts 映射、10 次跳转脚本） |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | 贡献范围、证据规则、DCO、RFC/ADR 流程 |
+| [`SECURITY.md`](SECURITY.md) | 私密漏洞报告与安全范围 |
 | [`scripts/validate.mjs`](scripts/validate.mjs) | 零依赖仓库自检（Schema / 示例 / 签名 / 链接） |
 
 快速自检（Node ≥ 18，无需安装依赖）：

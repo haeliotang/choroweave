@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Protocol discussion / Q&A
+    url: https://github.com/haeliotang/choroweave/discussions
+    about: Ask design questions, propose ideas, or share external reproduction logs.
+  - name: Security report (private)
+    url: https://github.com/haeliotang/choroweave/security/advisories/new
+    about: Do not open a public issue for security problems. Use private vulnerability reporting.
+  - name: Contributing guide
+    url: https://github.com/haeliotang/choroweave/blob/main/CONTRIBUTING.md
+    about: Scope, evidence rules, DCO, and the P0 acceptance gates.
