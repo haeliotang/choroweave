@@ -1,5 +1,7 @@
 # choroweave MVP 规格（P0 + P1）
 
+> **English (primary):** [`docs/en/06-mvp-spec.md`](en/06-mvp-spec.md) · 本页为中文版（Chinese version）。
+
 > 状态：草案 v0.1 · 基线日 **2026-11-07** · 覆盖 **P0（M0–M2）+ P1（M2–M6）**
 > 口径：阶段名/模块名/指标名与 [`05-roadmap.md`](05-roadmap.md) §5.1 字典、[`02-tech-selection.md`](02-tech-selection.md)、[`internal/writing-spec.md`](internal/writing-spec.md) 一致；设备预算沿用 02 性能表；市场数字来自 [`research/04`](research/04-products-market-prior-art.md) 并标 **【官方】/【第三方】/【媒体转述】**。工程估算标 **（估算，C）**。
 > 定位：**本文件是 P0+P1 的可执行规格**——05 定义"什么算完成"，本文定义"怎么做、怎么验、失败怎么办"。P2 起的规格见 05 §3.3–§3.5。

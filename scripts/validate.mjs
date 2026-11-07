@@ -579,6 +579,47 @@ function checkDocs() {
   pass("docs.extensions", "CHW_portal / CHW_collider / CHW_logic / CHW_avatar 在 03、04 一致出现；02 定义 CHW_ 前缀与 CHW_portal");
 }
 
+function checkEnglishDocs() {
+  group("docs.en");
+  const dir = join(ROOT, "docs/en");
+  const required = [
+    "README.md",
+    "00-executive-summary.md",
+    "01-landscape.md",
+    "02-tech-selection.md",
+    "03-architecture.md",
+    "04-spatial-hyperlink-protocol.md",
+    "05-roadmap.md",
+    "06-mvp-spec.md",
+    "07-risks-compliance.md",
+    "08-open-source-strategy.md",
+    "research/01-spatial-web-platforms.md",
+    "research/02-generative-3d-and-agents.md",
+    "research/03-runtime-standards.md",
+    "research/04-products-market-prior-art.md",
+  ];
+  const missing = required.filter((f) => !existsSync(join(dir, f)));
+  if (missing.length) throw new Error(`missing English docs: ${missing.join(", ")}`);
+  for (const [f, min, max] of [["03-architecture.md", 350, 600], ["04-spatial-hyperlink-protocol.md", 350, 600]]) {
+    const n = lines(join(dir, f));
+    if (n < min || n > max) throw new Error(`docs/en/${f} has ${n} lines, not in ${min}-${max}`);
+  }
+  const proto = readFileSync(join(dir, "04-spatial-hyperlink-protocol.md"), "utf8");
+  for (const needle of ["Spatial Hyperlink Protocol", "world.json", "CHW_portal", "handoff", "ed25519", "JCS", "weave-check"]) {
+    if (!proto.includes(needle)) throw new Error(`docs/en/04 missing anchor "${needle}"`);
+  }
+  const arch = readFileSync(join(dir, "03-architecture.md"), "utf8");
+  for (const needle of ["World Bundle", "Runtime Adapter", "WSP", "sync.whitelist", "ISS", "P0-P4"]) {
+    if (!arch.includes(needle)) throw new Error(`docs/en/03 missing anchor "${needle}"`);
+  }
+  const sel = readFileSync(join(dir, "02-tech-selection.md"), "utf8");
+  for (let i = 1; i <= 12; i++) {
+    const id = `ADR-${String(i).padStart(2, "0")}`;
+    if (!sel.includes(id)) throw new Error(`docs/en/02 missing ${id}`);
+  }
+  pass("docs.en", `${required.length} English docs present; 03/04 within 350-600 lines; anchors + ADR-01..12 OK`);
+}
+
 function checkCoverage(example) {
   group("coverage");
   const manifestSchema = SCHEMA_REGISTRY.get("urn:choroweave:schemas:world-manifest:0.1");
@@ -651,6 +692,7 @@ function main() {
 
   group("docs");
   attempt("docs", () => checkDocs());
+  attempt("docs.en", () => checkEnglishDocs());
 
   group("coverage");
   if (example) attempt("coverage", () => checkCoverage(example));

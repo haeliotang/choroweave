@@ -1,5 +1,5 @@
 # choroweave 系统架构（v0.1）
-
+> **English (primary):** [`docs/en/03-architecture.md`](en/03-architecture.md) · 本页为中文版（Chinese version）。
 > 状态：草案 · 截至 **2026-11-07** · 代码许可证 Apache-2.0 · 面向实现团队与外部贡献者
 > 依据：[`02-tech-selection.md`](02-tech-selection.md) 的 12 条 ADR、[`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md)（SHP）、[`research/`](research/) 四份调研。
 > 本文所有 `CHW_*` 扩展与 `world.json` 字段以 [`04`](04-spatial-hyperlink-protocol.md) 与 [`schemas/`](../schemas/) 为准；三者不一致时视为缺陷。
@@ -17,7 +17,6 @@ choroweave 的架构目标只有一句话：**让"意图 → 可玩世界 → �
 | **L-Runtime** | Reference Runtime | Babylon.js 8.x、WebXR、Rapier、Web Audio | Runtime Adapter、行为图宿主、门户生命周期、性能治理 | ADR-04 |
 | **L-Node** | Node | Node.js、WebSocket、SQLite、静态 HTTP | 静态托管布局、房间服务、短期 token、纯静态降级 | ADR-07 |
 | **L-Tooling** | `weave-check` / CLI | JSON Schema、glTF Validator | 一致性套件、`validate.mjs` 仓库自检 | ADR-12 |
-
 
 ### 1.1 分层架构图
 

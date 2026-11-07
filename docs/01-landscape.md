@@ -1,5 +1,7 @@
 # choroweave 生态全景：四层地图、五个断层与 2026–2028 机会窗口（v0.1）
 
+> **English (primary):** [`docs/en/01-landscape.md`](en/01-landscape.md) · 本页为中文版（Chinese version）。
+
 > 状态：草案 · 全部数据 **截至 2026-11-07 核实**（GitHub 数据为当日 REST API 抓取；其余为规范正文/官方页面/权威第三方，逐条标注见 §7）
 > 证据等级：**A** = 一手规范、官方文档、仓库元数据；**B** = 第三方实测或权威媒体报道；**C** = 工程判断（与 [`02-tech-selection.md`](02-tech-selection.md) 同一口径）
 > 配套：[`02-tech-selection.md`](02-tech-selection.md)（ADR-01..12）、[`03-architecture.md`](03-architecture.md)、[`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md)、[`research/`](research/)（四份原始调研）

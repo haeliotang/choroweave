@@ -1,5 +1,7 @@
 # choroweave Spatial Hyperlink Protocol（SHP）v0.1 草案
 
+> **English (primary):** [`docs/en/04-spatial-hyperlink-protocol.md`](en/04-spatial-hyperlink-protocol.md) · 本页为中文版（Chinese version）。
+
 > 状态：**草案 v0.1（2026-11-07）** · 规范许可证：CC-BY-4.0 · 实现：Apache-2.0
 > 范围：世界描述符（`world.json`）、世界寻址与节点发现、门户扩展 `CHW_portal`、进入握手（Traversal）、信任/签名、预取预算、访客身份与门禁、版本兼容，以及一致性测试清单。
 > 配套：[`02-tech-selection.md`](02-tech-selection.md)（ADR-01…12）、[`03-architecture.md`](03-architecture.md)（运行时与节点落地）、[`research/`](research/)（证据）。

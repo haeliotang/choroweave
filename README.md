@@ -34,22 +34,23 @@ All claims are evidence-graded (A = primary source, B = third-party test/report,
 
 | Document | Contents |
 |---|---|
-| [`docs/00-executive-summary.md`](docs/00-executive-summary.md) | Executive summary: judgments, path, roadmap, resourcing, KPIs |
-| [`docs/01-landscape.md`](docs/01-landscape.md) | Open-source landscape: four layers, five gaps, 2026–2028 window |
-| [`docs/02-tech-selection.md`](docs/02-tech-selection.md) | 12 ADRs, technical decision matrix, **deviations from the original vision** |
-| [`docs/03-architecture.md`](docs/03-architecture.md) | System architecture: compiler pipeline, runtime, node, interfaces |
-| [`docs/04-spatial-hyperlink-protocol.md`](docs/04-spatial-hyperlink-protocol.md) | SHP v0.1: `world.json`, `CHW_portal`, traversal handshake, trust |
-| [`docs/05-roadmap.md`](docs/05-roadmap.md) | 24-month roadmap (P0–P4), gates, resourcing, KPI dictionary |
-| [`docs/06-mvp-spec.md`](docs/06-mvp-spec.md) | Phase-1 MVP spec, user stories, 20-prompt eval set, acceptance tests |
-| [`docs/07-risks-compliance.md`](docs/07-risks-compliance.md) | Risks, licensing, security, content governance, compliance |
-| [`docs/08-open-source-strategy.md`](docs/08-open-source-strategy.md) | Governance, standards path, community, sustainable model |
+| [`docs/en/00-executive-summary.md`](docs/en/00-executive-summary.md) | Executive summary: judgments, path, roadmap, resourcing, KPIs |
+| [`docs/en/01-landscape.md`](docs/en/01-landscape.md) | Open-source landscape: four layers, five gaps, 2026–2028 window |
+| [`docs/en/02-tech-selection.md`](docs/en/02-tech-selection.md) | 12 ADRs, technical decision matrix, **deviations from the original vision** |
+| [`docs/en/03-architecture.md`](docs/en/03-architecture.md) | System architecture: compiler pipeline, runtime, node, interfaces |
+| [`docs/en/04-spatial-hyperlink-protocol.md`](docs/en/04-spatial-hyperlink-protocol.md) | SHP v0.1: `world.json`, `CHW_portal`, traversal handshake, trust |
+| [`docs/en/05-roadmap.md`](docs/en/05-roadmap.md) | 24-month roadmap (P0–P4), gates, resourcing, KPI dictionary |
+| [`docs/en/06-mvp-spec.md`](docs/en/06-mvp-spec.md) | Phase-1 MVP spec, user stories, 20-prompt eval set, acceptance tests |
+| [`docs/en/07-risks-compliance.md`](docs/en/07-risks-compliance.md) | Risks, licensing, security, content governance, compliance |
+| [`docs/en/08-open-source-strategy.md`](docs/en/08-open-source-strategy.md) | Governance, standards path, community, sustainable model |
 | [`docs/decisions/`](docs/decisions/README.md) | ADR index and change process |
-| [`docs/research/`](docs/research/) | Four primary research reports (spatial networks / generative 3D / runtime standards / market) |
+| [`docs/`](docs/) | Chinese originals (00–08 + research) with language banners |
+| [`docs/en/research/`](docs/en/research/) | Four primary research reports (spatial networks / generative 3D / runtime standards / market) |
 | [`schemas/`](schemas/) | JSON Schemas for Spatial-DSL, `world.json`, and the tacitweave ISS contract |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | The flagship example world ("pixel rooftop"), DSL + signed manifest |
 | [`scripts/validate.mjs`](scripts/validate.mjs) | Zero-dependency repo self-check (schemas, example, signatures, links) |
 
-> **Language note:** the design documents are currently written in **Chinese** (v0.1). English translations are planned; file names, schemas and key terms are English. A full Chinese README is at [`README.zh-CN.md`](README.zh-CN.md).
+> **Language note:** the plan is **English-first**. English documents live under [`docs/en/`](docs/en/); the Chinese originals remain under [`docs/`](docs/) with a language banner. A full Chinese README is at [`README.zh-CN.md`](README.zh-CN.md).
 
 Quick self-check (Node ≥ 18, no install needed):
 
@@ -73,16 +74,16 @@ node scripts/validate.mjs --strict
 
 ## Relationship to tacitweave
 
-**Separate repositories, contract-based upstream/downstream.** *tacitweave* models what the user cannot fully articulate (aesthetic preferences, routines, unspoken atmosphere) and emits an **Implicit Spatial Spec (ISS)**. *choroweave* merges ISS with explicit intent, compiles it into a world, and connects worlds into a network. The two share no code and no release cadence — only a versioned JSON contract ([`schemas/implicit-spatial-spec.schema.json`](schemas/implicit-spatial-spec.schema.json), described in [`docs/03-architecture.md`](docs/03-architecture.md) §8).
+**Separate repositories, contract-based upstream/downstream.** *tacitweave* models what the user cannot fully articulate (aesthetic preferences, routines, unspoken atmosphere) and emits an **Implicit Spatial Spec (ISS)**. *choroweave* merges ISS with explicit intent, compiles it into a world, and connects worlds into a network. The two share no code and no release cadence — only a versioned JSON contract ([`schemas/implicit-spatial-spec.schema.json`](schemas/implicit-spatial-spec.schema.json), described in [`docs/en/03-architecture.md`](docs/en/03-architecture.md) §8).
 
 ---
 
 ## How to read this plan
 
-- **Deciding whether this is worth doing** → [`docs/00-executive-summary.md`](docs/00-executive-summary.md) and the "deviations from the original vision" section of [`docs/02-tech-selection.md`](docs/02-tech-selection.md).
-- **Want to implement** → [`docs/03-architecture.md`](docs/03-architecture.md) → [`docs/04-spatial-hyperlink-protocol.md`](docs/04-spatial-hyperlink-protocol.md) → [`docs/06-mvp-spec.md`](docs/06-mvp-spec.md).
-- **Assessing risk / investing** → [`docs/05-roadmap.md`](docs/05-roadmap.md) → [`docs/07-risks-compliance.md`](docs/07-risks-compliance.md) → [`docs/08-open-source-strategy.md`](docs/08-open-source-strategy.md).
-- **Checking the evidence** → start at [`docs/research/`](docs/research/); every report has sources and an explicit "not verified" list.
+- **Deciding whether this is worth doing** → [`docs/en/00-executive-summary.md`](docs/en/00-executive-summary.md) and the "deviations from the original vision" section of [`docs/en/02-tech-selection.md`](docs/en/02-tech-selection.md).
+- **Want to implement** → [`docs/en/03-architecture.md`](docs/en/03-architecture.md) → [`docs/en/04-spatial-hyperlink-protocol.md`](docs/en/04-spatial-hyperlink-protocol.md) → [`docs/en/06-mvp-spec.md`](docs/en/06-mvp-spec.md).
+- **Assessing risk / investing** → [`docs/en/05-roadmap.md`](docs/en/05-roadmap.md) → [`docs/en/07-risks-compliance.md`](docs/en/07-risks-compliance.md) → [`docs/en/08-open-source-strategy.md`](docs/en/08-open-source-strategy.md).
+- **Checking the evidence** → start at [`docs/en/research/`](docs/en/research/); every report has sources and an explicit "not verified" list.
 
 ---
 
@@ -102,4 +103,4 @@ choroweave（原质之织）是 **Inceptless** 体系中的"空间计算层"：�
 
 **路线**：P0 无 AI 的双世界门户验证（M0–M2）→ P1 编译器 MVP → P2 多人+节点 → P3 Agent/生态 → P4 v1.0+WebXR；3 人小队约 $1.1–1.6M / 24 个月。
 
-完整中文版见 [`README.zh-CN.md`](README.zh-CN.md)；全部方案文档（中文）从 [`docs/00-executive-summary.md`](docs/00-executive-summary.md) 开始。
+完整中文版见 [`README.zh-CN.md`](README.zh-CN.md)；全部方案文档（中文）从 [`docs/en/00-executive-summary.md`](docs/en/00-executive-summary.md) 开始。

@@ -1,5 +1,7 @@
 # choroweave 调研 03：运行时、开放标准与设备支持
 
+> **English (primary):** [`docs/en/research/03-runtime-standards.md`](../en/research/03-runtime-standards.md) · 本页为中文版（Chinese version）。
+
 > **核实口径**：截至 **2026-11-07**。所有"已 ratified / 草案 / 实验性 / 默认开启"的判定，均以当日可访问的官方页面为准；
 > 无法从一手来源确认的，一律标注 **"未能核实"**，不做推测性补全。
 > 版本号与日期均来自一手页面；二手媒体仅用于交叉印证。

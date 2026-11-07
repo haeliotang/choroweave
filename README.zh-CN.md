@@ -1,7 +1,7 @@
 # choroweave · 原质之织（中文版）
 
 > **把人的意图即时编译为可执行、可共在、可互访的 3D 空间，并让这些空间像网页一样互相链接。**
-> English: [README.md](README.md) · 仓库：<https://github.com/haeliotang/choroweave>
+> English (primary): [README.md](README.md) · 英文文档入口：[docs/en/](docs/en/README.md) · 仓库：<https://github.com/haeliotang/choroweave>
 
 choroweave 是 **Inceptless** 矩阵中的"空间计算层"项目。它不做一个封闭的元宇宙平台，而是做空间时代的 **编译器 + 超链接协议 + 参考实现**：
 

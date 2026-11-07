@@ -1,5 +1,7 @@
 # 01 · 空间网络平台、门户/传送门、身份与多人状态同步
 
+> **English (primary):** [`docs/en/research/01-spatial-web-platforms.md`](../en/research/01-spatial-web-platforms.md) · 本页为中文版（Chinese version）。
+
 > 调研对象：choroweave（把自然语言意图编译为「可执行空间」+ 空间超链接/传送门协议 + 联邦式 3D 万维网）
 > 核实口径：**截至 2026-11 核实**（抓取日 2026-11-07，时区 Asia/Katmandu）。星数/许可证/最后提交均以当日抓取为准。
 > 方法：GitHub REST API（`api.github.com/repos/...`）+ GitHub HTML/atom 订阅 + 官方文档与规范原文抓取，共 40+ 次检索/抓取。

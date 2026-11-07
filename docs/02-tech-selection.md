@@ -1,5 +1,7 @@
 # choroweave 技术选型：决策记录与证据（v0.2）
 
+> **English (primary):** [`docs/en/02-tech-selection.md`](en/02-tech-selection.md) · 本页为中文版（Chinese version）。
+
 > 状态：草案 · 截至 **2026-11-07** 核实 · 面向实现团队、开源社区与投资人
 > 证据等级：**A** = 一手规范/官方文档/仓库元数据；**B** = 第三方实测或权威媒体报道；**C** = 工程判断/社区讨论。关键结论均标注等级；无法证实者标 `未知`。
 > 配套：[`01-landscape.md`](01-landscape.md)（生态全景）、[`03-architecture.md`](03-architecture.md)（架构落地）、[`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md)（协议草案）、[`research/`](research/)（四份原始调研）。

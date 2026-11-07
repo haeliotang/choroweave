@@ -1,5 +1,7 @@
 # choroweave 执行摘要
 
+> **English (primary):** [`docs/en/00-executive-summary.md`](en/00-executive-summary.md) · 本页为中文版（Chinese version）。
+
 > 版本 v0.1 · 2026-11 · 基于四份一手调研（`docs/research/`）与 12 条 ADR（`docs/02-tech-selection.md`）
 > 读者：创始人/投资人/首批贡献者。全文数字均标证据等级；估算明确标注"估算"。
 

@@ -1,5 +1,7 @@
 # choroweave 风险、许可证、安全与合规
 
+> **English (primary):** [`docs/en/07-risks-compliance.md`](en/07-risks-compliance.md) · 本页为中文版（Chinese version）。
+
 > 状态：草案 v0.1 · 基线日 **2026-11-07** · 读者：实现团队、资助方、法务/安全顾问、节点运营者
 > 纪律：风险编号 `R-01…R-26` 被 [`05`](05-roadmap.md) 各阶段与门引用；威胁编号 `T-01…T-10`；所有市场数字来自 [`research/04`](research/04-products-market-prior-art.md)，证据等级 **【官方】**（A）/**【第三方】**（B）/**【媒体转述】**（B–C）；工程估算标 **（估算，C）**；无法核实写"未能核实"。
 > 边界：本文负责**风险 / 许可证 / 安全 / 合规 / 内容治理 / 应急**；商业模式与治理结构见 [`08`](08-open-source-strategy.md)，二者交叉点见 §11。

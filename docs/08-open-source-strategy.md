@@ -1,5 +1,7 @@
 # choroweave 开源战略：仓库、治理、标准与可持续模式
 
+> **English (primary):** [`docs/en/08-open-source-strategy.md`](en/08-open-source-strategy.md) · 本页为中文版（Chinese version）。
+
 > 状态：草案 v0.1 · 基线日 **2026-11-07** · 读者：贡献者、社区、资助方、潜在托管服务客户
 > 口径：阶段名/模块名/指标名与 [`05`](05-roadmap.md) §5.1、[`02`](02-tech-selection.md)、[`internal/writing-spec.md`](internal/writing-spec.md) 一致；市场数字来自 [`research/04`](research/04-products-market-prior-art.md) 并标证据等级（**【官方】/【第三方】/【媒体转述】**）；定价与成本为**工程估算（C）**，与 [`07`](07-risks-compliance.md) §3 同一假设。
 > 边界：本文负责**仓库/贡献/标准/社区/商业化/治理**；风险、许可、安全与合规见 [`07`](07-risks-compliance.md)。

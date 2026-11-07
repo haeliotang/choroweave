@@ -1,27 +1,29 @@
-# 架构决策记录（ADR）
+# Architecture Decision Records (ADR)
 
-当前 v0.1 方案的 12 条 ADR 记录在 [`../02-tech-selection.md`](../02-tech-selection.md) 的 §1（总表）与 §3（逐条论证），包括背景、证据、代价、复盘信号与未决问题。
+The 12 ADRs for plan v0.1 live in [`../02-tech-selection.md`](../02-tech-selection.md) §1 (summary table) and §3 (per-decision rationale): context, evidence, cost, review signals and open questions.
 
-## 变更流程
+Chinese version: [`README.zh-CN.md`](README.zh-CN.md).
 
-1. **提案**：在本目录新建 `ADR-<四位编号>-<kebab-title>.md`，包含：背景、选项、决策、证据（A/B/C）、影响、复盘信号。
-2. **评审**：在 issue/RFC 中讨论；涉及协议破坏性变更时同步更新 [`../04-spatial-hyperlink-protocol.md`](../04-spatial-hyperlink-protocol.md) 的版本与废弃策略。
-3. **合并**：更新本索引与 `02-tech-selection.md` 的总表；如推翻既有 ADR，在新 ADR 中显式引用被替代编号（不要静默修改历史）。
-4. **记录**：阶段门（G0–G4）的 KPI 快照与决策一并归档到本目录（见 [`../05-roadmap.md`](../05-roadmap.md) §5.3）。
+## Change process
 
-## 索引
+1. **Propose** — add `ADR-<4-digit-id>-<kebab-title>.md` in this directory with: context, options, decision, evidence (A/B/C), impact, review signals.
+2. **Review** — discuss in an issue/RFC; for breaking protocol changes, update the version and deprecation policy in [`../04-spatial-hyperlink-protocol.md`](../04-spatial-hyperlink-protocol.md).
+3. **Merge** — update this index and the summary table in `02-tech-selection.md`; when superseding an ADR, explicitly reference the replaced ID (never silently rewrite history).
+4. **Record** — archive gate (G0–G4) KPI snapshots and decisions here (see [`../05-roadmap.md`](../05-roadmap.md) §5.3).
 
-| ADR | 主题 | 位置 |
+## Index
+
+| ADR | Topic | Location |
 |---|---|---|
-| ADR-01 | 独立孵化、与 tacitweave 契约衔接 | `02` §1/§3 |
-| ADR-02 | World Bundle 产物格式 | `02` §3 |
-| ADR-03 | 逻辑三层（L0/L1/L2） | `02` §3 |
-| ADR-04 | Babylon.js 参考运行时、WebGL2-first | `02` §3 |
-| ADR-05 | HTTPS URL 寻址 | `02` §3 |
-| ADR-06 | SHP 对齐 MSF WoW、`CHW_portal` | `02` §3 |
-| ADR-07 | WebTransport/WebRTC 实时层，Matrix 仅社交桥 | `02` §3 |
-| ADR-08 | Passkey/OIDC → did:web，无区块链 | `02` §3 |
-| ADR-09 | 骨架优先编译器、TRELLIS.2 | `02` §3 |
-| ADR-10 | Rapier 物理与碰撞体策略 | `02` §3 |
-| ADR-11 | 世界模型/3DGS 非运行时 | `02` §3 |
-| ADR-12 | 许可证与一致性治理；开源边界 | `02` §3 |
+| ADR-01 | Independent incubation; contract with tacitweave | `02` §1/§3 |
+| ADR-02 | World Bundle artifact format | `02` §3 |
+| ADR-03 | Three-layer logic (L0/L1/L2) | `02` §3 |
+| ADR-04 | Babylon.js reference runtime, WebGL2-first | `02` §3 |
+| ADR-05 | HTTPS URL addressing | `02` §3 |
+| ADR-06 | SHP aligned with MSF WoW, `CHW_portal` | `02` §3 |
+| ADR-07 | WebTransport/WebRTC realtime, Matrix only as social bridge | `02` §3 |
+| ADR-08 | Passkey/OIDC → did:web, no blockchain | `02` §3 |
+| ADR-09 | Skeleton-first compiler, TRELLIS.2 | `02` §3 |
+| ADR-10 | Rapier physics and collider strategy | `02` §3 |
+| ADR-11 | World models/3DGS are not the runtime | `02` §3 |
+| ADR-12 | Licensing and conformance governance; open-source boundary | `02` §3 |

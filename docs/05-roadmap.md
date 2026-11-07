@@ -1,5 +1,7 @@
 # choroweave 24 个月路线图（P0–P4）
 
+> **English (primary):** [`docs/en/05-roadmap.md`](en/05-roadmap.md) · 本页为中文版（Chinese version）。
+
 > 状态：草案 v0.1 · 基线日 **2026-11-07 = M0** · 面向实现团队、资助方与社区
 > 口径：阶段名（P0–P4）、模块名（`@choroweave/*`）、指标名与 [`internal/writing-spec.md`](internal/writing-spec.md)、[`02-tech-selection.md`](02-tech-selection.md) 完全一致；市场数字仅取自 [`research/04`](research/04-products-market-prior-art.md)，证据等级：**【官方】**=一手（A）/**【第三方】**=独立机构或数据商（B）/**【媒体转述】**=媒体转述（B–C，仅作交叉验证）；工程估算标 **（估算，C）**。
 > 配套：[`06-mvp-spec.md`](06-mvp-spec.md)（P0+P1 可执行规格）、[`07-risks-compliance.md`](07-risks-compliance.md)（风险编号 `R-xx` 在本文件被引用）、[`08-open-source-strategy.md`](08-open-source-strategy.md)（社区/标准/商业化）。

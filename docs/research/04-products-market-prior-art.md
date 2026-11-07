@@ -1,5 +1,7 @@
 # choroweave 调研 04：同类产品、市场信号、失败先例与社区生态
 
+> **English (primary):** [`docs/en/research/04-products-market-prior-art.md`](../en/research/04-products-market-prior-art.md) · 本页为中文版（Chinese version）。
+
 > **调研目的**：为 choroweave（"把自然语言意图编译为可漫游 / 可交互 / 多人共在的 3D 场景 + 空间超链接协议 + 个人服务器互联"）判断时机、形态优先级（VR-first vs Web-first）、必须先避开的失败模式、以及差异化楔子。
 >
 > **核实口径**：本文件所有"当前"数据均标注为「截至 2026-11 核实」。检索与抓取发生在 2026-11-07。
