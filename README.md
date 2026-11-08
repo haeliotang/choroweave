@@ -57,6 +57,7 @@ All claims are evidence-graded (A = primary source, B = third-party test/report,
 | [`docs/en/research/`](docs/en/research/) | Four primary research reports (spatial networks / generative 3D / runtime standards / market) |
 | [`schemas/`](schemas/) | JSON Schemas for Spatial-DSL, `world.json`, and the tacitweave ISS contract |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | The flagship example world ("pixel rooftop"), DSL + signed manifest |
+| [`docs/en/deploy-real.md`](docs/en/deploy-real.md) | Real LAN deployment recipe; public deployment blockers and required deployment profile |
 | [`docs/en/g0-evidence.md`](docs/en/g0-evidence.md) | G0 evidence bundle template (functional vs performance, topology, deployment) |
 | [`docs/en/p0-rc.md`](docs/en/p0-rc.md) | Release Candidate + G0 acceptance checklist (runtime baseline `95f12d8`) |
 | [`docs/en/reproduce-p0.md`](docs/en/reproduce-p0.md) | External reproduction runbook (P0-4 gate) |

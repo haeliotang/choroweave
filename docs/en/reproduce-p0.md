@@ -51,7 +51,11 @@ Expected:
 
 The browser suite starts both HTTPS nodes itself. It maps `alice.example`/`hana.example` to 127.0.0.1 and **pins the two fixture leaf keys via Chrome SPKI** (no global `--ignore-certificate-errors`). Node-side checks validate the CA chain strictly.
 
-## 4. Manual inspection (optional, 5 min)
+## 4. Real deployment (LAN / public)
+
+See [`deploy-real.md`](deploy-real.md). RC3 can do a real **LAN** run with two hosts + reverse proxies and the fixture CA; a real **public** domain requires a deployment profile (new RC) because the viewer and node origins are fixture-bound.
+
+## 5. Manual inspection (optional, 5 min)
 
 ```bash
 pnpm p0:up
@@ -63,7 +67,7 @@ curl --cacert .p0-tls/ca.crt --resolve alice.example:8443:127.0.0.1 \
 
 Controls: `WASD`, mouse drag, `E` to inspect/enter a portal, `Esc` cancel.
 
-## 5. Report back
+## 6. Report back
 
 Open the **External reproduction (P0)** issue form and include (or comment on the tracking issue: <https://github.com/haeliotang/choroweave/issues/1>):
 - commit hash and date;
@@ -74,7 +78,7 @@ Open the **External reproduction (P0)** issue form and include (or comment on th
 
 If a command fails, quote the exact command and output — that is the most useful contribution.
 
-## Troubleshooting
+## 7. Troubleshooting
 
 | Symptom | Fix |
 |---|---|

@@ -51,7 +51,11 @@ pnpm perf:p0 --strict        # 采样冷/热切换与目标重启恢复；超预
 
 浏览器套件会自行启动两个 HTTPS 节点；通过 Chrome host-resolver 映射 `.example`，并对两张夹具叶子证书做 **SPKI pin**（不是全局 `--ignore-certificate-errors`）。Node 侧套件严格校验 CA 链。
 
-## 4. 手工检查（可选，5 分钟）
+## 4. 真实部署（LAN / 公网）
+
+见 [`deploy-real.md`](deploy-real.md)。RC3 可以用两台主机 + 反向代理 + 夹具 CA 做真实 **LAN** 验证；真实 **公网** 域名需要 deployment profile（新 RC），因为 viewer 与节点 origin 是夹具绑定的。
+
+## 5. 手工检查（可选，5 分钟）
 
 ```bash
 pnpm p0:up
@@ -63,7 +67,7 @@ curl --cacert .p0-tls/ca.crt --resolve alice.example:8443:127.0.0.1 \
 
 操作：`WASD`、鼠标拖拽、`E` 检查/进门、`Esc` 取消。
 
-## 5. 回报
+## 6. 回报
 
 打开 **External reproduction (P0)** issue 表单（或直接在跟踪 issue <https://github.com/haeliotang/choroweave/issues/1> 下评论），附上：
 - commit 与日期；
@@ -74,7 +78,7 @@ curl --cacert .p0-tls/ca.crt --resolve alice.example:8443:127.0.0.1 \
 
 如果某条命令失败，请贴出完整命令与输出——这是最有价值的贡献。
 
-## 故障排查
+## 7. 故障排查
 
 | 症状 | 处理 |
 |---|---|
