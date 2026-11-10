@@ -140,7 +140,7 @@ Cost drivers: people (~70%), GPU/model calls ($2k–8k per month during P1, line
 4. **Land `weave-check` v0**: 5 validation categories (manifest/glTF/behavior graph/portal/budget) + CI.
 5. **Build evaluation set v0**: 20 prompts + scoring rubric (playability/proportion/collision/performance/aesthetics/safety), using existing TRELLIS.2 assets to establish a human baseline.
 6. **Pick the 3 showcase world topics** and gauge creator collaboration interest (pixel rooftop / cliff tavern / dungeon puzzle).
-7. **Legal/licensing**: Hunyuan3D terms, TRELLIS.2/Pixal3D weight licenses, provenance of example assets, AGPL/Apache-2.0/CC-BY-4.0 layered release checks, CLA in force.
+7. **Legal/licensing**: Hunyuan3D terms, TRELLIS.2/Pixal3D weight licenses, provenance of example assets, AGPL/Apache-2.0/CC-BY-4.0 layered release checks, CLA 1.0 record and license/cla check.
 8. **External narrative**: a technical manifesto, "The DNS and HTTP of Worlds", plus a playable demo link (desktop first).
 
 ---

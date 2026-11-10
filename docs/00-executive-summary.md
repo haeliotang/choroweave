@@ -141,7 +141,7 @@
 4. **落地 `weave-check` v0**：manifest/glTF/行为图/门户/预算 5 类校验 + CI。
 5. **建评测集 v0**：20 条提示词 + 评分 rubric（可玩/比例/碰撞/性能/美感/安全），用现成 TRELLIS.2 出资产做人工基线。
 6. **确定 3 个 showcase 世界选题**与创作者合作意向（像素天台/悬崖酒馆/地牢解谜）。
-7. **法务/许可**：Hunyuan3D 条款、TRELLIS.2/Pixal3D 权重许可、示例资产来源、AGPL/Apache-2.0/CC-BY-4.0 分层发布检查、CLA 生效。
+7. **法务/许可**：Hunyuan3D 条款、TRELLIS.2/Pixal3D 权重许可、示例资产来源、AGPL/Apache-2.0/CC-BY-4.0 分层发布检查、CLA 1.0 记录与 license/cla 检查。
 8. **对外叙事**：一篇《世界的 DNS 与 HTTP》技术宣言 + 可玩 demo 链接（desktop 优先）。
 
 ---
