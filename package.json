@@ -4,7 +4,7 @@
   "private": true,
   "packageManager": "pnpm@10.32.1",
   "description": "Open infrastructure for executable, hyperlinked 3D worlds (P0 scaffold)",
-  "license": "Apache-2.0",
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "dev": "pnpm --filter @choroweave/playground dev",
     "build": "pnpm -r build",
@@ -19,7 +19,9 @@
     "report:p0": "node scripts/p0-report.mjs",
     "p0:up": "node scripts/p0-up.mjs",
     "repro:check": "node scripts/repro-check.mjs",
-    "perf:p0": "node scripts/perf-p0.mjs"
+    "perf:p0": "node scripts/perf-p0.mjs",
+    "license:check": "node scripts/check-licenses.mjs",
+    "test:source": "node scripts/source-check.mjs"
   },
   "devDependencies": {
     "playwright-core": "^1.65.0",
