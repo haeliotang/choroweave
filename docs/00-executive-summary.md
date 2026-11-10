@@ -2,7 +2,7 @@
 
 > **English (primary):** [`docs/en/00-executive-summary.md`](en/00-executive-summary.md) · 本页为中文版（Chinese version）。
 
-> 版本 v0.1 · 2026-11 · 基于四份一手调研（`docs/research/`）与 13 条 ADR（`docs/02-tech-selection.md`）
+> 版本 v0.1 · 2026-11 · 基于四份一手调研（`docs/research/`）与 14 条 ADR（`docs/02-tech-selection.md`）
 > 读者：创始人/投资人/首批贡献者。全文数字均标证据等级；估算明确标注"估算"。
 
 ---
@@ -42,7 +42,7 @@
 
 ---
 
-## 4. 技术路径（13 条 ADR 摘要）
+## 4. 技术路径（14 条 ADR 摘要）
 
 | 层 | 选择 | 放弃的替代 |
 |---|---|---|
@@ -54,7 +54,7 @@
 | 身份 | Passkey/OIDC → `did:web`；无区块链 | 钱包/代币、平台账号锁定 |
 | 生成 | **骨架优先 + 确定性装配 + TRELLIS.2（MIT）**；Hunyuan3D 仅可选 | 端到端黑盒生成、Blender 硬依赖 |
 | 物理 | **Rapier** + 自动碰撞体 + `CHW_collider` 兜底 | KHR_physics（仍是 Review Draft） |
-| 许可证 | 代码 Apache-2.0 / 规范 CC-BY-4.0 / 示例 CC0-CC-BY | GPL 传染、非 OSI 模型默认依赖 |
+| 许可证 | 应用/运行时 AGPL-3.0-or-later；Schema/check/夹具 Apache-2.0；文档 CC-BY-4.0；示例 CC0-CC-BY | 防止闭源套壳/云服务不回馈；协议仍可独立实现 |
 
 详细论证见 [`02-tech-selection.md`](02-tech-selection.md)，其中第 5 节逐条列出**与原始设想的差异**（Third Room 停更、Hyperfy GPL、Matrix 不适合位姿同步、KHR_interactivity 仅单用户、VR-first 不成立等）。
 
@@ -141,7 +141,7 @@
 4. **落地 `weave-check` v0**：manifest/glTF/行为图/门户/预算 5 类校验 + CI。
 5. **建评测集 v0**：20 条提示词 + 评分 rubric（可玩/比例/碰撞/性能/美感/安全），用现成 TRELLIS.2 出资产做人工基线。
 6. **确定 3 个 showcase 世界选题**与创作者合作意向（像素天台/悬崖酒馆/地牢解谜）。
-7. **法务/许可**：Hunyuan3D 条款、TRELLIS.2/Pixal3D 权重许可、示例资产来源、Apache-2.0/CC-BY-4.0 发布检查。
+7. **法务/许可**：Hunyuan3D 条款、TRELLIS.2/Pixal3D 权重许可、示例资产来源、AGPL/Apache-2.0/CC-BY-4.0 分层发布检查、CLA 1.0 记录与 license/cla 检查。
 8. **对外叙事**：一篇《世界的 DNS 与 HTTP》技术宣言 + 可玩 demo 链接（desktop 优先）。
 
 ---

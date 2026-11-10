@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// SPDX-FileCopyrightText: 2026 Inceptless <support@inceptless.com>
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /**
  * P0 e2e: actual portal UI interaction (teleport → E → confirm dialog → Enter),
  * 10 bidirectional traversals, rollback, live prefetch budget + whitelist checks.

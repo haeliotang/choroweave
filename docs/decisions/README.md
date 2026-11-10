@@ -1,6 +1,6 @@
 # Architecture Decision Records (ADR)
 
-The 13 ADRs for plan v0.1 live in [`../02-tech-selection.md`](../02-tech-selection.md) §1 (summary table) and §3 (per-decision rationale): context, evidence, cost, review signals and open questions.
+The 14 ADRs for plan v0.1 live in [`../02-tech-selection.md`](../02-tech-selection.md) §1 (summary table) and §3 (per-decision rationale): context, evidence, cost, review signals and open questions.
 
 Chinese version: [`README.zh-CN.md`](README.zh-CN.md).
 
@@ -29,3 +29,4 @@ Chinese version: [`README.zh-CN.md`](README.zh-CN.md).
 | ADR-11 | World models/3DGS are not the runtime | `02` §3 |
 | ADR-12 | Licensing and conformance governance; open-source boundary | `02` §3 |
 | ADR-13 | Rust core, Web-native runtime (post-G0, no P0 change) | `02` §3 · [`ADR-0013-rust-core-web-native-runtime.md`](ADR-0013-rust-core-web-native-runtime.md) |
+| ADR-14 | Layered licensing; DCO → CLA; AGPL §13 source link | `02` §1/§3 · [`ADR-0014-license-layer-split.md`](ADR-0014-license-layer-split.md) |

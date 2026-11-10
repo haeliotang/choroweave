@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: 2026 Inceptless <support@inceptless.com>
+// SPDX-License-Identifier: AGPL-3.0-or-later
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
 import { UniversalCamera } from "@babylonjs/core/Cameras/universalCamera";
@@ -36,6 +38,8 @@ const canvas = document.getElementById("renderCanvas");
 const engine = new Engine(canvas, true, { preserveDrawingBuffer: false, stencil: true, antialias: true });
 const state = { active: null, busy: false, prefetched: new Map(), failedOnce: false, trust: null, mode: IS_LIVE ? "live" : "fixture" };
 const budget = { used: 0, limit: DEFAULT_LIMIT, aborted: false };
+const SOURCE_URL = typeof __CHOROWEAVE_SOURCE_URL__ !== "undefined" ? __CHOROWEAVE_SOURCE_URL__ : "https://github.com/haeliotang/choroweave";
+document.getElementById("sourceLink")?.setAttribute("href", SOURCE_URL);
 const ui = {
   loading: document.getElementById("loading"),
   loadingText: document.getElementById("loadingText"),

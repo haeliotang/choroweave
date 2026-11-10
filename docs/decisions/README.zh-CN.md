@@ -2,7 +2,7 @@
 
 English (primary): [`README.md`](README.md)。
 
-当前 v0.1 方案的 13 条 ADR 记录在 [`../02-tech-selection.md`](../02-tech-selection.md) 的 §1（总表）与 §3（逐条论证），包括背景、证据、代价、复盘信号与未决问题。
+当前 v0.1 方案的 14 条 ADR 记录在 [`../02-tech-selection.md`](../02-tech-selection.md) 的 §1（总表）与 §3（逐条论证），包括背景、证据、代价、复盘信号与未决问题。
 
 ## 变更流程
 
@@ -29,3 +29,4 @@ English (primary): [`README.md`](README.md)。
 | ADR-11 | 世界模型/3DGS 非运行时 | `02` §3 |
 | ADR-12 | 许可证与一致性治理；开源边界 | `02` §3 |
 | ADR-13 | Rust core、Web-native runtime（G0 后，P0 不变） | `02` §3 · [`ADR-0013-rust-core-web-native-runtime.md`](ADR-0013-rust-core-web-native-runtime.md) |
+| ADR-14 | 许可分层；DCO → CLA；AGPL §13 源码入口 | `02` §1/§3 · [`ADR-0014-license-layer-split.md`](ADR-0014-license-layer-split.md) |

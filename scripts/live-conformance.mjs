@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// SPDX-FileCopyrightText: 2026 Inceptless <support@inceptless.com>
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /**
  * P0-2 LIVE conformance: real HTTPS nodes, real signed descriptors, real arrive tokens.
  * Separate from the mock unit suite in packages/check.

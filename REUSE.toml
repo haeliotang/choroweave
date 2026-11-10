@@ -1,0 +1,55 @@
+version = 1
+SPDX-PackageName = "choroweave"
+SPDX-PackageSupplier = "Inceptless <support@inceptless.com>"
+SPDX-PackageDownloadLocation = "https://github.com/haeliotang/choroweave"
+
+# Protocol contracts, conformance data, and frozen P0 fixtures must remain
+# reusable by independent implementations. Do not add SPDX headers to these
+# bytes (frozen paths) — licensing is declared here.
+[[annotations]]
+path = ["schemas/**", "fixtures/**", "packages/check/package.json"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Inceptless <support@inceptless.com>"
+SPDX-License-Identifier = "Apache-2.0"
+
+# Documentation, specifications, and project prose.
+[[annotations]]
+path = ["docs/**", "README.md", "README.zh-CN.md", "CONTRIBUTING.md", "SECURITY.md", "CLA.md", "LICENSING.md", "NOTICE", ".github/pull_request_template.md"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Inceptless <support@inceptless.com>"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# Example worlds and their assets: P0 manifests declare CC-BY-4.0.
+# These are frozen (signed/declared bytes); do not modify them for metadata.
+[[annotations]]
+path = ["worlds/**", "examples/**"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Inceptless <support@inceptless.com>"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# Brand identifiers are excluded from the open-source licences.
+[[annotations]]
+path = ["assets/brand/*.svg"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Inceptless <support@inceptless.com>"
+SPDX-License-Identifier = "LicenseRef-Inceptless-Brand"
+
+[[annotations]]
+path = ["assets/brand/README.md"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Inceptless <support@inceptless.com>"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# Build/operations configuration, CI, and issue templates.
+[[annotations]]
+path = ["package.json", "apps/playground/package.json", "pnpm-workspace.yaml", "pnpm-lock.yaml", ".npmrc", ".gitignore", ".github/workflows/**", ".github/ISSUE_TEMPLATE/**"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Inceptless <support@inceptless.com>"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+# The root license text itself.
+[[annotations]]
+path = ["LICENSE"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Inceptless <support@inceptless.com>"
+SPDX-License-Identifier = "AGPL-3.0-or-later"

@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// SPDX-FileCopyrightText: 2026 Inceptless <support@inceptless.com>
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /**
  * Unified P0-3 conformance report.
  * Aggregates: mock 22 (two worlds), live node protocol, live hardening, live browser.

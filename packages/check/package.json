@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "bin": { "weave-check": "./src/cli.mjs" },
+  "bin": {
+    "weave-check": "./src/cli.mjs"
+  },
   "scripts": {
     "test": "node --test test/p0.test.mjs"
-  }
+  },
+  "license": "Apache-2.0",
+  "author": "Inceptless <support@inceptless.com>"
 }

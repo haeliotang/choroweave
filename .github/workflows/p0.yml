@@ -21,6 +21,12 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: node scripts/check-licenses.mjs
+      - name: REUSE lint
+        run: |
+          python3 -m venv /tmp/reuse-venv
+          /tmp/reuse-venv/bin/pip install --quiet 'reuse[charset-normalizer]'
+          /tmp/reuse-venv/bin/reuse lint
       - run: pnpm run worlds:build
       - run: pnpm --filter @choroweave/check test
       - run: pnpm --filter @choroweave/playground build
@@ -28,6 +34,7 @@ jobs:
 
       - run: mkdir -p .p0-reports
       - run: node scripts/tls-fixture.mjs
+      - run: node scripts/source-check.mjs
       - run: node scripts/live-conformance.mjs --json-out .p0-reports/live-node.json
       - run: node scripts/node-hardening.mjs --json-out .p0-reports/live-hardening.json
 

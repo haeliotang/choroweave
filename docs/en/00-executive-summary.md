@@ -1,6 +1,6 @@
 # choroweave Executive Summary
 
-> Version v0.1 · 2026-11 · Based on four first-hand research reports ([`research/`](research/); English translations; Chinese originals under `../research/`) and 13 ADRs ([`02-tech-selection.md`](02-tech-selection.md))
+> Version v0.1 · 2026-11 · Based on four first-hand research reports ([`research/`](research/); English translations; Chinese originals under `../research/`) and 14 ADRs ([`02-tech-selection.md`](02-tech-selection.md))
 > Audience: founders / investors / first contributors. Every number is tagged with an evidence grade; estimates are explicitly labeled "estimate".
 > Chinese version: [`../00-executive-summary.md`](../00-executive-summary.md)
 
@@ -41,7 +41,7 @@
 
 ---
 
-## 4. Technical Path (Summary of 13 ADRs)
+## 4. Technical Path (Summary of 14 ADRs)
 
 | Layer | Choice | Rejected alternative |
 |---|---|---|
@@ -53,7 +53,7 @@
 | Identity | Passkey/OIDC → `did:web`; no blockchain | Wallets/tokens, platform account lock-in |
 | Generation | **Skeleton-first + deterministic assembly + TRELLIS.2 (MIT)**; Hunyuan3D optional only | End-to-end black-box generation, hard Blender dependency |
 | Physics | **Rapier** + automatic colliders + `CHW_collider` fallback | KHR_physics (still a Review Draft) |
-| License | Code Apache-2.0 / spec CC-BY-4.0 / examples CC0-CC-BY | GPL contagion, default dependency on non-OSI models |
+| License | Apps/runtime AGPL-3.0-or-later; schemas/check/fixtures Apache-2.0; docs CC-BY-4.0; examples CC0-CC-BY | Prevents closed-source wrapping/hosted free-riding while keeping the protocol independently implementable |
 
 Detailed reasoning is in [`02-tech-selection.md`](02-tech-selection.md); its §5 itemizes **divergences from the original idea** (Third Room discontinued, Hyperfy GPL, Matrix unsuitable for pose synchronization, KHR_interactivity single-user only, VR-first unsupported, etc.).
 
@@ -140,7 +140,7 @@ Cost drivers: people (~70%), GPU/model calls ($2k–8k per month during P1, line
 4. **Land `weave-check` v0**: 5 validation categories (manifest/glTF/behavior graph/portal/budget) + CI.
 5. **Build evaluation set v0**: 20 prompts + scoring rubric (playability/proportion/collision/performance/aesthetics/safety), using existing TRELLIS.2 assets to establish a human baseline.
 6. **Pick the 3 showcase world topics** and gauge creator collaboration interest (pixel rooftop / cliff tavern / dungeon puzzle).
-7. **Legal/licensing**: Hunyuan3D terms, TRELLIS.2/Pixal3D weight licenses, provenance of example assets, Apache-2.0/CC-BY-4.0 release checks.
+7. **Legal/licensing**: Hunyuan3D terms, TRELLIS.2/Pixal3D weight licenses, provenance of example assets, AGPL/Apache-2.0/CC-BY-4.0 layered release checks, CLA 1.0 record and license/cla check.
 8. **External narrative**: a technical manifesto, "The DNS and HTTP of Worlds", plus a playable demo link (desktop first).
 
 ---

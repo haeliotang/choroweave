@@ -296,14 +296,14 @@ Desktop Chrome（WebGL2）；`@choroweave/*` P1 版本；两个本地/公网节�
 
 | 类别 | 发布物 | 验收要求 |
 |---|---|---|
-| npm 包 | `@choroweave/dsl`、`compiler`、`assembler`、`runtime`、`node`、`protocol`、`check`、`provider-trellis`、`provider-kit` | 可安装、可构建、类型完整、LICENSE=Apache-2.0 |
+| npm 包 | `@choroweave/dsl`、`compiler`、`assembler`、`runtime`、`node`、`protocol`、`check`、`provider-trellis`、`provider-kit` | 可安装、可构建、类型完整；许可证按包分层（AGPL-3.0-or-later / Apache-2.0） |
 | CLI | `choroweave`（聚合 CLI：`build/preview/publish/eval`） | `--help` 完整；退出码语义化（0 成功 / 1 校验失败 / 2 参数错 / 3 内部错） |
 | 一致性套件 | `weave-check`（CLI + [`04`](04-spatial-hyperlink-protocol.md) §12 的 22 条用例，P2 扩到 80） | 好样本全过、坏样本全失败；JSON 报告稳定 |
 | Schema | `schemas/spatial-dsl.schema.json`、`schemas/world-manifest.schema.json` | 两示例世界 0 error；与 [`04`](04-spatial-hyperlink-protocol.md) 字段一致 |
 | 示例/运行时 | `worlds/pixel-rooftop/`、`worlds/neon-alley/`（P0 运行时）；`examples/pixel-rooftop/`（P1 设计示例） | 通过 `weave-check`；运行时夹具由脚本生成、可复现 |
 | 节点镜像 | `ghcr.io/choroweave/node:<version>`（Docker） | 一条命令起节点；`node doctor` 通过 |
 | 文档 | 02/03/04/05/06（本文件） + README 导航 | 相对链接全部可达 |
-| 供应链 | CycloneDX SBOM + 产物 SHA-256 清单 + 许可证扫描报告 | 0 GPL/AGPL 进入核心包；Hunyuan provider 默认关闭且不随包分发权重 |
+| 供应链 | CycloneDX SBOM + 产物 SHA-256 清单 + 许可证扫描报告 | 0 个不兼容许可进入核心包（自有 AGPL 允许）；Hunyuan provider 默认关闭且不随包分发权重 |
 | 评测 | `eval/` 测试集 + `eval/report.json` + 人工评分表 | 可复现；报告含 20 条明细 |
 
 ### 9.2 验收命令（P0 门，G0 = 2027-01-25）

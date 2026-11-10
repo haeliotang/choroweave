@@ -1,0 +1,20 @@
+choroweave
+Copyright 2026 Inceptless <support@inceptless.com>
+
+The applications, runtime, node service, build and operations scripts are licensed
+under the GNU Affero General Public License, version 3 or later
+(AGPL-3.0-or-later). See LICENSE and LICENSING.md.
+
+The protocol contract schemas, conformance suite and test fixtures are licensed
+under the Apache License, Version 2.0 (Apache-2.0). See LICENSES/Apache-2.0.txt.
+
+Documentation is licensed under Creative Commons Attribution 4.0 International
+(CC-BY-4.0). Example worlds and their assets are distributed under the licence
+declared in each world.json (CC-BY-4.0 for the P0 examples).
+
+Brand assets are excluded from the open-source licences; see
+LICENSES/LicenseRef-Inceptless-Brand.txt.
+
+This product includes third-party software; their licences are retained in their
+respective packages. No warranty is provided beyond the terms of the applicable
+licence.

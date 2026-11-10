@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: 2026 Inceptless <support@inceptless.com>
+// SPDX-License-Identifier: Apache-2.0
 import { createHash, generateKeyPairSync, sign } from "node:crypto";
 import { canonicalize, canonicalManifestBytes } from "./jcs.mjs";
 import { escapeText, isEnterableTarget, validateManifest } from "./manifest.mjs";
