@@ -30,9 +30,9 @@ The rule for the Apache/AGPL boundary: **is this artifact meant to let someone e
 | Version / tag | Licence | Notes |
 |---|---|---|
 | `p0-rc3` and earlier | `Apache-2.0` | released candidate and all earlier commits remain under Apache-2.0 |
-| unreleased `license/agpl-split` (2026-11-10) | layered: AGPL-3.0-or-later + Apache-2.0 + CC-BY-4.0 | first switch commit `dbdf39a`; no release tag yet; merge commit to be recorded |
+| unreleased `license/agpl-split` (2026-11-10) | layered: AGPL-3.0-or-later + Apache-2.0 + CC-BY-4.0 | first switch commit `dbdf39a`; merged in `72cc0fe`; no release tag yet |
 
-Already-published versions are **not** relicensed. The new model applies from the commits on the `license/agpl-split` branch after maintainer merge; the exact merge commit should be recorded here when merged.
+Already-published versions are **not** relicensed. The new model applies from the merge commit `72cc0fe`; earlier commits remain under Apache-2.0.
 
 ## Dual licensing
 
