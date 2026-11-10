@@ -9,5 +9,6 @@
   "scripts": {
     "test": "node --test test/p0.test.mjs"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "author": "Inceptless <support@inceptless.com>"
 }

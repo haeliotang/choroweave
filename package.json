@@ -26,5 +26,6 @@
   "devDependencies": {
     "playwright-core": "^1.65.0",
     "@choroweave/check": "workspace:*"
-  }
+  },
+  "author": "Inceptless <support@inceptless.com>"
 }

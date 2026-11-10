@@ -1,5 +1,7 @@
 # Licensing
 
+Copyright 2026 Inceptless <support@inceptless.com>
+
 choroweave uses a layered licence model: the protocol and its verification surface stay permissive, while the reference applications and node service are copyleft.
 
 ## Layer table
