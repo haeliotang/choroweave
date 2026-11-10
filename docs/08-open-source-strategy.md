@@ -117,7 +117,7 @@
 
 ### 3.2 PR 要求
 
-- 外部贡献须先签署 **Inceptless CLA**（CLA 1.0 正式生效前不合并外部 PR；签署工具链接由维护者补 `TODO(maintainer)`）。
+- 外部贡献须先签署 **Inceptless CLA 1.0**（<https://cla-assistant.io/haeliotang/choroweave>）；PR 只有在 CLA 检查（license/cla）通过后才会合并。
 - 必过：单元/集成测试、`weave-check` 自检、license 扫描、SBOM diff、格式化、文档更新。
 - 变更需 **changeset**（版本与变更说明）；影响协议/世界的变更必须附 conformance 用例。
 - 生成/资产相关 PR 必须附 `provenance` 与许可声明；示例世界必须通过预算校验。

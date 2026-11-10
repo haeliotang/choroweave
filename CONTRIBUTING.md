@@ -40,9 +40,9 @@ If you are unsure where something belongs, open a Discussion or a blank issue; w
 - **Example assets**: the licence declared in each `world.json` (P0 examples: CC-BY-4.0).
 - **Brand assets**: excluded from the open-source licences (see [`LICENSES/LicenseRef-Inceptless-Brand.txt`](LICENSES/LicenseRef-Inceptless-Brand.txt)).
 - Do not copy GPL/AGPL code into the Apache-2.0 contract surface; dependencies must remain compatible with the layered policy (`pnpm license:check`).
-- **CLA.** External contributions require a signed Inceptless CLA. The signing tool link will be added by the maintainer: `TODO(maintainer)`. **Until the CLA is formally in force, external contributions are not merged.**
+- **CLA.** External contributions require a signed Inceptless CLA. Sign at <https://cla-assistant.io/haeliotang/choroweave>. **PRs are merged only after the CLA check (`license/cla`) passes.**
 - **Model-generated assets** must record provenance: model name/version, licence, generation parameters. Do not add assets whose licence is unclear or whose terms exclude the project's distribution model.
-- Full layer table and licence history: [`LICENSING.md`](LICENSING.md). `CLA.md` is the unmodified draft; it is not legal advice.
+- Full layer table and licence history: [`LICENSING.md`](LICENSING.md). `CLA.md` is the unmodified 1.0 text.
 
 ## 5. Development workflow
 
@@ -75,7 +75,7 @@ pnpm test:source    # AGPL §13 Source endpoint + viewer link
   - [ ] English and Chinese docs updated together (or the gap is stated)
   - [ ] numbers/dates carry evidence grades and sources
   - [ ] no secrets, no production keys, no incompatible third-party code
-  - [ ] if external: Inceptless CLA signed (not merged before CLA 1.0 is in force)
+  - [ ] if external: CLA check (`license/cla`) passed
 
 ## 6. Review and response times
 

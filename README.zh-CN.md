@@ -53,7 +53,7 @@ choroweave 是 **Inceptless** 矩阵中的"空间计算层"项目。它不做一
 | [`schemas/`](schemas/) | Spatial-DSL、world.json 与 ISS 契约的 JSON Schema（v0.1） |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | 旗舰示例世界"像素天台"的 DSL、签名清单与说明 |
 | [`LICENSING.md`](LICENSING.md) | 分层许可、许可历史、双许可、品牌资产 |
-| [`CLA.md`](CLA.md) | Inceptless CLA（逐字草案；非法律意见） |
+| [`CLA.md`](CLA.md) | Inceptless CLA 1.0（逐字） |
 | [`docs/deploy-real.md`](docs/deploy-real.md) | 真实 LAN 部署步骤；公网部署阻塞点与 deployment profile 需求 |
 | [`docs/g0-evidence.md`](docs/g0-evidence.md) | G0 证据包模板（功能/性能分离、拓扑、部署信息） |
 | [`docs/p0-rc.md`](docs/p0-rc.md) | Release Candidate 与 G0 验收清单（运行时基线 `95f12d8`） |
@@ -128,5 +128,5 @@ P0_LIVE=1 pnpm build && P0_LIVE=1 pnpm test:e2e   # 同上，但对两个 live H
 
 - 状态：**方案 v0.1（2026-11）**；协议与 Schema 均为草案，欢迎在 issue/RFC 中挑战。
 - **应用/运行时/节点**：AGPL-3.0-or-later（见 [`LICENSE`](LICENSE)）；**Schema、`weave-check`、夹具**：Apache-2.0；**文档**：CC-BY-4.0；**示例资产**：按各 `world.json`（P0 为 CC-BY-4.0）。详见 [`LICENSING.md`](LICENSING.md)。
-- 外部贡献须签署 Inceptless CLA（[`CLA.md`](CLA.md)）；在 CLA 正式生效前，暂不合并外部 PR。
+- 外部贡献须签署 Inceptless CLA（[`CLA.md`](CLA.md)）；签署地址 <https://cla-assistant.io/haeliotang/choroweave>。PR 只有在 CLA 检查（license/cla）通过后才会合并。
 - 姊妹项目：tacitweave（默会知识/隐性意图层）。本仓库不包含其代码。

@@ -11,5 +11,5 @@
 - [ ] English and Chinese docs updated together (or the gap is stated)
 - [ ] numbers/dates carry evidence grades and sources
 - [ ] no secrets, no production keys, no incompatible third-party code
-- [ ] I have signed, or will sign, the Inceptless CLA before this contribution is merged
-- [ ] (maintainer) CLA 1.0 is formally in force before merging an external contribution
+- [ ] I have signed the Inceptless CLA at <https://cla-assistant.io/haeliotang/choroweave>
+- [ ] (maintainer) CLA check (`license/cla`) passes before merge

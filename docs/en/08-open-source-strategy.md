@@ -116,7 +116,7 @@ This table is the **strategic view**; the final directory structure, package spl
 
 ### 3.2 PR requirements
 
-- External contributions require a signed **Inceptless CLA** (external PRs are not merged until CLA 1.0 is in force; signing-tool link: `TODO(maintainer)`).
+- External contributions require a signed **Inceptless CLA 1.0** (<https://cla-assistant.io/haeliotang/choroweave>); PRs are merged only after the CLA check (`license/cla`) passes.
 - Required to pass: unit/integration tests, `weave-check` self-check, license scan, SBOM diff, formatting, documentation updates.
 - Changes need a **changeset** (version and description); changes affecting the protocol/worlds must include conformance cases.
 - Generation/asset-related PRs must include `provenance` and a license declaration; example worlds must pass the budget check.

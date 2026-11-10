@@ -45,7 +45,7 @@ The Inceptless and choroweave names, logos and icons are **not** licensed under 
 
 ## Contributions
 
-External contributions require a signed Inceptless CLA. See `CONTRIBUTING.md` and `CLA.md`. Until the CLA is formally in force, external contributions are not merged.
+External contributions require a signed Inceptless CLA (1.0). Sign at <https://cla-assistant.io/haeliotang/choroweave>; PRs are merged only after the CLA check (`license/cla`) passes. See `CONTRIBUTING.md` and `CLA.md`.
 
 ## Reuse
 

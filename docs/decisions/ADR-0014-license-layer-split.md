@@ -26,7 +26,7 @@ Boundary test: *does this artifact exist so that someone else can implement or i
 Other decisions:
 
 1. **No retroactive relicensing.** `p0-rc3` and every earlier release/tag remain Apache-2.0. The new model applies only from the commits that introduce it; no tag has been cut under the new model at the time of this ADR.
-2. **DCO → CLA.** External contributions require a signed Inceptless CLA. The CLA is a draft pending legal review; until it is in force, external contributions are not merged. The DCO and `git commit -s` requirements are removed.
+2. **DCO → CLA.** External contributions require a signed Inceptless CLA 1.0 (<https://cla-assistant.io/haeliotang/choroweave>); PRs are merged only after the CLA check (`license/cla`) passes. The DCO and `git commit -s` requirements are removed.
 3. **AGPL §13.** Every network-interactive component (viewer, node) exposes a visible Source entry pointing at the running version's repository URL + commit. This is a link/read-only endpoint only; no product behaviour changes.
 4. **Dependency compatibility.** Dependencies must remain AGPL-compatible; CI rejects known-incompatible licences. The project's own AGPL packages are accepted by the policy.
 5. **Brand assets** are excluded via `LicenseRef-Inceptless-Brand`; no further brand terms are added beyond that file.
@@ -42,12 +42,12 @@ Other decisions:
 
 - The reference node/viewer become copyleft; hosted use must offer corresponding source under AGPL §13.
 - Independent implementations can still use the schemas, conformance suite and fixtures under Apache-2.0.
-- The project needs a CLA signature tool and legal review before accepting external contributions.
+- The project uses the CLA Assistant check (`license/cla`) before merging external contributions.
 - Licence layers must be reflected in package manifests, REUSE metadata and CI; stale "Apache-2.0" project statements are incorrect.
 - No change to the SHP protocol or the frozen P0 runtime behaviour.
 
 ## Review signals
 
-- If the CLA is not in force by the next public contribution window, keep external PRs closed rather than silently accepting unlicensed contributions.
+- If the `license/cla` check is unavailable, keep external PRs closed rather than silently accepting unlicensed contributions.
 - If a genuinely embeddable SDK appears, evaluate MPL-2.0 rather than adding it to the AGPL layer.
 - If AGPL adoption blocks a strategic implementer that only needs the wire contract, confirm they can rely on the Apache-2.0 schemas/fixtures; do not relicense application code ad hoc.

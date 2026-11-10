@@ -58,7 +58,7 @@ All claims are evidence-graded (A = primary source, B = third-party test/report,
 | [`schemas/`](schemas/) | JSON Schemas for Spatial-DSL, `world.json`, and the tacitweave ISS contract |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | The flagship example world ("pixel rooftop"), DSL + signed manifest |
 | [`LICENSING.md`](LICENSING.md) | Layer table, licence history, dual licensing, brand assets |
-| [`CLA.md`](CLA.md) | Inceptless CLA (verbatim draft; not legal advice) |
+| [`CLA.md`](CLA.md) | Inceptless CLA 1.0 (verbatim) |
 | [`docs/en/deploy-real.md`](docs/en/deploy-real.md) | Real LAN deployment recipe; public deployment blockers and required deployment profile |
 | [`docs/en/g0-evidence.md`](docs/en/g0-evidence.md) | G0 evidence bundle template (functional vs performance, topology, deployment) |
 | [`docs/en/p0-rc.md`](docs/en/p0-rc.md) | Release Candidate + G0 acceptance checklist (runtime baseline `95f12d8`) |
@@ -131,7 +131,7 @@ Controls: `WASD` move, mouse drag to look, `E` interact / enter portal, `Esc` ca
 
 - Status: **plan v0.1 (Nov 2026)**; protocol and schemas are drafts — challenges via issues/RFCs are welcome.
 - **Applications/runtime/node**: AGPL-3.0-or-later ([`LICENSE`](LICENSE)); **schemas, `weave-check`, fixtures**: Apache-2.0; **documentation**: CC-BY-4.0; **example assets**: per `world.json` (CC-BY-4.0 for P0). Details: [`LICENSING.md`](LICENSING.md).
-- External contributions require the Inceptless CLA ([`CLA.md`](CLA.md)); until it is in force, external PRs are not merged.
+- External contributions require the Inceptless CLA ([`CLA.md`](CLA.md)); sign at <https://cla-assistant.io/haeliotang/choroweave>. PRs are merged only after the CLA check (`license/cla`) passes.
 - Sister project: **tacitweave** (tacit knowledge / implicit intent layer). This repository contains none of its code.
 
 ---
