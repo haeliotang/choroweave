@@ -1,6 +1,6 @@
 # P0 release candidate & external validation (2026-11-07)
 
-> **Runtime baseline:** `95f12d8` (2026-11-07). **RC tag:** `p0-rc3` (validation tooling: strict perf gate incl. rollback+retry, DNS/TLS topology validation for remote profiles, safe port checks; runtime files identical to `95f12d8`; supersedes `p0-rc2`). Verify with `git diff 95f12d8..p0-rc3 -- apps packages scripts/serve-node.mjs scripts/tls-fixture.mjs worlds schemas`.
+> **Runtime baseline:** `854f114` (2026-11-10, after the licensing switch). **RC tag:** `p0-rc4` (supersedes `p0-rc3`; the licensing switch changed runtime files: SPDX headers and the §13 Source endpoint). Verify with `git diff 854f114..p0-rc4 -- apps packages scripts/serve-node.mjs scripts/tls-fixture.mjs worlds schemas`; `p0-rc3` remains a historical RC and is no longer the current baseline.
 > **SHP v0.1:** candidate freeze — **not final** until external validation completes.
 > G0: **not granted**. Target date **2027-01-25**.
 > Chinese: [`../p0-rc.md`](../p0-rc.md)
@@ -10,7 +10,7 @@
 | Status | Meaning |
 |---|---|
 | **Engineering: complete** | P0-1…P0-4 implementation and tooling done; CI green; mock/live suites pass |
-| **RC: candidate** | runtime baseline frozen at `95f12d8`; no new features before external feedback |
+| **RC: candidate** | runtime baseline frozen at `854f114`; no new features before external feedback |
 | **G0 acceptance: not granted** | external reproduction pending; LAN/public performance profiles pending |
 
 P0 is now in **Release Candidate / External Validation**, not feature development. Scope is frozen: no generative models, no multiplayer sync, no agents, no hosted discovery.

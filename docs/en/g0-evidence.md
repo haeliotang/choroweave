@@ -80,3 +80,10 @@ Rules:
 - [ ] Strict performance targets met on the required profiles, or an explicit waiver recorded
 - [ ] Topology, deployment, browser perf, and conformance artifacts linked
 - [ ] SHP v0.1 final freeze decision recorded after external feedback
+
+
+## RC4 record (appended 2026-11-10)
+
+- `p0-rc4` uses runtime baseline `854f114` and supersedes `p0-rc3`.
+- Reason: the licensing switch changed runtime files (SPDX headers, `/source` and the viewer Source link).
+- G0 evidence must bind to `p0-rc4`; `p0-rc3` is retained as historical evidence only and is no longer the current baseline.

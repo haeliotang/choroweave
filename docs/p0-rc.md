@@ -1,6 +1,6 @@
 # P0 Release Candidate 与外部验证（2026-11-07）
 
-> **运行时基线：** `95f12d8`（2026-11-07）。**RC tag：** `p0-rc3`（验证工具：strict 门禁含回滚+重试、远程 DNS/TLS 拓扑验证、安全端口检查；运行时文件与 `95f12d8` 相同；取代 `p0-rc2`）。可用 `git diff 95f12d8..p0-rc3 -- apps packages scripts/serve-node.mjs scripts/tls-fixture.mjs worlds schemas` 核对。
+> **运行时基线：** `854f114`（2026-11-10，许可切换后）。**RC tag：** `p0-rc4`（取代 `p0-rc3`；原因是许可切换改了运行时文件：SPDX 头与 §13 Source 入口）。可用 `git diff 854f114..p0-rc4 -- apps packages scripts/serve-node.mjs scripts/tls-fixture.mjs worlds schemas` 核对；`p0-rc3` 保留为历史 RC，不再作为当前基线。
 > **SHP v0.1：** 候选冻结——外部验证完成前**不是最终冻结**。
 > G0：**未授予**。目标日期 **2027-01-25**。
 > English (primary): [`en/p0-rc.md`](en/p0-rc.md)
@@ -10,7 +10,7 @@
 | 状态 | 含义 |
 |---|---|
 | **工程：完成** | P0-1…P0-4 实现与工具完成；CI 绿；mock/live 套件通过 |
-| **RC：候选** | 运行时基线冻结在 `95f12d8`；外部反馈前不加新功能 |
+| **RC：候选** | 运行时基线冻结在 `854f114`；外部反馈前不加新功能 |
 | **G0 验收：未授予** | 缺外部复现；缺 LAN/公网性能档案 |
 
 P0 现在处于 **Release Candidate / External Validation**，不是功能开发阶段。范围冻结：不接生成模型、不做多人同步、不做 Agent、不做中心化发现。
