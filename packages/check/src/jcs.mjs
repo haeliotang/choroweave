@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: 2026 Inceptless <support@inceptless.com>
+// SPDX-License-Identifier: Apache-2.0
 /**
  * RFC 8785 (JCS) canonical JSON — sufficient subset for SHP manifests.
  * Numbers are serialized with ECMAScript Number::toString (JCS requirement).

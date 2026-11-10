@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: 2026 Inceptless <support@inceptless.com>
+// SPDX-License-Identifier: Apache-2.0
 /**
  * Minimal SHP world.json validator for P0.
  * Intentionally hand-written (zero deps) and scoped to the fields exercised by

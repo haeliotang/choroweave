@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// SPDX-FileCopyrightText: 2026 Inceptless <support@inceptless.com>
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /**
  * Rotate a fixture node's ed25519 identity and update the pinned trust anchors.
  * The node must be restarted to load the new key (descriptor signature changes).

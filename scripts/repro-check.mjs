@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// SPDX-FileCopyrightText: 2026 Inceptless <support@inceptless.com>
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /** Preflight for an external P0 reproduction (no project knowledge required). */
 import { existsSync, readFileSync } from "node:fs";
 import { createServer } from "node:net";

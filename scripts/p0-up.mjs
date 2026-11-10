@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// SPDX-FileCopyrightText: 2026 Inceptless <support@inceptless.com>
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /**
  * One-click P0 two-node launcher (test-only TLS fixture).
  * Generates certs if needed, starts Alice + Hana, serves the built client from Alice.

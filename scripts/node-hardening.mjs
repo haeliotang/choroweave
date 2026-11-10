@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// SPDX-FileCopyrightText: 2026 Inceptless <support@inceptless.com>
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /**
  * P0-2 hardening (live): rate limit, room-full, private world, key rotation.
  * Separate live suite; mock 22 and live-node 12 remain independent.

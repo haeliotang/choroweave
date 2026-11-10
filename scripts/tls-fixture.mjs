@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// SPDX-FileCopyrightText: 2026 Inceptless <support@inceptless.com>
+// SPDX-License-Identifier: AGPL-3.0-or-later
 /**
  * Generate a disposable local CA + certs for the P0 two-node fixture.
  * Test-only: never use these keys or trust anchors in production.

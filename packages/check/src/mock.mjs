@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: 2026 Inceptless <support@inceptless.com>
+// SPDX-License-Identifier: Apache-2.0
 /**
  * P0 mock session used by the conformance suite.
  * It models the SHP traversal contract (not a network stack); P0-2 wires the
