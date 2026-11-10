@@ -7,7 +7,7 @@ SPDX-PackageDownloadLocation = "https://github.com/haeliotang/choroweave"
 # reusable by independent implementations. Do not add SPDX headers to these
 # bytes (frozen paths) — licensing is declared here.
 [[annotations]]
-path = ["schemas/**", "fixtures/**"]
+path = ["schemas/**", "fixtures/**", "packages/check/package.json"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 Inceptless <support@inceptless.com>"
 SPDX-License-Identifier = "Apache-2.0"
@@ -42,7 +42,7 @@ SPDX-License-Identifier = "CC-BY-4.0"
 
 # Build/operations configuration, CI, and issue templates.
 [[annotations]]
-path = ["package.json", "apps/playground/package.json", "packages/check/package.json", "pnpm-workspace.yaml", "pnpm-lock.yaml", ".npmrc", ".gitignore", ".github/workflows/**", ".github/ISSUE_TEMPLATE/**"]
+path = ["package.json", "apps/playground/package.json", "pnpm-workspace.yaml", "pnpm-lock.yaml", ".npmrc", ".gitignore", ".github/workflows/**", ".github/ISSUE_TEMPLATE/**"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 Inceptless <support@inceptless.com>"
 SPDX-License-Identifier = "AGPL-3.0-or-later"

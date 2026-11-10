@@ -25,9 +25,9 @@ if (!existsSync(join(ROOT, "apps/playground/dist/index.html"))) {
 const ca = readFileSync(join(TLS, "ca.crt"));
 const lookup = (host, opts, cb) => (opts?.all ? cb(null, [{ address: "127.0.0.1", family: 4 }]) : cb(null, "127.0.0.1", 4));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-function req(path) {
+function req(path, port = PORT) {
   return new Promise((resolve) => {
-    const u = new URL(path, `https://alice.example:${PORT}`);
+    const u = new URL(path, `https://alice.example:${port}`);
     const r = httpsRequest(u, { lookup, ca, servername: u.hostname, timeout: 2000 }, (res) => {
       const chunks = [];
       res.on("data", (c) => chunks.push(c));
@@ -38,9 +38,12 @@ function req(path) {
     r.end();
   });
 }
-const proc = spawn(process.execPath, [join(ROOT, "scripts/serve-node.mjs"), "--name", "alice", "--port", String(PORT), "--client-dist", "apps/playground/dist"], {
-  cwd: ROOT, stdio: ["ignore", "pipe", "pipe"],
-});
+function startNode(port, env = {}) {
+  return spawn(process.execPath, [join(ROOT, "scripts/serve-node.mjs"), "--name", "alice", "--port", String(port), "--client-dist", "apps/playground/dist"], {
+    cwd: ROOT, env: { ...process.env, ...env }, stdio: ["ignore", "pipe", "pipe"],
+  });
+}
+const proc = startNode(PORT);
 let health = null;
 for (let i = 0; i < 40; i++) {
   health = await req("/healthz");
@@ -66,5 +69,31 @@ try {
 } finally {
   proc.kill("SIGTERM");
 }
+
+// Override path: CHOROWEAVE_SOURCE_URL must not drop the commit; the /source
+// response carries the commit as a separate field (and the Link header).
+let overrideOk = false;
+const overrideUrl = "https://github.com/haeliotang/choroweave";
+const proc2 = startNode(9550, { CHOROWEAVE_SOURCE_URL: overrideUrl });
+try {
+  let health2 = null;
+  for (let i = 0; i < 40; i++) {
+    health2 = await req("/healthz", 9550);
+    if (health2.status === 200) break;
+    await sleep(150);
+  }
+  const source2 = await req("/source", 9550);
+  const json2 = JSON.parse(source2.body || "{}");
+  overrideOk = Boolean(health2?.status === 200
+    && json2.source === overrideUrl
+    && /^[0-9a-f]{7,40}$/i.test(json2.commit || "")
+    && String(source2.headers?.link || "").includes(`<${overrideUrl}>; rel="source"`));
+  console.log(`${overrideOk ? "PASS" : "FAIL"}  CHOROWEAVE_SOURCE_URL override: source=${json2.source || "missing"}; commit=${json2.commit || "missing"}`);
+} catch (err) {
+  console.error(`source-check override: ${err.message}`);
+} finally {
+  proc2.kill("SIGTERM");
+}
+ok = ok && overrideOk;
 console.log(`\nSOURCE RESULT: ${ok ? "PASS" : "FAIL"}`);
 process.exit(ok ? 0 : 1);

@@ -50,3 +50,7 @@ External contributions require a signed Inceptless CLA. See `CONTRIBUTING.md` an
 ## Reuse
 
 Every file is licensed via SPDX headers and/or `REUSE.toml`; run `reuse lint`. Frozen P0 conformance/fixture bytes and signed example worlds are declared in `REUSE.toml` and must not be modified for licensing metadata.
+
+## G0 evidence and RC tags
+
+G0 evidence is verified only on tag `p0-rc3` (runtime baseline `95f12d8`; decision 2026-11-10 #22). This licensing switch changes runtime files (SPDX headers and the §13 source endpoint), so after this branch merges the runtime diff from `95f12d8` is no longer empty. A G0 application after the switch must cut a **new RC tag** and rerun the full gate; `p0-rc3` evidence must not be reused. `docs/g0-evidence.md` is frozen and is not edited by this change.
