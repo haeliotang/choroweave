@@ -32,20 +32,25 @@ If you are unsure where something belongs, open a Discussion or a blank issue; w
 4. Breaking changes to SHP require a minor/major version bump in [`docs/en/04-spatial-hyperlink-protocol.md`](docs/en/04-spatial-hyperlink-protocol.md) and a fixture update.
 5. Consensus is sought; the maintainers make the final call and record it.
 
-## 4. Licensing and provenance
+## 4. Licensing, CLA and provenance
 
-- **Code**: Apache-2.0 (see [`LICENSE`](LICENSE)). By contributing, you agree your contribution is licensed under Apache-2.0.
-- **Specification/docs**: CC-BY-4.0.
-- **Example assets**: CC0/CC-BY as declared in each `world.json`.
-- **Do not copy GPL/AGPL code** into the repository (Hyperfy is GPL-3.0 and is referenced only as prior art).
-- **Model-generated assets** must record provenance: model name/version, license, generation parameters. Do not add assets whose license is unclear or whose terms exclude the project's distribution model.
-- **Sign-off (DCO)**: every commit must be signed off (`git commit -s`), certifying the [Developer Certificate of Origin 1.1](https://developercertificate.org/). No CLA is required.
+- **Applications, runtime, node and scripts**: **AGPL-3.0-or-later**. By contributing code to these paths, you agree it is licensed under AGPL-3.0-or-later.
+- **Protocol contracts and verification surface** (`schemas/`, `packages/check/`, `fixtures/`): **Apache-2.0**, so independent implementations can reuse them.
+- **Documentation**: **CC-BY-4.0**.
+- **Example assets**: the licence declared in each `world.json` (P0 examples: CC-BY-4.0).
+- **Brand assets**: excluded from the open-source licences (see [`LICENSES/LicenseRef-Inceptless-Brand.txt`](LICENSES/LicenseRef-Inceptless-Brand.txt)).
+- Do not copy GPL/AGPL code into the Apache-2.0 contract surface; dependencies must remain compatible with the layered policy (`pnpm license:check`).
+- **CLA.** External contributions require a signed Inceptless CLA. The signing tool link will be added by the maintainer: `TODO(maintainer)`. **Until the CLA is formally in force, external contributions are not merged.**
+- **Model-generated assets** must record provenance: model name/version, licence, generation parameters. Do not add assets whose licence is unclear or whose terms exclude the project's distribution model.
+- Full layer table and licence history: [`LICENSING.md`](LICENSING.md). `CLA.md` is the unmodified draft; it is not legal advice.
 
 ## 5. Development workflow
 
 ```bash
 # Plan-repo self-check (Node >= 18, no install needed)
 node scripts/validate.mjs --strict
+node scripts/check-licenses.mjs
+reuse lint   # install reuse (https://reuse.software) first
 
 # P0 scaffold
 pnpm install --frozen-lockfile
@@ -59,6 +64,7 @@ pnpm test:hardening # rate limit, room-full, private world, key rotation
 P0_LIVE=1 pnpm build && P0_LIVE=1 pnpm test:e2e   # live browser E2E against two HTTPS nodes
 pnpm report:p0      # unified mock/live report
 pnpm repro:check    # external reproduction preflight
+pnpm test:source    # AGPL §13 Source endpoint + viewer link
 ```
 
 - Branch naming: `feat/…`, `fix/…`, `docs/…`, `protocol/…`.
@@ -68,8 +74,8 @@ pnpm repro:check    # external reproduction preflight
   - [ ] relative links resolve; no new dead links
   - [ ] English and Chinese docs updated together (or the gap is stated)
   - [ ] numbers/dates carry evidence grades and sources
-  - [ ] no secrets, no production keys, no GPL code
-  - [ ] commits signed off (`-s`)
+  - [ ] no secrets, no production keys, no incompatible third-party code
+  - [ ] if external: Inceptless CLA signed (not merged before CLA 1.0 is in force)
 
 ## 6. Review and response times
 

@@ -32,8 +32,9 @@ choroweave 的技术路径压缩为 12 条决策。若只读一段：
 | ADR-09 | 编译器 = **骨架优先（Spatial-DSL + 确定性装配）+ LLM 规划 + 验证/修复循环**；资产默认 **TRELLIS.2（MIT）**；Hunyuan3D 仅可选 | TRELLIS.2 MIT（A）；CEGame-Bench 16% 通关（A/B） | 高 |
 | ADR-10 | 物理 = **Rapier（Apache-2.0/WASM）**；碰撞体自动生成 + `OMI_physics_shape` 语义子集 + `CHW_collider` 兜底；KHR_physics 仍是 Review Draft，不能依赖 | Khronos registry（A）；OMI Stage 1（A） | 中高 |
 | ADR-11 | 世界模型与 3DGS **不作多人持久运行时**；3DGS 虽已有 ratified 的 `KHR_gaussian_splatting`，仍排 P3 作视觉增强 | Genie 4 官方限制（A）；Marble 导出持久资产（A）；头显流式成本（B/C） | 中高 |
-| ADR-12 | 许可证：**代码 Apache-2.0 / 规范 CC-BY-4.0 / 示例资产 CC0-CC-BY**；以 **一致性测试套件** 为治理核心 | 协议采用度取决于可自由商用 + 可验证（C） | 高 |
+| ADR-12 | 许可证：**代码 Apache-2.0 / 规范 CC-BY-4.0 / 示例资产 CC0-CC-BY**（许可部分由 ADR-14 取代）；以 **一致性测试套件** 为治理核心 | 协议采用度取决于可自由商用 + 可验证（C） | 高 |
 | ADR-13 | 架构原则：**Web-native at the surface, Rust-native at the core**；Rust 负责协议/验证/确定性编译/空间计算，TS 负责 Web 运行时与 Agent 接入；P0 冻结，G0 后渐进引入 | 单一权威协议语义 + 跨语言测试向量；浏览器仍是主运行环境（[详细 ADR](decisions/ADR-0013-rust-core-web-native-runtime.md)） | 高（G0 后执行） |
+| ADR-14 | 许可分层：应用/运行时/节点/脚本 **AGPL-3.0-or-later**，Schema/一致性套件/夹具 **Apache-2.0**，文档 **CC-BY-4.0**，品牌 **LicenseRef-Inceptless-Brand**；DCO 换 CLA | 防止闭源套壳/云服务不回馈，同时保证协议可被独立实现（Inceptless 2026-11-10 #19；[详细 ADR](decisions/ADR-0014-license-layer-split.md)） | 高 |
 
 ---
 

@@ -1,7 +1,7 @@
 # choroweave 系统架构（v0.1）
 > **English (primary):** [`docs/en/03-architecture.md`](en/03-architecture.md) · 本页为中文版（Chinese version）。
-> 状态：草案 · 截至 **2026-11-07** · 代码许可证 Apache-2.0 · 面向实现团队与外部贡献者
-> 依据：[`02-tech-selection.md`](02-tech-selection.md) 的 13 条 ADR、[`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md)（SHP）、[`research/`](research/) 四份调研。
+> 状态：草案 · 截至 **2026-11-07** · 代码许可：应用/运行时 AGPL-3.0-or-later、契约/check/夹具 Apache-2.0 · 面向实现团队与外部贡献者
+> 依据：[`02-tech-selection.md`](02-tech-selection.md) 的 14 条 ADR、[`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md)（SHP）、[`research/`](research/) 四份调研。
 > 本文所有 `CHW_*` 扩展与 `world.json` 字段以 [`04`](04-spatial-hyperlink-protocol.md) 与 [`schemas/`](../schemas/) 为准；三者不一致时视为缺陷。
 
 ---
@@ -94,7 +94,7 @@ flowchart TB
 | C5 | 实时层 **WebSocket（P0-P1）→ WebTransport/WebRTC（P2+）**；Matrix 不承载位姿 | ADR-07 |
 | C6 | 资产生成默认 **TRELLIS.2（MIT）**；Hunyuan3D 仅可选 provider（地域/MAU 限制） | ADR-09 |
 | C7 | 身份 **Passkey/OIDC → did:web**；无区块链 | ADR-08 |
-| C8 | 代码 Apache-2.0 / 规范 CC-BY-4.0 / 示例 CC0-CC-BY；一致性套件是治理核心 | ADR-12 |
+| C8 | 应用/运行时 AGPL-3.0-or-later；Schema/check/夹具 Apache-2.0；文档 CC-BY-4.0；示例 CC0-CC-BY；一致性套件是治理核心 | ADR-14（取代 ADR-12 许可部分） |
 | C9 | Studio 无需服务端：**纯静态 HTTPS 托管即可运行世界**；房间服务可选 | ADR-06 第 5 条 |
 | C10 | 面向 Quest 3 的预算写入引擎启动检查（≤30–50 万三角形、50–80 draw calls/帧） | ADR-04、调研 03 §3.5 |
 
@@ -593,7 +593,7 @@ choroweave/
 
 ## 14. 参考
 
-- [02 技术选型](02-tech-selection.md)（ADR-01…13）· [04 SHP v0.1](04-spatial-hyperlink-protocol.md)（`world.json` / `CHW_portal` / 握手 / 信任 / 一致性用例）
+- [02 技术选型](02-tech-selection.md)（ADR-01…14）· [04 SHP v0.1](04-spatial-hyperlink-protocol.md)（`world.json` / `CHW_portal` / 握手 / 信任 / 一致性用例）
 - [调研 01 空间网络](research/01-spatial-web-platforms.md) · [02 生成式 3D](research/02-generative-3d-and-agents.md) · [03 运行时标准](research/03-runtime-standards.md) · [04 产品与失败先例](research/04-products-market-prior-art.md)
 - Schemas：[`spatial-dsl`](../schemas/spatial-dsl.schema.json) · [`world-manifest`](../schemas/world-manifest.schema.json) · [`implicit-spatial-spec`](../schemas/implicit-spatial-spec.schema.json)
 - 示例：[`examples/pixel-rooftop/`](../examples/pixel-rooftop/)

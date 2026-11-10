@@ -2,9 +2,9 @@
 
 > Status: Draft · All data **verified as of 2026-11-07** (GitHub data captured that day via the REST API; everything else from specification text / official pages / authoritative third parties, itemized in §7)
 > Evidence grades: **A** = first-hand specifications, official documentation, repository metadata; **B** = third-party measurement or authoritative media; **C** = engineering judgment (same rubric as [`02-tech-selection.md`](02-tech-selection.md))
-> Companions: [`02-tech-selection.md`](02-tech-selection.md) (ADR-01..13), [`03-architecture.md`](03-architecture.md), [`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md), [`research/`](research/) (four original research reports (English translations; Chinese originals under `../research/`))
+> Companions: [`02-tech-selection.md`](02-tech-selection.md) (ADR-01..14), [`03-architecture.md`](03-architecture.md), [`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md), [`research/`](research/) (four original research reports (English translations; Chinese originals under `../research/`))
 > Chinese version: [`../01-landscape.md`](../01-landscape.md)
-> Discipline: this document provides ecosystem evidence and judgments only. **Technical conclusions follow the 13 ADRs in 02; this document introduces no new decisions**; any divergence in framing is listed explicitly in §8.
+> Discipline: this document provides ecosystem evidence and judgments only. **Technical conclusions follow the 14 ADRs in 02; this document introduces no new decisions**; any divergence in framing is listed explicitly in §8.
 
 ## 0. One-Page Conclusion (Conclusion First, Evidence After)
 
@@ -201,7 +201,7 @@ This layer answers: who is making money, who is dying, and whether demand-side d
 - **License**: **GPL-3.0** (LICENSE text verified) [A10]
 - **Last commit/release**: v0.16.0 (2025-12-18); repo last push 2026-04-21 [A10]
 - **Key facts**: 310★ / 117 forks / 30 open issues; a single Node process is both authoritative server and client asset server; WebSocket + msgpack, PhysX (WASM), SES sandbox, LiveKit voice, VRM avatars, `.hyp` world bundles; apps can only mutate state/emit events, and there is **no cross-world portal primitive** (`player.teleport` is intra-world) [A10][A11][A28]
-- **Relationship to choroweave**: demo candidate for route A (loosely coupled host); **do not fork, do not link into the Apache-2.0 reference implementation** (ADR-04/12); its fork/star=0.38 is key evidence that "self-hosting demand is real" (research 01 rubric: the only shipped self-hosted web world engine that simultaneously has app scripts/physics/VRM/voice)
+- **Relationship to choroweave**: demo candidate for route A (loosely coupled host); **do not fork, do not link into the reference implementation** (ADR-04/12); its fork/star=0.38 is key evidence that "self-hosting demand is real" (research 01 rubric: the only shipped self-hosted web world engine that simultaneously has app scripts/physics/VRM/voice)
 - **Reusability**: **4/5 as a host / 2/5 as a codebase**
 - **Evidence**: <https://github.com/hyperfy-xyz/hyperfy> · <https://docs.hyperfy.xyz/docs/scripts/>
 
@@ -453,7 +453,7 @@ This layer answers: who is making money, who is dying, and whether demand-side d
 | ADR-09 | Skeleton-first + TRELLIS.2 default; Hunyuan3D optional | CEGame-Bench 16%; TRELLIS.2 MIT; Hunyuan non-OSI [B1][A15][A17] | Compiler guarantees playability; generative models are providers |
 | ADR-10 | Rapier + OMI physics subset + `CHW_collider`; do not depend on KHR_physics | KHR_physics Review Draft; OMI physics Stage 1, Godot only [A25][A6] | Ship our own physics; standard as fallback semantics |
 | ADR-11 | World models/3DGS are not a runtime; 3DGS scheduled P3 | Genie 4 limits; Marble outputs assets; SPZ streaming incomplete [A20][A19][A46] | Visual enhancement, never the authority on state |
-| ADR-12 | Apache-2.0/CC-BY-4.0/CC0; `weave-check` as core | GPL risk; only 2 implementations; OMI Stage 2 requires implementation + samples [A10][A3][A6] | The moat is conformance and adoption, not code |
+| ADR-12 | Licensing/governance; `weave-check` as core (licensing portion superseded by ADR-14) | GPL risk; only 2 implementations; OMI Stage 2 requires implementation + samples [A10][A3][A6] | The moat is conformance and adoption, not code |
 
 ## 7. Source Table (Reusing the Four Research URL Sets, A/B/C Grading)
 
@@ -548,7 +548,7 @@ This layer answers: who is making money, who is dying, and whether demand-side d
 ### 8.1 Self-check results
 
 - **Terminology consistent**: world/space/World Bundle/world manifest/node/portal/traversal/room/node capability/ISS/Spatial-DSL/Chôra Compiler/`weave-check` are used consistently with the established glossary; the term "portal" is used throughout (with the colloquial "teleport gate" noted at its first occurrence).
-- **ADR consistent**: §6 points back to ADR-01..13 one by one, with no new decisions; all "judgments" are marked C and never passed off as facts.
+- **ADR consistent**: §6 points back to ADR-01..14 one by one, with no new decisions; all "judgments" are marked C and never passed off as facts.
 - **Number rubric**: all GitHub data was captured on 2026-11-07; product/market data carry the original statistical scope and time point; unverified items are in §8.3.
 - **Links correct**: all URLs in §7 are taken from the four research source tables; the body cites IDs and introduces no unverified external links. Internal relative links point to 02/03/04/08 in the delivery tree and to `research/`; 03/04/08 are delivered by parallel roles and link reachability must be rechecked during consolidation.
 

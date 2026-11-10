@@ -382,7 +382,7 @@ gantt
 | 阶段名/时间/Exit Criteria | 与 `internal/writing-spec.md` §3 逐字一致；本文只在"可测口径"上量化，不改语义 |
 | 模块名 | 与 `internal/writing-spec.md` §2 一致（`@choroweave/*`、`pixel-rooftop`） |
 | 协议/扩展名 | SHP v0.1、WSP v0.1、`CHW_portal`/`CHW_collider`/`CHW_logic`/`CHW_avatar`（P2）一致 |
-| 运行时/许可证 | Babylon.js 9.x、WebGL2-first、代码 Apache-2.0 / 规范 CC-BY-4.0 一致 |
+| 运行时/许可证 | Babylon.js 9.x、WebGL2-first、应用/运行时 AGPL-3.0-or-later / Schema/check Apache-2.0 / 文档 CC-BY-4.0 一致 |
 | 性能预算 | 沿用 [`02`](02-tech-selection.md) §3 性能表与 [`research/03`](research/03-runtime-standards.md) §4.4；本文不新增设备档位 |
 | **偏差 1** | 02 §6 的"Quest 浏览器 WebGPU 未核实"在 P2 门需要实测数据；本文把它列为 G2 的**前置证据**，但不作为门条件（避免不可控依赖） |
 | **偏差 2** | `research/03` §4.6 的"12 个月路线建议"与本文 24 个月分阶段不同粒度；以本文为准，`research/03` 的建议作为 P0–P2 的内部工作序参考 |

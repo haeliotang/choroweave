@@ -45,7 +45,7 @@ All claims are evidence-graded (A = primary source, B = third-party test/report,
 |---|---|
 | [`docs/en/00-executive-summary.md`](docs/en/00-executive-summary.md) | Executive summary: judgments, path, roadmap, resourcing, KPIs |
 | [`docs/en/01-landscape.md`](docs/en/01-landscape.md) | Open-source landscape: four layers, five gaps, 2026–2028 window |
-| [`docs/en/02-tech-selection.md`](docs/en/02-tech-selection.md) | 13 ADRs, technical decision matrix, **deviations from the original vision** |
+| [`docs/en/02-tech-selection.md`](docs/en/02-tech-selection.md) | 14 ADRs, technical decision matrix, **deviations from the original vision** |
 | [`docs/en/03-architecture.md`](docs/en/03-architecture.md) | System architecture: compiler pipeline, runtime, node, interfaces |
 | [`docs/en/04-spatial-hyperlink-protocol.md`](docs/en/04-spatial-hyperlink-protocol.md) | SHP v0.1: `world.json`, `CHW_portal`, traversal handshake, trust |
 | [`docs/en/05-roadmap.md`](docs/en/05-roadmap.md) | 24-month roadmap (P0–P4), gates, resourcing, KPI dictionary |
@@ -57,6 +57,8 @@ All claims are evidence-graded (A = primary source, B = third-party test/report,
 | [`docs/en/research/`](docs/en/research/) | Four primary research reports (spatial networks / generative 3D / runtime standards / market) |
 | [`schemas/`](schemas/) | JSON Schemas for Spatial-DSL, `world.json`, and the tacitweave ISS contract |
 | [`examples/pixel-rooftop/`](examples/pixel-rooftop/) | The flagship example world ("pixel rooftop"), DSL + signed manifest |
+| [`LICENSING.md`](LICENSING.md) | Layer table, licence history, dual licensing, brand assets |
+| [`CLA.md`](CLA.md) | Inceptless CLA (verbatim draft; not legal advice) |
 | [`docs/en/deploy-real.md`](docs/en/deploy-real.md) | Real LAN deployment recipe; public deployment blockers and required deployment profile |
 | [`docs/en/g0-evidence.md`](docs/en/g0-evidence.md) | G0 evidence bundle template (functional vs performance, topology, deployment) |
 | [`docs/en/p0-rc.md`](docs/en/p0-rc.md) | Release Candidate + G0 acceptance checklist (runtime baseline `95f12d8`) |
@@ -67,7 +69,7 @@ All claims are evidence-graded (A = primary source, B = third-party test/report,
 | [`worlds/`](worlds/) | Generated P0 runtime worlds (simple geometry, no generative models) |
 | [`scripts/build-p0-worlds.mjs`](scripts/build-p0-worlds.mjs) | Deterministic world/GLB builder for the P0 fixtures |
 | [`fixtures/p0/`](fixtures/p0/README.md) | Frozen two-world P0 fixtures (canonical IDs/URLs, hosts mapping, 10-jump script) |
-| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contribution scope, evidence rules, DCO, RFC/ADR process |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contribution scope, evidence rules, CLA, RFC/ADR process |
 | [`SECURITY.md`](SECURITY.md) | Private vulnerability reporting and security scope |
 | [`scripts/validate.mjs`](scripts/validate.mjs) | Zero-dependency repo self-check (schemas, example, signatures, links) |
 
@@ -106,7 +108,7 @@ Controls: `WASD` move, mouse drag to look, `E` interact / enter portal, `Esc` ca
 - **Realtime** — WebSocket room server (P0–P1) → WebTransport / WebRTC DataChannel (P2+) + LiveKit voice; Matrix is only an optional social bridge, never a pose-sync bus.
 - **Addressing** — an HTTPS URL *is* the world ID; `weave://` is only an alias; assets are SHA-256 content-addressed.
 - **Generation** — skeleton-first + deterministic assembly + **TRELLIS.2 (MIT)**; Hunyuan3D is opt-in only (license excludes EU/UK/KR and has a 1M-MAU clause).
-- **Licenses** — code Apache-2.0, specification CC-BY-4.0, example assets CC0/CC-BY.
+- **Licenses** — layered: applications/runtime **AGPL-3.0-or-later**, schemas/conformance/fixtures **Apache-2.0**, docs **CC-BY-4.0**; example assets follow each `world.json` (CC-BY-4.0 for P0). See [`LICENSING.md`](LICENSING.md).
 
 ---
 
@@ -128,7 +130,8 @@ Controls: `WASD` move, mouse drag to look, `E` interact / enter portal, `Esc` ca
 ## Status and licenses
 
 - Status: **plan v0.1 (Nov 2026)**; protocol and schemas are drafts — challenges via issues/RFCs are welcome.
-- Code (future): Apache-2.0 ([`LICENSE`](LICENSE)); specification: CC-BY-4.0; example assets: CC0/CC-BY.
+- **Applications/runtime/node**: AGPL-3.0-or-later ([`LICENSE`](LICENSE)); **schemas, `weave-check`, fixtures**: Apache-2.0; **documentation**: CC-BY-4.0; **example assets**: per `world.json` (CC-BY-4.0 for P0). Details: [`LICENSING.md`](LICENSING.md).
+- External contributions require the Inceptless CLA ([`CLA.md`](CLA.md)); until it is in force, external PRs are not merged.
 - Sister project: **tacitweave** (tacit knowledge / implicit intent layer). This repository contains none of its code.
 
 ---

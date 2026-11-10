@@ -10,7 +10,7 @@
 ## 0. One-page conclusion
 
 1. **The positioning is not a platform — it is "DNS + HTTP for worlds".** Success does not depend on how many worlds we host, but on how many of **other people's** worlds and nodes are connected through SHP ([`00`](00-executive-summary.md) §5). Every design decision therefore takes "implementable by a third party" as its first principle.
-2. **The protocol is free forever, the reference implementation is Apache-2.0, and the moat is the conformance suite.** As with glTF/Khronos: the barrier in protocol projects is not code but "verifiable conformance + ecosystem adoption" (02 ADR-12).
+2. **The protocol is free forever; applications/runtime use AGPL-3.0-or-later, while schemas, the conformance suite and fixtures stay Apache-2.0; the moat is the conformance suite.** As with glTF/Khronos: the barrier in protocol projects is not code but "verifiable conformance + ecosystem adoption" (02 ADR-12; licensing portion superseded by ADR-14).
 3. **No UGC take rate, no centralized hosting monopoly, no paid certification monopoly.** Rec Room (UGC take 30¢ vs first-party 70¢, paid rate <2%) and Spatial (hosting-cost open letter) have already shown that both paths lead to death [official + media report].
 4. **Sustainable revenue comes only from "services", never from "licenses"**: hosting-node service, enterprise private deployment, support contracts, training, donations/sponsorship. The protocol, SDK, conformance suite and migration tools are free forever and self-hostable.
 5. **The standards path has three stages**: `CHW_` in-house (P0) → OMI Stage 1/W3C CG (submitted from P1) → MSF "Web of Worlds"/Khronos glTF (P2–P4). Align with X3D 4.1 WoW's **Anchor (3D hyperlink) / Inline (external scene)** semantics; do not invent another spatial language.
@@ -63,11 +63,11 @@ External communication uses only three messages (30-second version):
 
 | Repository | Contents | License | Visibility | Publishing |
 |---|---|---|---|---|
-| `choroweave/choroweave` | **Main monorepo**: all `@choroweave/*` packages + documentation | Apache-2.0 (docs CC-BY-4.0) | Public | npm (`@choroweave/*`), Docker |
+| `choroweave/choroweave` | **Main monorepo**: all `@choroweave/*` packages + documentation | Layered: apps/runtime/node AGPL-3.0-or-later; schemas/check/fixtures Apache-2.0; docs CC-BY-4.0 | Public | npm (`@choroweave/*`), Docker |
 | `choroweave/spec` | SHP/WSP specification text, conformance cases, `CHW_*` extension definitions, OMI/MSF mapping docs | CC-BY-4.0 | Public | Spec version tags (v0.1/v0.5/v1.0) |
 | `choroweave/weave-check` | Conformance-suite CLI (independently installable) | Apache-2.0 | Public | npm + static binaries |
 | `choroweave/examples` | `pixel-rooftop`, `cliff-tavern`, `dungeon-puzzle` plus templates/kits | Example worlds CC0/CC-BY; kits CC-BY | Public | With release tags |
-| `choroweave/registry` | Optional world index/discovery protocol and reference implementation (P3) | Apache-2.0 | Public | Standalone service image |
+| `choroweave/registry` | Optional world index/discovery protocol and reference implementation (P3) | Service implementation AGPL-3.0-or-later; contract schemas Apache-2.0 | Public | Standalone service image |
 | `choroweave/hosted` | The **operations layer** of the hosting service (billing, multi-tenancy, audit console, invoicing) | Private by default | Private | Not an open-source deliverable |
 
 **Open-source boundary principles**:
@@ -109,14 +109,14 @@ This table is the **strategic view**; the final directory structure, package spl
 | Level | Requirement | Rights | Obligations |
 |---|---|---|---|
 | **User** | Uses/deploys | Open issues | Follow the code of conduct |
-| **Contributor** | ≥1 merged PR | Open PRs | DCO sign-off |
+| **Contributor** | ≥1 merged PR | Open PRs | Signed Inceptless CLA |
 | **Reviewer** | ≥5 merged PRs and one area of ownership | Review PRs | Respond to assignments within 7 days |
 | **Maintainer** | 6 months of sustained contribution + nomination by an existing maintainer | Merge rights, RFC votes | Quarterly maintenance report |
 | **Technical committee** | See §8 | Specification/architecture decisions | Conflict adjudication |
 
 ### 3.2 PR requirements
 
-- Every commit needs a **DCO** sign-off (`Signed-off-by`); no CLA (lowering the barrier; trademarks and specification copyright are held by the project, see §8.4).
+- External contributions require a signed **Inceptless CLA** (external PRs are not merged until CLA 1.0 is in force; signing-tool link: `TODO(maintainer)`).
 - Required to pass: unit/integration tests, `weave-check` self-check, license scan, SBOM diff, formatting, documentation updates.
 - Changes need a **changeset** (version and description); changes affecting the protocol/worlds must include conformance cases.
 - Generation/asset-related PRs must include `provenance` and a license declaration; example worlds must pass the budget check.
@@ -298,7 +298,7 @@ The commercial entity (hosting/support) is separate from the open-source project
 |---|---|---|---|
 | **BDFL** | P0–P2 (M0–M12) | Project lead (PL) has final say; a technical committee (3 people: TL/SL/CL) advises | ≥5 external maintainers, or ≥10 third-party nodes |
 | **Committee** | P3 (M12–M18) | Technical committee of 5–7 people (including ≥2 external maintainers); specification changes need a 2/3 majority | The committee runs stably for ≥6 months; ≥2 commercial hosters exist |
-| **Foundation** | P4 onward (M18+) | An independent foundation or affiliation with an existing organization (candidates: MSF membership path, W3C CG, a Software Freedom Conservancy-like body); charter, trademark, fund custody | Charter signed before G4 |
+| **Foundation** | P4 onward (M18+) | An independent foundation or affiliation with an existing organization (candidates: MSF membership path, W3C CG, a Software Freedom Conservancy-like body); charter, brand assets, fund custody | Charter signed before G4 |
 
 ### 8.2 Decision rights
 
@@ -306,7 +306,7 @@ The commercial entity (hosting/support) is separate from the open-source project
 |---|---|---|---|
 | Code merges | Maintainers | Maintainers | Maintainers |
 | Specification semantics (SHP/WSP/`CHW_*`) | PL + technical committee | Technical committee 2/3 | Technical committee + community review |
-| Trademark/brand usage | PL | Committee | Foundation |
+| Brand-asset usage | PL | Committee | Foundation |
 | Funds/grants | PL | Committee | Foundation board |
 | Code of conduct/conflicts | PL | Committee (with external representatives) | Foundation |
 | Commercial service pricing | Commercial entity | Commercial entity (protocol-independent) | Commercial entity (with disclosure) |
@@ -317,9 +317,9 @@ The commercial entity (hosting/support) is separate from the open-source project
 - `security.txt` + a private disclosure channel; security advisories and CVE (if needed) follow the process in [`07`](07-risks-compliance.md) §10.
 - Transparency: quarterly community report (contributor count, PR response time, reports/actions, where the money went).
 
-### 8.4 Trademark and conformance (no fees)
+### 8.4 Brand assets and conformance (no fees)
 
-- The name "choroweave / 原质之织" and the logo are held by the project/foundation; third parties may state "compatible with SHP vX" but must not imply official endorsement.
+- The "choroweave" name and logo are Inceptless brand assets; the open-source licences do not grant brand rights. Third parties may state "compatible with SHP vX" but must not imply official endorsement. See `LICENSING.md` and `LICENSES/LicenseRef-Inceptless-Brand.txt`.
 - **Conformance certification is free and self-service** (run `weave-check` and publish the report); no paid certification and no "official certification" gate. This is a precondition for protocol adoption (consistent with §7.1).
 
 ---
@@ -328,7 +328,7 @@ The commercial entity (hosting/support) is separate from the open-source project
 
 | Category | Check | Owner | Gate |
 |---|---|---|---|
-| Legal | License scan 0 forbidden items; SBOM generated; provenance complete; no GPL/AGPL in core | TL/LG | Blocking |
+| Legal | License scan 0 forbidden items; SBOM generated; provenance complete; dependencies compatible with the layered policy (own AGPL allowed) | TL/LG | Blocking |
 | Specification | `weave-check` passes; conformance cases updated; compatibility matrix generated | SL | Blocking |
 | Security | Dependency CVE high/critical = 0 (or a recorded exception); no keys in the repo; privacy policy updated | SL | Blocking |
 | Quality | Tests pass; performance regression ≤15%; eval set (P1+) meets targets | CL/RL | Blocking |
@@ -345,7 +345,7 @@ The commercial entity (hosting/support) is separate from the open-source project
 |---|---|---|
 | Hosting service | Product/pricing/contract shape (§7.2) | Terms obligations, DSA, liability boundary (07 §6.5/§8) |
 | Standards submission | Path/deliverables/timing (§4) | Licensing and legal constraints (07 §4) |
-| Governance | Structure/decision rights/trademark (§8) | Security-response process, incident response (07 §10) |
+| Governance | Structure/decision rights/brand assets (§8) | Security-response process, incident response (07 §10) |
 | Community incentives | Program and budget (§6) | Content ratings/minors (07 §6) |
 | Business-model risk | Revenue lines and anti-lock-in (§7) | Unit-economics stress test and red lines (07 §3) |
 
@@ -356,7 +356,7 @@ The commercial entity (hosting/support) is separate from the open-source project
 | Check | Result |
 |---|---|
 | Module/package names | Consistent with the internal writing spec §2 (`@choroweave/*`, `pixel-rooftop`); `cliff-tavern`/`dungeon-puzzle` are new examples from `00` §11 and must be registered in 03's directory structure |
-| Licensing | Consistent: code Apache-2.0 / spec CC-BY-4.0 / examples CC0-CC-BY (ADR-12) |
+| Licensing | Apps/runtime AGPL-3.0-or-later; schemas/check/fixtures Apache-2.0; docs CC-BY-4.0; examples CC0-CC-BY (ADR-14, supersedes ADR-12 licensing) |
 | Standards path | `CHW_` → OMI Stage 1 → MSF/Khronos is consistent with ADR-06 and `research/03` §3.8 |
 | Business model | "No UGC take rate / no centralized hosting monopoly" is consistent with `research/04` §5 conclusion 3 and `00` §9 |
 | **Deviation 1 (resolved)** | This document proposed that the "hosting-service operations layer may be private"; the Lead has written this back into the "open-source boundary" clause of [`02`](02-tech-selection.md) ADR-12; the anti-lock-in commitment in §7.4 is the implementation detail |

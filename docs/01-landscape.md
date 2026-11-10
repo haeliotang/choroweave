@@ -4,8 +4,8 @@
 
 > 状态：草案 · 全部数据 **截至 2026-11-07 核实**（GitHub 数据为当日 REST API 抓取；其余为规范正文/官方页面/权威第三方，逐条标注见 §7）
 > 证据等级：**A** = 一手规范、官方文档、仓库元数据；**B** = 第三方实测或权威媒体报道；**C** = 工程判断（与 [`02-tech-selection.md`](02-tech-selection.md) 同一口径）
-> 配套：[`02-tech-selection.md`](02-tech-selection.md)（ADR-01..13）、[`03-architecture.md`](03-architecture.md)、[`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md)、[`research/`](research/)（四份原始调研）
-> 纪律：本文只提供生态证据与判断。**技术结论以 02 的 13 条 ADR 为准，本文不新增决策**；发现口径差异在 §8 显式列出。
+> 配套：[`02-tech-selection.md`](02-tech-selection.md)（ADR-01..14）、[`03-architecture.md`](03-architecture.md)、[`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md)、[`research/`](research/)（四份原始调研）
+> 纪律：本文只提供生态证据与判断。**技术结论以 02 的 14 条 ADR 为准，本文不新增决策**；发现口径差异在 §8 显式列出。
 
 ## 0. 一页结论（先结论，后证据）
 
@@ -202,7 +202,7 @@ flowchart TB
 - **许可证**：**GPL-3.0**（已核验 LICENSE 文本）[A10]
 - **最后提交/发布**：v0.16.0（2025-12-18）；仓库最后 push 2026-04-21 [A10]
 - **关键事实**：310★ / 117 fork / 30 open issues；单 Node 进程同时做权威服务器 + 客户端资源服务；WebSocket + msgpack、PhysX(WASM)、SES 沙箱、LiveKit 语音、VRM 头像、`.hyp` 世界包；App 只能改状态/发事件，**没有跨世界门户原语**（`player.teleport` 仅世界内）[A10][A11][A28]
-- **与 choroweave 的关系**：路线 A（松耦合宿主）的 demo 候选；**不 fork、不链接进 Apache-2.0 参考实现**（ADR-04/12）；其 fork/star=0.38 是"自托管需求真实存在"的关键证据（调研 01 口径：唯一同时具备 app 脚本/物理/VRM/语音的 shipped 自托管 Web 世界引擎）
+- **与 choroweave 的关系**：路线 A（松耦合宿主）的 demo 候选；**不 fork、不链接进参考实现**（ADR-04/12）；其 fork/star=0.38 是"自托管需求真实存在"的关键证据（调研 01 口径：唯一同时具备 app 脚本/物理/VRM/语音的 shipped 自托管 Web 世界引擎）
 - **可复用性**：**4/5 作宿主 / 2/5 作代码库**
 - **证据**：<https://github.com/hyperfy-xyz/hyperfy> · <https://docs.hyperfy.xyz/docs/scripts/>
 
@@ -454,7 +454,7 @@ flowchart TB
 | ADR-09 | 骨架优先 + TRELLIS.2 默认；Hunyuan3D 可选 | CEGame-Bench 16%；TRELLIS.2 MIT；Hunyuan 非 OSI [B1][A15][A17] | 编译器保证可玩，生成模型做 provider |
 | ADR-10 | Rapier + OMI physics 子集 + `CHW_collider`；KHR_physics 不依赖 | KHR_physics Review Draft；OMI physics Stage 1、仅 Godot [A25][A6] | 物理自带，标准兜底语义 |
 | ADR-11 | 世界模型/3DGS 不作运行时，3DGS 排 P3 | Genie 4 限制；Marble 输出资产；SPZ 流式未完成 [A20][A19][A46] | 视觉增强，不作状态权威 |
-| ADR-12 | Apache-2.0/CC-BY-4.0/CC0；`weave-check` 为核心 | GPL 风险；仅 2 实现；OMI Stage 2 要求实现+样例 [A10][A3][A6] | 护城河是一致性与采用，不是代码 |
+| ADR-12 | 许可与治理；`weave-check` 为核心（许可部分由 ADR-14 取代） | GPL 风险；仅 2 实现；OMI Stage 2 要求实现+样例 [A10][A3][A6] | 护城河是一致性与采用，不是代码 |
 
 ## 7. 来源表（复用四份调研 URL，A/B/C 分级）
 
@@ -549,7 +549,7 @@ flowchart TB
 ### 8.1 自查结果
 
 - **术语一致**：世界/空间/世界包/世界描述符/节点/门户/传送/房间/节点能力/ISS/Spatial-DSL/Chôra Compiler/`weave-check` 均按 [`internal/writing-spec.md`](internal/writing-spec.md) §1 使用；术语统一用"门户"（首次出现注明俗称"传送门"）。
-- **ADR 一致**：§6 逐一回指 ADR-01..13，未新增决策；所有"判断"均标注 C，未冒充事实。
+- **ADR 一致**：§6 逐一回指 ADR-01..14，未新增决策；所有"判断"均标注 C，未冒充事实。
 - **数字口径**：所有 GitHub 数据为 2026-11-07 抓取；产品/市场数据标注原始统计口径与时点；未能核实项见 §8.3。
 - **链接正确**：§7 全部 URL 取自四份调研来源表；正文用编号引用，未引入未核实外链。内部相对链接指向交付树中的 02/03/04/08 与 `research/`；其中 03/04/08 由并行角色交付，合稿时需复核可达性。
 

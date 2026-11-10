@@ -381,7 +381,7 @@ gantt
 | Stage names/timing/Exit Criteria | Verbatim identical to the internal writing spec §3; this document only quantifies the "testable" basis, without changing semantics |
 | Module names | Consistent with the internal writing spec §2 (`@choroweave/*`, `pixel-rooftop`) |
 | Protocol/extension names | SHP v0.1, WSP v0.1, `CHW_portal`/`CHW_collider`/`CHW_logic`/`CHW_avatar` (P2) consistent |
-| Runtime/license | Babylon.js 9.x, WebGL2-first, code Apache-2.0 / specification CC-BY-4.0 consistent |
+| Runtime/license | Babylon.js 9.x, WebGL2-first, apps/runtime AGPL-3.0-or-later / schemas/check Apache-2.0 / docs CC-BY-4.0 consistent |
 | Performance budget | Reuses [`02`](02-tech-selection.md) §3 performance table and [`research/03`](research/03-runtime-standards.md) §4.4; this document adds no device tiers |
 | **Deviation 1** | 02 §6's "Quest browser WebGPU unverified" needs measured data at the P2 gate; this document lists it as **prerequisite evidence** for G2 but not a gate condition (avoiding an uncontrollable dependency) |
 | **Deviation 2** | `research/03` §4.6's "12-month roadmap recommendation" differs in granularity from this document's 24-month staging; this document prevails, and `research/03`'s recommendation serves as an internal work-order reference for P0–P2 |

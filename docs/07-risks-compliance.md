@@ -142,11 +142,12 @@
 
 ## 4. 许可证、SBOM 与供应链
 
-### 4.1 分层许可证（与 ADR-12 一致）
+### 4.1 分层许可证（ADR-14，取代 ADR-12 许可部分）
 
 | 层 | 许可证 | 说明 |
 |---|---|---|
-| 代码（`@choroweave/*`、CLI、节点） | **Apache-2.0** | 含专利授权，商业宿主可集成 |
+| 应用/运行时/节点/CLI | **AGPL-3.0-or-later** | 网络使用需提供对应源码；商业托管可谈商业许可 |
+| Schema / `weave-check` / 夹具 | **Apache-2.0** | 让第三方独立实现/验证契约 |
 | 规范文本（SHP/WSP）与文档 | **CC-BY-4.0** | 可自由实现/商用，需署名 |
 | 示例世界与官方资产 | **CC0 / CC-BY**（逐个标注） | 降低二次创作摩擦 |
 | 默认模型权重（TRELLIS.2 / Pixal3D） | **MIT** | 不随包分发；运行时按需下载并记录 provenance |
@@ -157,9 +158,9 @@
 
 | 级别 | 许可证 | 处理 |
 |---|---|---|
-| **允许** | Apache-2.0、MIT、BSD-2/3、ISC、0BSD、Unlicense、CC0、CC-BY | 自动通过，SBOM 记录 |
+| **允许** | AGPL-3.0-or-later、Apache-2.0、MIT、BSD-2/3、ISC、0BSD、Unlicense、CC0、CC-BY | 自动通过，SBOM 记录 |
 | **需评审** | MPL-2.0（文件级 copyleft）、LGPL（仅动态链接）、CC-BY-SA、OpenRAIL（仅模型/资产层） | TL + LG 双签，写入 `docs/decisions/` |
-| **禁止进核心** | GPL-2/3、AGPL-3、SSPL、BUSL、任何限制商用/地域/MAU 的模型许可作**默认**依赖 | CI 硬失败；例外需 PL 签字并公示 |
+| **禁止进核心** | 第三方 GPL-2.0-only、SSPL、BUSL、任何限制商用/地域/MAU 的模型许可作**默认**依赖（本项目自有 AGPL 除外） | CI 硬失败；例外需 PL 签字并公示 |
 
 ### 4.3 Hunyuan / 腾讯系许可隔离（R-07）
 

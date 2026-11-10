@@ -297,14 +297,14 @@ Desktop Chrome (WebGL2); `@choroweave/*` P1 build; two local/public nodes; the d
 
 | Category | Deliverable | Acceptance requirement |
 |---|---|---|
-| npm packages | `@choroweave/dsl`, `compiler`, `assembler`, `runtime`, `node`, `protocol`, `check`, `provider-trellis`, `provider-kit` | Installable, buildable, complete types, LICENSE=Apache-2.0 |
+| npm packages | `@choroweave/dsl`, `compiler`, `assembler`, `runtime`, `node`, `protocol`, `check`, `provider-trellis`, `provider-kit` | Installable, buildable, complete types; per-package layered licence (AGPL-3.0-or-later / Apache-2.0) |
 | CLI | `choroweave` (aggregate CLI: `build/preview/publish/eval`) | Complete `--help`; semantic exit codes (0 success / 1 validation failure / 2 bad arguments / 3 internal error) |
 | Conformance suite | `weave-check` (CLI + the 22 cases in [`04`](04-spatial-hyperlink-protocol.md) §12, expanded to 80 in P2) | Good samples all pass, bad samples all fail; stable JSON report |
 | Schemas | [`schemas/spatial-dsl.schema.json`](../../schemas/spatial-dsl.schema.json), [`schemas/world-manifest.schema.json`](../../schemas/world-manifest.schema.json) | 0 errors for both example worlds; fields consistent with [`04`](04-spatial-hyperlink-protocol.md) |
 | Examples/runtime | `worlds/pixel-rooftop/`, `worlds/neon-alley/` (P0 runtime); [`examples/pixel-rooftop/`](../../examples/pixel-rooftop/) (P1 design example) | Pass `weave-check`; runtime fixtures are generated reproducibly |
 | Node image | `ghcr.io/choroweave/node:<version>` (Docker) | Start a node with one command; `node doctor` passes |
 | Docs | 02/03/04/05/06 (this file) + [README](../../README.md) navigation | All relative links reachable |
-| Supply chain | CycloneDX SBOM + artifact SHA-256 manifest + license scan report | 0 GPL/AGPL in core packages; Hunyuan provider off by default and weights not distributed with the package |
+| Supply chain | CycloneDX SBOM + artifact SHA-256 manifest + license scan report | 0 incompatible licences in core packages (own AGPL allowed); Hunyuan provider off by default and weights not distributed with the package |
 | Evaluation | `eval/` test set + `eval/report.json` + human scoring sheets | Reproducible; the report contains all 20 items |
 
 ### 9.2 Acceptance commands (P0 gate, G0 = 2027-01-25)

@@ -141,11 +141,12 @@
 
 ## 4. Licensing, SBOM and supply chain
 
-### 4.1 Layered licensing (consistent with ADR-12)
+### 4.1 Layered licensing (ADR-14, supersedes ADR-12 licensing)
 
 | Layer | License | Notes |
 |---|---|---|
-| Code (`@choroweave/*`, CLI, node) | **Apache-2.0** | Includes a patent grant; commercial hosters can integrate it |
+| Apps/runtime/node/CLI | **AGPL-3.0-or-later** | Network use must offer corresponding source; commercial hosting can request a commercial licence |
+| Schemas / `weave-check` / fixtures | **Apache-2.0** | Lets third parties implement and verify the contract independently |
 | Specification text (SHP/WSP) and documentation | **CC-BY-4.0** | Free to implement/commercialize, attribution required |
 | Example worlds and official assets | **CC0 / CC-BY** (labeled per item) | Lowers friction for derivative work |
 | Default model weights (TRELLIS.2 / Pixal3D) | **MIT** | Not distributed with the package; downloaded on demand at runtime with provenance recorded |
@@ -156,9 +157,9 @@
 
 | Level | Licenses | Handling |
 |---|---|---|
-| **Allowed** | Apache-2.0, MIT, BSD-2/3, ISC, 0BSD, Unlicense, CC0, CC-BY | Automatic pass, recorded in the SBOM |
+| **Allowed** | AGPL-3.0-or-later, Apache-2.0, MIT, BSD-2/3, ISC, 0BSD, Unlicense, CC0, CC-BY | Automatic pass, recorded in the SBOM |
 | **Needs review** | MPL-2.0 (file-level copyleft), LGPL (dynamic linking only), CC-BY-SA, OpenRAIL (model/asset layer only) | Signed off by both TL and LG, recorded in [`docs/decisions/`](../decisions/README.md) |
-| **Forbidden in core** | GPL-2/3, AGPL-3, SSPL, BUSL, and any model license restricting commercial use/geography/MAU as a **default** dependency | CI hard-fails; exceptions need PL sign-off and public disclosure |
+| **Forbidden in core** | Third-party GPL-2.0-only, SSPL, BUSL, and any model licence restricting commercial use/geography/MAU as a **default** dependency (the project's own AGPL is allowed) | CI hard-fails; exceptions need PL sign-off and public disclosure |
 
 ### 4.3 Hunyuan / Tencent-family license isolation (R-07)
 

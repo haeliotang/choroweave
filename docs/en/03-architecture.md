@@ -1,7 +1,7 @@
 # choroweave System Architecture (v0.1)
 
-> Status: draft · as of **2026-11-07** · code license Apache-2.0 · for the implementation team and external contributors
-> Basis: the 13 ADRs in [`02-tech-selection.md`](02-tech-selection.md), [`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md) (SHP), and the four research reports in [`research/`](research/).
+> Status: draft · as of **2026-11-07** · code licenses: apps/runtime AGPL-3.0-or-later, contracts/check/fixtures Apache-2.0 · for the implementation team and external contributors
+> Basis: the 14 ADRs in [`02-tech-selection.md`](02-tech-selection.md), [`04-spatial-hyperlink-protocol.md`](04-spatial-hyperlink-protocol.md) (SHP), and the four research reports in [`research/`](research/).
 > All `CHW_*` extensions and `world.json` fields in this document defer to [`04`](04-spatial-hyperlink-protocol.md) and [`schemas/`](../../schemas/); any inconsistency among the three is a defect.
 > Chinese version: [`../03-architecture.md`](../03-architecture.md)
 
@@ -95,7 +95,7 @@ flowchart TB
 | C5 | Real-time layer **WebSocket (P0-P1) → WebTransport/WebRTC (P2+)**; Matrix does not carry pose | ADR-07 |
 | C6 | Asset generation defaults to **TRELLIS.2 (MIT)**; Hunyuan3D is an optional provider only (region/MAU restrictions) | ADR-09 |
 | C7 | Identity **Passkey/OIDC → did:web**; no blockchain | ADR-08 |
-| C8 | Code Apache-2.0 / specification CC-BY-4.0 / examples CC0-CC-BY; the conformance suite is the governance core | ADR-12 |
+| C8 | Apps/runtime AGPL-3.0-or-later; schemas/check/fixtures Apache-2.0; docs CC-BY-4.0; examples CC0-CC-BY; the conformance suite is the governance core | ADR-14 (supersedes ADR-12 licensing) |
 | C9 | Studio requires no server: **pure static HTTPS hosting is enough to run a world**; the room service is optional | ADR-06 item 5 |
 | C10 | Quest 3 budgets are written into the engine startup check (≤300k–500k triangles, 50–80 draw calls/frame) | ADR-04, research 03 §3.5 |
 
@@ -594,7 +594,7 @@ No ADR-level conflicts; this document introduces no new technical bets.
 
 ## 14. References
 
-- [02 Technology selection](02-tech-selection.md) (ADR-01…13) · [04 SHP v0.1](04-spatial-hyperlink-protocol.md) (`world.json` / `CHW_portal` / handshake / trust / conformance cases)
+- [02 Technology selection](02-tech-selection.md) (ADR-01…14) · [04 SHP v0.1](04-spatial-hyperlink-protocol.md) (`world.json` / `CHW_portal` / handshake / trust / conformance cases)
 - [Research 01 spatial web platforms](research/01-spatial-web-platforms.md) · [02 generative 3D](research/02-generative-3d-and-agents.md) · [03 runtime standards](research/03-runtime-standards.md) · [04 products and failure precedents](research/04-products-market-prior-art.md)
 - Schemas: [`spatial-dsl`](../../schemas/spatial-dsl.schema.json) · [`world-manifest`](../../schemas/world-manifest.schema.json) · [`implicit-spatial-spec`](../../schemas/implicit-spatial-spec.schema.json)
 - Examples: [`examples/pixel-rooftop/`](../../examples/pixel-rooftop/)

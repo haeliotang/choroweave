@@ -8,4 +8,4 @@ contact_links:
     about: Do not open a public issue for security problems. Use private vulnerability reporting.
   - name: Contributing guide
     url: https://github.com/haeliotang/choroweave/blob/main/CONTRIBUTING.md
-    about: Scope, evidence rules, DCO, and the P0 acceptance gates.
+    about: Scope, evidence rules, CLA, and the P0 acceptance gates.
